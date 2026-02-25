@@ -17,7 +17,7 @@ const gaps = [
 ]
 
 const BANNER_THRESHOLD_DESKTOP = 0.78
-const BANNER_THRESHOLD_MOBILE = 0.48
+const BANNER_THRESHOLD_MOBILE = 0.80
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0)

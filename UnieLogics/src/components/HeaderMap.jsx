@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const API_URL = 'https://api.unielogics.com'
+const API_URL = import.meta.env?.VITE_API_BASE_URL || 'https://api.uniewms.com/api/v1'
 const COORDS_URL = `${API_URL}/wOwners/getAllOnlyCoordinates`
 const US_GEOJSON_URL = 'https://raw.githubusercontent.com/shawnbot/topogram/master/data/us-states.geojson'
 

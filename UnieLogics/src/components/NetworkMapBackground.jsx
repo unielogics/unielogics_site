@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-const API_URL = 'https://api.unielogics.com'
+const API_URL = import.meta.env?.VITE_API_BASE_URL || 'https://api.uniewms.com/api/v1'
 const COORDS_URL = `${API_URL}/wOwners/getAllOnlyCoordinates`
 
 // Minimal static map – no zoom/drag, muted styling

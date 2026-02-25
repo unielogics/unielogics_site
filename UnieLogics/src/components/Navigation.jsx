@@ -46,6 +46,32 @@ export default function Navigation() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.left = '0'
+      document.body.style.right = '0'
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.left = ''
+        document.body.style.right = ''
+        document.body.style.overflow = ''
+        window.scrollTo(0, scrollY)
+      }
+    } else {
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.left = ''
+      document.body.style.right = ''
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
+
   const isActive = (path) => location.pathname === path
 
   return (
@@ -102,6 +128,14 @@ export default function Navigation() {
         className={`menu-panel ${isMenuOpen ? 'open' : ''}`}
         aria-hidden={!isMenuOpen}
       >
+        <button
+          type="button"
+          className="menu-panel-close"
+          aria-label="Close menu"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
         <div className="menu-panel-inner">
           <Link
             to="/"
