@@ -2083,8 +2083,8 @@ footer,
 
 /* FAQ section — fills gap between Audit CTA and Future section */
 .faq-wrap{
-  width: 80%;
-  max-width: min(800px, 90vw);
+  width: 100%;
+  max-width: min(1080px, 90vw);
   margin: 0 auto;
 }
 @media (max-width: 768px){
@@ -2102,7 +2102,7 @@ footer,
   margin-bottom: 36px;
 }
 .faq-list{
-  max-width: 640px;
+  max-width: 864px;
   margin: 0 auto;
 }
 .faq-item{
