@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 
 const LOGO_URL = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/logofull.png'
 
-// Desktop: all links flat in header
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/solutions', label: 'Solutions' },
@@ -14,7 +14,6 @@ const navItems = [
   { path: '/articles', label: 'Articles' },
 ]
 
-// Mobile panel: grouped for readability
 const navGroups = [
   { id: 'offerings', label: 'Offerings', links: [
     { path: '/solutions', label: 'Solutions' },
@@ -30,140 +29,133 @@ const navGroups = [
 export default function Navigation() {
   const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const navRef = useRef(null)
+  const closeMenu = () => setIsMenuOpen(false)
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setIsMenuOpen(false)
+    closeMenu()
   }, [location.pathname])
 
-  // Close on Escape
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsMenuOpen(false)
+    const onEscape = (e) => {
+      if (e.key === 'Escape') closeMenu()
     }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', onEscape)
+    return () => document.removeEventListener('keydown', onEscape)
   }, [])
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      const scrollY = window.scrollY
+      const y = window.scrollY
+      document.body.style.overflow = 'hidden'
       document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
+      document.body.style.top = `-${y}px`
       document.body.style.left = '0'
       document.body.style.right = '0'
-      document.body.style.overflow = 'hidden'
       return () => {
+        document.body.style.overflow = ''
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.left = ''
         document.body.style.right = ''
-        document.body.style.overflow = ''
-        window.scrollTo(0, scrollY)
+        window.scrollTo(0, y)
       }
-    } else {
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.left = ''
-      document.body.style.right = ''
-      document.body.style.overflow = ''
     }
   }, [isMenuOpen])
 
   const isActive = (path) => location.pathname === path
 
-  return (
-    <nav className="navigation topbar" ref={navRef} aria-label="Main navigation">
-      <div className="topbar-content wrap">
-        <div className="brand">
-          <Link to="/" className="navigation-logo">
-            <img src={LOGO_URL} alt="UnieLogics" />
-          </Link>
-        </div>
-
-        {/* Desktop: all links in header */}
-        <div className="nav-desktop right">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`nav-top-link ${isActive(item.path) ? 'active' : ''}`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <ThemeToggle />
-        </div>
-
-        {/* Mobile: hamburger + theme */}
-        <div className="nav-mobile right">
-          <ThemeToggle />
-          <button
-            type="button"
-            className="nav-hamburger"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setIsMenuOpen((v) => !v)}
-          >
-            <span className={`nav-hamburger-icon ${isMenuOpen ? 'open' : ''}`}>
-              <span className="nav-hamburger-line" />
-              <span className="nav-hamburger-line" />
-              <span className="nav-hamburger-line" />
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu overlay + panel */}
+  const mobileMenu = isMenuOpen ? createPortal(
+    <>
       <div
-        className={`menu-overlay ${isMenuOpen ? 'open' : ''}`}
-        aria-hidden={!isMenuOpen}
-        onClick={() => setIsMenuOpen(false)}
+        className="mobile-menu-backdrop"
+        onClick={closeMenu}
+        onKeyDown={(e) => e.key === 'Escape' && closeMenu()}
+        aria-hidden="true"
       />
-      <div
+      <aside
         id="mobile-menu"
-        className={`menu-panel ${isMenuOpen ? 'open' : ''}`}
-        aria-hidden={!isMenuOpen}
+        className="mobile-menu-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Main menu"
       >
         <button
           type="button"
-          className="menu-panel-close"
+          className="mobile-menu-close"
+          onClick={closeMenu}
           aria-label="Close menu"
-          onClick={() => setIsMenuOpen(false)}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <span aria-hidden="true">×</span>
         </button>
-        <div className="menu-panel-inner">
-          <Link
-            to="/"
-            className={`menu-panel-link ${location.pathname === '/' ? 'active' : ''}`}
-            onClick={() => setIsMenuOpen(false)}
-          >
+        <nav className="mobile-menu-nav">
+          <Link to="/" className={`mobile-menu-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMenu}>
             Home
           </Link>
-          {navGroups.map((group) => (
-            <div key={group.id} className="menu-panel-group">
-              <span className="menu-panel-group-label">{group.label}</span>
-              {group.links.map((link) => (
+          {navGroups.map((g) => (
+            <div key={g.id} className="mobile-menu-group">
+              <span className="mobile-menu-group-label">{g.label}</span>
+              {g.links.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`menu-panel-link ${isActive(link.path) ? 'active' : ''}`}
-                  onClick={() => setIsMenuOpen(false)}
+                  className={`mobile-menu-link ${isActive(link.path) ? 'active' : ''}`}
+                  onClick={closeMenu}
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
           ))}
-          <div className="menu-panel-theme">
+          <div className="mobile-menu-theme">
             <ThemeToggle />
           </div>
+        </nav>
+      </aside>
+    </>,
+    document.body
+  ) : null
+
+  return (
+    <>
+      <nav className="navigation topbar" aria-label="Main navigation">
+        <div className="topbar-content wrap">
+          <div className="brand">
+            <Link to="/" className="navigation-logo">
+              <img src={LOGO_URL} alt="UnieLogics" />
+            </Link>
+          </div>
+          <div className="nav-desktop right">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`nav-top-link ${isActive(item.path) ? 'active' : ''}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <ThemeToggle />
+          </div>
+          <div className="nav-mobile right">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="nav-hamburger"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setIsMenuOpen((v) => !v)}
+            >
+              <span className="nav-hamburger-icon">
+                <span />
+                <span />
+                <span />
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      {mobileMenu}
+    </>
   )
 }
