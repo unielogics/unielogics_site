@@ -1,6 +1,7 @@
 /**
  * Lead/contact form submission to UnieWMS backend
  * Posts to SalesRequest API - leads appear in super-admin dashboard (franco@unielogics.com)
+ * Employment form (footer developer widget) uses source "UnieLogics Employment" → appears under Employment tab
  */
 
 const API_BASE =
