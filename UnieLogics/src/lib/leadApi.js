@@ -40,17 +40,27 @@ export async function submitLead(payload) {
     callConsent: false,
   }
   try {
-    const res = await fetch(`${API_BASE}/sales-request`, {
+    // #region agent log
+    const url = `${API_BASE}/sales-request`
+    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'leadApi.js:submitLead',message:'Before fetch',data:{url,source:body.source,hasPhone:!!body.phone},timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
     const data = await res.json().catch(() => ({}))
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'leadApi.js:submitLead',message:'After fetch',data:{ok:res.ok,status:res.status,dataSuccess:data.success,dataError:data.error},timestamp:Date.now(),hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
     if (!res.ok) {
       return { success: false, error: data.error || 'Submission failed' }
     }
     return { success: true, id: data.id, message: data.message }
   } catch (err) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'leadApi.js:submitLead',message:'Fetch error',data:{error:err?.message},timestamp:Date.now(),hypothesisId:'C'})}).catch(()=>{});
+    // #endregion
     return { success: false, error: err.message || 'Network error' }
   }
 }

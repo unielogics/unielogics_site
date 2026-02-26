@@ -52,6 +52,9 @@ export default function Footer() {
       form.technologyToPublish.trim() ? `Technology to publish: ${form.technologyToPublish.trim()}` : null,
     ].filter(Boolean)
     const notes = notesParts.join('\n\n')
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.jsx:handleDeveloperSubmit',message:'About to submit',data:{source:'UnieLogics Employment',hasNotes:!!notes},timestamp:Date.now(),hypothesisId:'D'})}).catch(()=>{});
+    // #endregion
     const result = await submitLead({
       name: form.name.trim(),
       email: form.email.trim().toLowerCase(),
@@ -60,6 +63,9 @@ export default function Footer() {
       notes,
       source: 'UnieLogics Employment',
     })
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.jsx:handleDeveloperSubmit',message:'Submit result',data:{success:result.success,error:result.error},timestamp:Date.now(),hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll be in touch to explore." })
