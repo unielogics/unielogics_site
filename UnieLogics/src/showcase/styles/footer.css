@@ -184,9 +184,9 @@ footer.site-footer .footer-grid {
   border-radius: 999px !important;
 }
 .site-footer .footer-developer-btn.btn-primary {
-  background: var(--accent) !important;
-  color: var(--accent-ink) !important;
-  border: 1px solid var(--accent) !important;
+  background: linear-gradient(120deg, var(--accent-2) 0%, var(--accent) 100%) !important;
+  color: #fff !important;
+  border: 1px solid transparent !important;
 }
 .site-footer .footer-developer-btn.btn-primary:hover:not(:disabled) {
   box-shadow: 0 6px 20px var(--accent-glow);

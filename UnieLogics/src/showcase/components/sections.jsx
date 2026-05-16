@@ -627,7 +627,7 @@ export function UnieConnectThumb() {
         <text x="48" y="27" fontFamily="JetBrains Mono" fontSize="3" fill="rgba(255,255,255,.55)">ORDERS / HR</text>
         <text x="48" y="38" fontFamily="Inter" fontSize="9" fontWeight="700" fill="#fff" letterSpacing="-.04em">8,402</text>
         <text x="48" y="46" fontFamily="JetBrains Mono" fontSize="2.6" fill="var(--accent)">▲ +12.4%</text>
-        <rect x="108" y="20" width="58" height="32" rx="2" fill="rgba(122,240,198,.06)" stroke="var(--accent)" strokeWidth=".3" />
+        <rect x="108" y="20" width="58" height="32" rx="2" fill="rgba(79,134,183,.06)" stroke="var(--accent)" strokeWidth=".3" />
         <text x="112" y="27" fontFamily="JetBrains Mono" fontSize="3" fill="var(--accent)">MARGIN AT ORDER</text>
         <text x="112" y="38" fontFamily="Inter" fontSize="9" fontWeight="700" fill="var(--accent)" letterSpacing="-.04em">+8.1%</text>
         <text x="112" y="46" fontFamily="JetBrains Mono" fontSize="2.6" fill="rgba(255,255,255,.55)">vs static price</text>

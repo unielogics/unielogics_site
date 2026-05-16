@@ -247,7 +247,7 @@ function IndustryTile({ ind, scale, flipMetrics }) {
               <span
                 className="it-row-v"
                 style={{
-                  color: flipped ? 'var(--accent)' : row.bad ? '#FF7A5C' : 'var(--fg)',
+                  color: flipped ? 'var(--accent)' : 'var(--accent-2)',
                 }}>
                 {flipped ? after.v : row.v}
               </span>

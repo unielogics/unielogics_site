@@ -126,9 +126,9 @@ export function CortexOrbital({ size = 720, showLabels = true, compact = false }
 
         return (
           <g key={'sat-' + i}>
-            <circle cx={sx} cy={sy} r={satR + 2.5} fill="var(--accent)" opacity={.08 + .04 * Math.sin(tick * 2 + i)} />
-            <circle cx={sx} cy={sy} r={satR} fill="var(--bg)" stroke="var(--accent)" strokeWidth=".5" />
-            <circle cx={sx} cy={sy} r={satR - 1.6} fill="var(--accent)" opacity=".15" />
+            <circle cx={sx} cy={sy} r={satR + 2.5} fill="var(--accent-2)" opacity={.08 + .04 * Math.sin(tick * 2 + i)} />
+            <circle cx={sx} cy={sy} r={satR} fill="var(--bg)" stroke="var(--accent-2)" strokeWidth=".5" />
+            <circle cx={sx} cy={sy} r={satR - 1.6} fill="var(--accent-2)" opacity=".15" />
 
             <SatelliteGlyph kind={s.glyph} cx={sx} cy={sy} size={satR * 1.0} />
 
@@ -140,7 +140,7 @@ export function CortexOrbital({ size = 720, showLabels = true, compact = false }
                 <text x={lx} y={ly + 2.2} textAnchor={anchor} fontFamily="JetBrains Mono" fontSize="1.4" fill="var(--fg-3)" letterSpacing=".1em">
                   {s.sub.toUpperCase()}
                 </text>
-                <text x={lx} y={ly + 4.4} textAnchor={anchor} fontFamily="JetBrains Mono" fontSize="1.3" fill="var(--accent)" letterSpacing=".08em">
+                <text x={lx} y={ly + 4.4} textAnchor={anchor} fontFamily="JetBrains Mono" fontSize="1.3" fill="var(--accent-2)" letterSpacing=".08em">
                   {s.metric}
                 </text>
               </g>

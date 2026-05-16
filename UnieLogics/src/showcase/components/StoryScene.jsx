@@ -234,7 +234,7 @@ function Scene02PickerReroute({ progress }) {
             return (
               <g key={b.id}>
                 <rect x={x} y={y} width={7.5} height={3.5} rx=".3"
-                  fill={b.flagged ? 'rgba(122,240,198,.18)' : 'rgba(255,255,255,.05)'}
+                  fill={b.flagged ? 'rgba(79,134,183,.18)' : 'rgba(255,255,255,.05)'}
                   stroke={b.flagged ? 'var(--accent)' : 'rgba(255,255,255,.12)'}
                   strokeWidth=".15"
                   style={{ filter: b.flagged ? 'drop-shadow(0 0 1.5px var(--accent))' : 'none' }} />
@@ -290,7 +290,7 @@ function Scene03Staged({ progress }) {
             return (
               <g key={i} style={{ opacity: appear ? 1 : 0, transition: 'opacity .5s' }}>
                 <rect x={14 + i * 13} y={36} width={11} height={12} rx=".4"
-                  fill="rgba(122,240,198,.2)" stroke="var(--accent)" strokeWidth=".25" />
+                  fill="rgba(79,134,183,.2)" stroke="var(--accent)" strokeWidth=".25" />
                 <rect x={14 + i * 13} y={45} width={11} height={3} fill="rgba(255,255,255,.4)" />
                 <text x={19.5 + i * 13} y={43} textAnchor="middle" fontFamily="JetBrains Mono" fontSize="1.7" fill="#fff">P{i + 1}</text>
               </g>
@@ -335,7 +335,7 @@ function Scene04DriverMatched({ progress }) {
           <line x1="0" y1="47" x2={progress * 100} y2="47" stroke="var(--accent)" strokeWidth=".4" strokeDasharray="2 2" opacity=".7" />
           <g transform="translate(2, 30)">
             <rect x="0" y="0" width="20" height="18" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.18)" strokeWidth=".2" />
-            <rect x="3" y="6" width="14" height="12" fill="rgba(122,240,198,.1)" stroke="var(--accent)" strokeWidth=".2" />
+            <rect x="3" y="6" width="14" height="12" fill="rgba(79,134,183,.1)" stroke="var(--accent)" strokeWidth=".2" />
             <text x="10" y="14" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="1.6" fill="#fff">DOCK 3</text>
           </g>
           <g transform={`translate(${85 - progress * 50}, 32)`}>
@@ -375,9 +375,9 @@ function Scene05Delivered({ progress }) {
       <div className="deliver-visual">
         <svg viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%' }}>
           <g style={{ opacity: Math.min(1, progress * 2) }}>
-            <rect x={20} y={6} width={60} height={48} rx="1" fill="rgba(122,240,198,.06)" stroke="var(--accent)" strokeWidth=".3" />
+            <rect x={20} y={6} width={60} height={48} rx="1" fill="rgba(79,134,183,.06)" stroke="var(--accent)" strokeWidth=".3" />
             <text x={24} y={12} fontFamily="JetBrains Mono" fontSize="1.6" fill="var(--accent)">PROOF OF DELIVERY · #44291</text>
-            <line x1={24} y1={14} x2={76} y2={14} stroke="rgba(122,240,198,.3)" strokeWidth=".15" />
+            <line x1={24} y1={14} x2={76} y2={14} stroke="rgba(79,134,183,.3)" strokeWidth=".15" />
             <text x={24} y={20} fontFamily="JetBrains Mono" fontSize="1.4" fill="rgba(255,255,255,.6)">CONSIGNEE</text>
             <text x={24} y={24} fontFamily="Plus Jakarta Sans" fontSize="2.4" fill="#fff" fontWeight="600">1450 E Lehigh St, Bethlehem PA</text>
             <text x={24} y={31} fontFamily="JetBrains Mono" fontSize="1.4" fill="rgba(255,255,255,.6)">DELIVERED</text>

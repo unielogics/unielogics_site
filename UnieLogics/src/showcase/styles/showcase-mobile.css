@@ -142,100 +142,78 @@
   .lede { font-size: 15.5px; line-height: 1.5; }
   .eyebrow { font-size: 10px; margin-bottom: 18px; }
 
-  /* ─── Merge scene — vertical stack on mobile ──────────────────────────── */
-  /* Make the stage normal-height (no sticky pin); show all 4 tiles in a column. */
-  .merge-stage {
-    height: auto !important;
-  }
+  /* ─── Merge scene — KEEP the pinned scroll story, sized to the phone ──────
+     The desktop scroll choreography (isolate → brain emerges → flip green)
+     stays intact; we only shrink the pinned 100vh canvas so all four tiles
+     + the brain fit a phone screen with no clipping. Shorter stage = less
+     scrolling on a phone. */
+  .merge-stage { height: 300vh !important; }
   .merge-pin {
-    position: static;
-    height: auto;
-    display: block;
-    padding: 60px 20px 40px;
-    overflow: visible;
+    height: 100vh;
+    grid-template-rows: auto 1fr;
+    padding: 74px 16px 18px;
+    overflow: hidden;
   }
-  .merge-header {
-    padding-top: 0;
-    padding-bottom: 36px;
-    text-align: left;
-  }
-  .merge-title { font-size: clamp(28px, 8.5vw, 40px); line-height: 1.06; }
-  /* Hide the brain orbital on mobile — it's a desktop affordance. */
-  .merge-canvas { display: none; }
-
-  /* The 2x2 grid becomes a 1-col stack of always-flipped (green) tiles
-     because on a phone the user just wants to see the wins per archetype,
-     not scroll through 4 acts. We render before+after rows together. */
+  .merge-pin::before { background: radial-gradient(ellipse 70% 50% at 50% 50%, var(--accent-faint), transparent 70%); }
+  .merge-header { padding-top: 4px; padding-bottom: 0; text-align: left; }
+  .merge-eyebrow { font-size: 9px; margin-bottom: 12px; }
+  .merge-title { font-size: clamp(18px, 5.4vw, 24px); line-height: 1.18; }
+  /* Tiles + brain start well below the (variable-height) header so the
+     scrolling title never overlaps the boxes. */
+  .merge-canvas { top: 224px; bottom: 16px; left: 0; right: 0; opacity: .5; }
   .merge-tiles-grid {
-    position: static;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 14px;
-    max-width: 100%;
-    pointer-events: auto;
-  }
-  .industry-tile {
-    transform: none !important;
-    padding: 18px 18px;
-    background: rgba(13,15,21,.94);
-    border-color: var(--accent) !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,.4), 0 0 24px var(--accent-faint);
-  }
-  .industry-tile.q-tl, .industry-tile.q-tr, .industry-tile.q-bl, .industry-tile.q-br {
-    transform-origin: center;
-  }
-  .it-status {
-    background: rgba(122,240,198,.12) !important;
-    color: var(--accent) !important;
-    border-color: var(--accent) !important;
-  }
-  /* Override row colors so they always show the GREEN after-state on mobile. */
-  /* (The component logic still computes based on scroll, but since stage has
-      no scroll on mobile, flipMetrics stays low. We force the visual.) */
-
-  .merge-results {
-    position: static;
-    grid-template-columns: 1fr 1fr;
+    top: 224px; left: 14px; right: 14px; bottom: 16px;
     gap: 10px;
-    margin-top: 36px;
-    opacity: 1 !important;
-    transform: none !important;
-    max-width: 100%;
   }
-  .merge-result { padding: 14px 14px; }
-  .mr-num { font-size: 26px; }
-  .mr-lbl { font-size: 9px; }
+  .industry-tile { padding: 9px 11px; border-radius: 11px; }
+  .it-head { margin-bottom: 6px; padding-bottom: 6px; }
+  .it-label { font-size: 11.5px; }
+  .it-sub { font-size: 7.5px; }
+  .it-status { font-size: 7px; padding: 2px 5px; }
+  .it-rows { gap: 0; }
+  .it-row { font-size: 9px; padding: 3px 0; }
+  .it-row-l { padding-right: 6px; }
 
-  /* ─── Story scene — full-bleed stacked scenes (no sticky pin) ─────────── */
-  .story-stage {
-    height: auto !important;
-  }
+  /* ─── Story scene — KEEP the pinned scene-by-scene scroll, fit the phone ──
+     Each of the 5 acts still advances on scroll within a pinned 100vh; copy
+     sits above a visual that fills the remaining height. */
+  .story-stage { height: 460vh !important; }
   .story-pin {
-    position: static;
-    height: auto;
-    padding: 60px 20px 40px;
-    display: block;
+    height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    padding: 72px 16px 16px;
+    gap: 10px;
+    overflow: hidden;
   }
   .story-eyebrow {
-    flex-direction: column; align-items: flex-start; gap: 8px;
-    margin-bottom: 24px; padding-bottom: 16px;
+    flex-direction: row; align-items: center; justify-content: space-between;
+    gap: 10px; margin-bottom: 0; padding-bottom: 10px;
   }
+  .story-eyebrow-row span { font-size: 9px; }
+  .story-eyebrow-savings { font-size: 9px !important; }
   .story-body {
     grid-template-columns: 1fr;
-    height: auto;
-    gap: 20px;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    align-content: start;
+    overflow: hidden;
   }
-  .story-copy { max-width: 100%; }
-  .story-title { font-size: clamp(24px, 7vw, 34px); line-height: 1.1; }
-  .story-text { font-size: 14.5px; }
-  .story-visual { min-height: 320px; max-height: none; }
-  .scene-frame { min-height: 320px; }
+  .story-copy { max-width: 100%; gap: 7px; }
+  .story-chapter { font-size: 9px; }
+  .story-time { font-size: 20px; }
+  .story-title { font-size: clamp(18px, 5.4vw, 25px); line-height: 1.16; }
+  .story-text { font-size: 12px; line-height: 1.5; }
+  .story-metric { font-size: 9.5px; padding: 7px 0; }
+  .story-visual { min-height: 0; height: 100%; max-height: none; }
+  .scene-frame { min-height: 0; }
   .story-timeline {
     grid-template-columns: repeat(5, 1fr);
-    margin-top: 28px;
-    padding-top: 14px;
+    margin-top: 0;
+    padding-top: 8px;
   }
-  .story-step-time { font-size: 9px; }
+  .story-step-time { font-size: 8px; }
 
   /* ─── Two-track / Four-track / similar grids ───────────────────────────── */
   .compare-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
@@ -349,4 +327,10 @@
   .h-display { font-size: 32px; }
   .merge-results { grid-template-columns: 1fr 1fr; }
   .predict-grid { grid-template-columns: 1fr; }
+}
+
+/* Grids the base mobile sheet missed. */
+@media (max-width: 760px) {
+  .network-levers { grid-template-columns: 1fr !important; gap: 14px; margin-top: 32px; }
+  .lever-card { padding: 22px 20px; }
 }

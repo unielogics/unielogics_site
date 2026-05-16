@@ -25,12 +25,12 @@
   --light-hairline: rgba(10,10,10,.1);
   --light-hairline-strong: rgba(10,10,10,.22);
 
-  /* Accent — defaults to mint (UnieLogics brand). Tweaked via JS. */
-  --accent:        #7af0c6;
-  --accent-2:      #5dd1a8;
-  --accent-glow:   rgba(122,240,198,.32);
-  --accent-faint:  rgba(122,240,198,.1);
-  --accent-ink:    #062019;
+  /* Accent — UnieLogics brand gradient (logo purple → blue). */
+  --accent:        #4f86b7;
+  --accent-2:      #9C5CC4;
+  --accent-glow:   rgba(79,134,183,.32);
+  --accent-faint:  rgba(79,134,183,.1);
+  --accent-ink:    #0a151f;
 
   /* Type scale — editorial */
   --display: "Newsreader", "Times New Roman", Georgia, serif;
@@ -109,7 +109,8 @@ img { max-width: 100%; display: block; }
 .nav-cta {
   padding: 9px 16px; border-radius: 999px;
   font-size: 13px; font-weight: 600;
-  background: var(--accent); color: var(--accent-ink);
+  background: linear-gradient(120deg, var(--accent-2) 0%, var(--accent) 100%);
+  color: #fff;
   transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out);
 }
 .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--accent-glow); }
@@ -222,8 +223,9 @@ em.serif, .serif {
   border-color: var(--fg); transform: translateY(-1px);
 }
 .btn-primary {
-  background: var(--accent); color: var(--accent-ink);
-  border-color: var(--accent);
+  background: linear-gradient(120deg, var(--accent-2) 0%, var(--accent) 100%);
+  color: #fff;
+  border-color: transparent;
   box-shadow: 0 4px 18px var(--accent-glow);
 }
 .btn-primary:hover {
@@ -837,7 +839,7 @@ em.serif, .serif {
 }
 .pmini-auto-banner::before {
   content: ""; width: 8px; height: 8px; border-radius: 50%;
-  background: #7af0c6; box-shadow: 0 0 8px #7af0c6;
+  background: #4f86b7; box-shadow: 0 0 8px #4f86b7;
   animation: pulse 1.6s infinite;
 }
 
@@ -1288,7 +1290,7 @@ footer.site-footer {
 }
 .oms-row.is-flagged {
   border-color: var(--accent);
-  background: rgba(122,240,198,.08);
+  background: rgba(79,134,183,.08);
   box-shadow: 0 0 12px var(--accent-faint);
 }
 .oms-row-pri {
@@ -1306,7 +1308,7 @@ footer.site-footer {
 .oms-row-flag { text-align: right; }
 .oms-flag-pill {
   font-size: 9.5px; letter-spacing: .1em; color: var(--accent);
-  background: rgba(122,240,198,.12);
+  background: rgba(79,134,183,.12);
   padding: 2px 8px; border-radius: 999px;
   border: 1px solid var(--accent);
 }
@@ -1368,7 +1370,7 @@ footer.site-footer {
 }
 .result-tile {
   padding: 10px 12px;
-  background: rgba(122,240,198,.06);
+  background: rgba(79,134,183,.06);
   border: 1px solid var(--accent);
   border-radius: 8px;
 }
@@ -1620,7 +1622,7 @@ footer.site-footer {
   border-radius: 14px;
   background: rgba(13,15,21,.94);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,90,31,.2);
+  border: 1px solid rgba(156,92,196,.30);
   box-shadow: 0 8px 30px rgba(0,0,0,.5);
   transform-origin: center;
   transition: transform .25s cubic-bezier(0.16,1,0.3,1),
@@ -1657,15 +1659,15 @@ footer.site-footer {
 .it-status {
   font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
   padding: 3px 8px; border-radius: 999px;
-  background: rgba(255,90,31,.12); color: #FF7A5C;
-  border: 1px solid rgba(255,90,31,.32);
+  background: rgba(156,92,196,.14); color: var(--accent-2);
+  border: 1px solid rgba(156,92,196,.36);
   white-space: nowrap;
   flex-shrink: 0;
   transition: all .4s;
   font-weight: 600;
 }
 .industry-tile.is-flipped .it-status {
-  background: rgba(122,240,198,.12);
+  background: rgba(79,134,183,.12);
   color: var(--accent);
   border-color: var(--accent);
 }
@@ -1901,7 +1903,7 @@ footer.site-footer {
   min-height: 480px;
 }
 .twotrack-card.is-winner {
-  background: linear-gradient(180deg, rgba(122,240,198,.08), rgba(122,240,198,.02));
+  background: linear-gradient(180deg, rgba(79,134,183,.08), rgba(79,134,183,.02));
   border: 1.5px solid var(--accent);
   box-shadow: 0 20px 80px rgba(0,0,0,.4), 0 0 60px var(--accent-faint);
 }
