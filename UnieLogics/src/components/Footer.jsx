@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Anchor } from '../showcase/lib/nav'
 import { submitLead } from '../lib/leadApi'
 
 const BACKGROUND_OPTIONS = [
@@ -52,9 +52,6 @@ export default function Footer() {
       form.technologyToPublish.trim() ? `Technology to publish: ${form.technologyToPublish.trim()}` : null,
     ].filter(Boolean)
     const notes = notesParts.join('\n\n')
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.jsx:handleDeveloperSubmit',message:'About to submit',data:{source:'UnieLogics Employment',hasNotes:!!notes},timestamp:Date.now(),hypothesisId:'D'})}).catch(()=>{});
-    // #endregion
     const result = await submitLead({
       name: form.name.trim(),
       email: form.email.trim().toLowerCase(),
@@ -63,9 +60,6 @@ export default function Footer() {
       notes,
       source: 'UnieLogics Employment',
     })
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/80561277-9255-4c94-92b0-dc2ed86ffc82',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Footer.jsx:handleDeveloperSubmit',message:'Submit result',data:{success:result.success,error:result.error},timestamp:Date.now(),hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll be in touch to explore." })
@@ -81,213 +75,142 @@ export default function Footer() {
     if (step === 1) return form.name.trim() && form.email.trim() && form.phone.trim()
     if (step === 2) return form.github.trim()
     if (step === 3) return form.background.length > 0
-    return true // step 4 & 5: company, technology optional
+    return true
   }
 
   return (
     <footer className="site-footer">
-      <div className="wrap">
-        <div className="footer-content">
-          <div className="footer-mission">
-            <h4>Our Mission</h4>
-            <p className="footer-mission-lead">
-              UnieLogics is a technology firm redefining ecommerce and logistics for small and medium-sized businesses.
-            </p>
-            <p className="footer-mission-text">
-              We empower SMBs with an interconnected network that makes operations self-sustaining, efficient, and competitive—offering features that were once exclusive to large corporations.
-            </p>
-            <p className="footer-mission-text">
-              By leveraging AI, we identify and resolve inefficiencies that are nearly impossible to detect when operating in isolation. Our platform enables suppliers, buyers, distributors, transportation companies, and warehouses to collaborate seamlessly, reducing costs, improving speed, and creating a balanced ecosystem where every participant benefits.
-            </p>
-            <p className="footer-mission-text">
-              Our mission is simple: to build a sustainable and equitable environment for SMBs in the ecommerce and logistics space, leveling the playing field and unlocking growth opportunities that were previously out of reach.
-            </p>
+      <div className="footer-grid">
+        <div>
+          <div className="nav-logo" style={{ marginBottom: 18 }}>
+            <span className="logo-mark"></span>
+            UnieLogics
           </div>
-
-          <div className="footer-links-column">
-            <div className="footer-section">
-              <h4>Products</h4>
-              <ul className="footer-links">
-                <li><a href="https://uniewms.com" target="_blank" rel="noopener noreferrer">UnieWMS</a></li>
-                <li><Link to="/products">UnieFreight</Link></li>
-                <li><Link to="/products">UnieCourier</Link></li>
-                <li><a href="https://prepcenternearme.com" target="_blank" rel="noopener noreferrer">PrepCenterNearMe</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Company</h4>
-              <ul className="footer-links">
-                <li><Link to="/services">Services</Link></li>
-                <li><Link to="/solutions">Solutions</Link></li>
-                <li><Link to="/industry-problems">Industry Problems</Link></li>
-                <li><Link to="/articles">Articles</Link></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Connect</h4>
-              <ul className="footer-links">
-                <li><Link to="/get-started">Get Started</Link></li>
-                <li><a href="mailto:contact@unielogics.com">Contact</a></li>
-                <li><a href="mailto:contact@unielogics.com">Support</a></li>
-              </ul>
-            </div>
-
-            {/* Developer widget: under Products, Company, Connect */}
-            <div className="footer-developer-widget">
-              <h4 className="footer-developer-widget-title">Curious if we're a fit?</h4>
-              <p className="footer-developer-widget-tagline">AI, ecommerce, logistics—request to explore.</p>
-              <form className="footer-developer-form" onSubmit={handleDeveloperSubmit}>
-                <div className="footer-developer-pagination">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <span
-                      key={s}
-                      className={`footer-developer-dot ${step === s ? 'active' : ''}`}
-                      onClick={() => setStep(s)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => e.key === 'Enter' && setStep(s)}
-                      aria-label={`Step ${s}`}
-                    />
-                  ))}
-                </div>
-                <div className="footer-developer-step-panel">
-                  {step === 1 && (
-                    <>
-                      <div className="form-group footer-developer-field">
-                        <label htmlFor="dev-name">Name</label>
-                        <input
-                          id="dev-name"
-                          type="text"
-                          required
-                          placeholder="Your name"
-                          value={form.name}
-                          onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                        />
-                      </div>
-                      <div className="form-group footer-developer-field">
-                        <label htmlFor="dev-email">Email</label>
-                        <input
-                          id="dev-email"
-                          type="email"
-                          required
-                          placeholder="you@example.com"
-                          value={form.email}
-                          onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                        />
-                      </div>
-                      <div className="form-group footer-developer-field footer-developer-field-wide">
-                        <label htmlFor="dev-phone">Phone</label>
-                        <input
-                          id="dev-phone"
-                          type="tel"
-                          required
-                          placeholder="+1 (555) 000-0000"
-                          value={form.phone}
-                          onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                        />
-                      </div>
-                    </>
-                  )}
-                  {step === 2 && (
-                    <div className="form-group footer-developer-field footer-developer-field-wide">
-                      <label htmlFor="dev-github">GitHub</label>
-                      <input
-                        id="dev-github"
-                        type="text"
-                        required
-                        placeholder="github.com/username or username"
-                        value={form.github}
-                        onChange={(e) => setForm((f) => ({ ...f, github: e.target.value }))}
-                      />
-                    </div>
-                  )}
-                  {step === 3 && (
-                    <div className="form-group footer-developer-field footer-developer-field-wide">
-                      <label>Background</label>
-                      <div className="footer-developer-icons">
-                        {BACKGROUND_OPTIONS.map((opt) => (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            className={`footer-developer-icon-btn ${form.background.includes(opt.id) ? 'selected' : ''}`}
-                            onClick={() => toggleBackground(opt.id)}
-                          >
-                            <DevIcon name={opt.icon} size={16} />
-                            <span>{opt.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {step === 4 && (
-                    <div className="form-group footer-developer-field footer-developer-field-wide">
-                      <label htmlFor="dev-company">Company <span className="micro">(optional)</span></label>
-                      <input
-                        id="dev-company"
-                        type="text"
-                        placeholder="Current employer"
-                        value={form.company}
-                        onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
-                      />
-                    </div>
-                  )}
-                  {step === 5 && (
-                    <div className="form-group footer-developer-field footer-developer-field-wide">
-                      <label htmlFor="dev-technology">Any current technology in the industry you'd like to publish? <span className="micro">(optional)</span></label>
-                      <textarea
-                        id="dev-technology"
-                        rows={3}
-                        placeholder="Tools, APIs, open-source projects, etc."
-                        value={form.technologyToPublish}
-                        onChange={(e) => setForm((f) => ({ ...f, technologyToPublish: e.target.value }))}
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="footer-developer-form-actions">
-                  {step > 1 && (
-                    <button
-                      type="button"
-                      className="btn secondary footer-developer-btn footer-developer-back"
-                      onClick={() => setStep(step - 1)}
-                      disabled={submitting}
-                    >
-                      Back
-                    </button>
-                  )}
-                  <span className="footer-developer-step-hint">{step} of {totalSteps}</span>
-                  {step < totalSteps ? (
-                    <button
-                      type="button"
-                      className="btn btn-primary footer-developer-btn"
-                      onClick={() => setStep(step + 1)}
-                      disabled={!canProceed() || submitting}
-                    >
-                      Next
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-primary footer-developer-btn"
-                      disabled={!canProceed() || submitting}
-                    >
-                      {submitting ? 'Sending...' : 'Request'}
-                    </button>
-                  )}
-                </div>
-                {submitStatus && (
-                  <p className={submitStatus.ok ? 'success' : 'error'} style={{ marginTop: 12, marginBottom: 0 }}>
-                    {submitStatus.message}
-                  </p>
-                )}
-              </form>
-            </div>
-          </div>
+          <p className="footer-tag">
+            The operating intelligence for logistics, ecommerce, and transportation. Built from inside the system, for everyone who runs inside it.
+          </p>
         </div>
 
-        <div className="footer-bottom">
-          <p>&copy; {currentYear} UnieLogics. All rights reserved.</p>
+        <div>
+          <h4>Platform</h4>
+          <ul>
+            <li><Anchor href="cortex.html">UnieCortex</Anchor></li>
+            <li><Anchor href="wms.html">UnieWMS</Anchor></li>
+            <li><Anchor href="tms.html">TMS Driver App</Anchor></li>
+            <li><Anchor href="products.html">All products</Anchor></li>
+          </ul>
         </div>
+
+        <div>
+          <h4>Network</h4>
+          <ul>
+            <li><a href="https://uniewms.com" target="_blank" rel="noreferrer">UnieWMS</a></li>
+            <li><a href="https://prepcenternearme.com" target="_blank" rel="noreferrer">PrepCenterNearMe</a></li>
+            <li><Anchor href="index.html#audit">Request audit</Anchor></li>
+            <li><a href="mailto:contact@unielogics.com">Contact</a></li>
+          </ul>
+        </div>
+
+        <div className="footer-developer-widget">
+          <h4 className="footer-developer-widget-title">Curious if we're a fit?</h4>
+          <p className="footer-developer-widget-tagline">AI, ecommerce, logistics—request to explore.</p>
+          <form className="footer-developer-form" onSubmit={handleDeveloperSubmit}>
+            <div className="footer-developer-pagination">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <span
+                  key={s}
+                  className={`footer-developer-dot ${step === s ? 'active' : ''}`}
+                  onClick={() => setStep(s)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setStep(s)}
+                  aria-label={`Step ${s}`}
+                />
+              ))}
+            </div>
+            <div className="footer-developer-step-panel">
+              {step === 1 && (
+                <>
+                  <div className="form-group footer-developer-field">
+                    <label htmlFor="dev-name">Name</label>
+                    <input id="dev-name" type="text" required placeholder="Your name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+                  </div>
+                  <div className="form-group footer-developer-field">
+                    <label htmlFor="dev-email">Email</label>
+                    <input id="dev-email" type="email" required placeholder="you@example.com" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
+                  </div>
+                  <div className="form-group footer-developer-field footer-developer-field-wide">
+                    <label htmlFor="dev-phone">Phone</label>
+                    <input id="dev-phone" type="tel" required placeholder="+1 (555) 000-0000" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
+                  </div>
+                </>
+              )}
+              {step === 2 && (
+                <div className="form-group footer-developer-field footer-developer-field-wide">
+                  <label htmlFor="dev-github">GitHub</label>
+                  <input id="dev-github" type="text" required placeholder="github.com/username or username" value={form.github} onChange={(e) => setForm((f) => ({ ...f, github: e.target.value }))} />
+                </div>
+              )}
+              {step === 3 && (
+                <div className="form-group footer-developer-field footer-developer-field-wide">
+                  <label>Background</label>
+                  <div className="footer-developer-icons">
+                    {BACKGROUND_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        className={`footer-developer-icon-btn ${form.background.includes(opt.id) ? 'selected' : ''}`}
+                        onClick={() => toggleBackground(opt.id)}
+                      >
+                        <DevIcon name={opt.icon} size={16} />
+                        <span>{opt.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {step === 4 && (
+                <div className="form-group footer-developer-field footer-developer-field-wide">
+                  <label htmlFor="dev-company">Company <span className="micro">(optional)</span></label>
+                  <input id="dev-company" type="text" placeholder="Current employer" value={form.company} onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))} />
+                </div>
+              )}
+              {step === 5 && (
+                <div className="form-group footer-developer-field footer-developer-field-wide">
+                  <label htmlFor="dev-technology">Any current technology in the industry you'd like to publish? <span className="micro">(optional)</span></label>
+                  <textarea id="dev-technology" rows={3} placeholder="Tools, APIs, open-source projects, etc." value={form.technologyToPublish} onChange={(e) => setForm((f) => ({ ...f, technologyToPublish: e.target.value }))} />
+                </div>
+              )}
+            </div>
+            <div className="footer-developer-form-actions">
+              {step > 1 && (
+                <button type="button" className="btn secondary footer-developer-btn footer-developer-back" onClick={() => setStep(step - 1)} disabled={submitting}>
+                  Back
+                </button>
+              )}
+              <span className="footer-developer-step-hint">{step} of {totalSteps}</span>
+              {step < totalSteps ? (
+                <button type="button" className="btn btn-primary footer-developer-btn" onClick={() => setStep(step + 1)} disabled={!canProceed() || submitting}>
+                  Next
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-primary footer-developer-btn" disabled={!canProceed() || submitting}>
+                  {submitting ? 'Sending...' : 'Request'}
+                </button>
+              )}
+            </div>
+            {submitStatus && (
+              <p className={submitStatus.ok ? 'success' : 'error'} style={{ marginTop: 12, marginBottom: 0 }}>
+                {submitStatus.message}
+              </p>
+            )}
+          </form>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <div>© {currentYear} UnieLogics · The operating intelligence</div>
+        <div>Built from inside the system.</div>
       </div>
     </footer>
   )

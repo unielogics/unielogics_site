@@ -1,0 +1,352 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   UnieLogics — Mobile stylesheet
+   Loaded AFTER styles.css. Targets ≤ 760px viewports. Covers home page
+   (hero, merge scene, story, TMS, product suite, sections) and detail pages.
+
+   Strategy:
+   • Tighten typography & spacing (smaller display sizes, less section padding).
+   • Stack every multi-column grid to 1 column.
+   • Mobile nav: replace the link row with a hamburger that opens a sheet.
+   • Merge scene: drop the absolute 2×2 grid + brain orbital. Render tiles
+     as a vertical stack pinned beneath the title; result-strip stays.
+   • Story scene: stop pinning. Each scene becomes a full-width section.
+   • TMS phone frame: stays as-is (intrinsic phone shape works fine), but
+     center it and shrink the surrounding gutters.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+
+  /* ─── Base ─────────────────────────────────────────────────────────────── */
+  html, body { font-size: 16px; }
+  .container, .container-tight { padding: 0; }
+
+  .section { padding: 84px 20px; }
+  .section.tight { padding: 64px 20px; }
+
+  /* ─── Top nav (hamburger) ──────────────────────────────────────────────── */
+  .nav {
+    padding: 12px 18px;
+    background: rgba(7,8,11,.82);
+  }
+  .nav-logo { font-size: 15px; gap: 8px; }
+  .nav-logo .logo-mark { width: 24px; height: 24px; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+
+  .nav-mobile-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--hairline);
+    color: var(--fg);
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-mobile-toggle svg { width: 18px; height: 18px; }
+  .nav-light .nav-mobile-toggle {
+    background: rgba(15,17,22,.06);
+    border-color: var(--light-hairline);
+    color: var(--light-fg);
+  }
+
+  /* Mobile sheet — slides down from top */
+  .nav-mobile-sheet {
+    display: block;
+    position: fixed;
+    top: 62px; left: 12px; right: 12px;
+    z-index: 99;
+    padding: 18px 16px 22px;
+    border-radius: 16px;
+    background: rgba(13,15,21,.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--hairline);
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    transform-origin: top right;
+    transform: scale(.96) translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .25s var(--ease-out), opacity .25s var(--ease-out);
+  }
+  .nav-mobile-sheet.is-open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-mobile-sheet a {
+    display: block;
+    padding: 14px 12px;
+    border-radius: 10px;
+    color: var(--fg);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -.005em;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-mobile-sheet a:last-of-type { border-bottom: none; }
+  .nav-mobile-sheet a:hover, .nav-mobile-sheet a:active {
+    background: rgba(255,255,255,.04);
+    color: var(--accent);
+  }
+  .nav-mobile-sheet .nav-mobile-cta {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 999px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  /* ─── Hero ─────────────────────────────────────────────────────────────── */
+  .hero {
+    padding: 110px 20px 40px;
+    min-height: auto;
+  }
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    min-height: auto;
+  }
+  .hero-orbital-wrap {
+    order: -1;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .hero-tagline-mark { font-size: 10px; margin-bottom: 18px; letter-spacing: .14em; }
+  .hero-title { font-size: clamp(40px, 12vw, 60px); line-height: 0.96; }
+  .hero-title .serif-line { font-size: clamp(36px, 11vw, 56px); }
+  .hero-sub {
+    margin-top: 22px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .hero-cta { margin-top: 28px; flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-cta .btn { width: 100%; justify-content: center; padding: 14px 20px; font-size: 14px; }
+  .hero-meta {
+    position: static;
+    margin-top: 48px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--hairline);
+    flex-direction: column; align-items: flex-start; gap: 16px;
+    font-size: 10px;
+  }
+  .hero-meta .scroll-cue { display: none; }
+  .hero-bg .grid-overlay { background-size: 40px 40px; }
+
+  /* ─── Generic section headings ─────────────────────────────────────────── */
+  .h-display { font-size: clamp(30px, 9vw, 44px); margin-bottom: 18px; }
+  .h-section { font-size: clamp(26px, 8vw, 38px); }
+  .h-hero { font-size: clamp(40px, 12vw, 60px); line-height: 0.96; }
+  .lede { font-size: 15.5px; line-height: 1.5; }
+  .eyebrow { font-size: 10px; margin-bottom: 18px; }
+
+  /* ─── Merge scene — vertical stack on mobile ──────────────────────────── */
+  /* Make the stage normal-height (no sticky pin); show all 4 tiles in a column. */
+  .merge-stage {
+    height: auto !important;
+  }
+  .merge-pin {
+    position: static;
+    height: auto;
+    display: block;
+    padding: 60px 20px 40px;
+    overflow: visible;
+  }
+  .merge-header {
+    padding-top: 0;
+    padding-bottom: 36px;
+    text-align: left;
+  }
+  .merge-title { font-size: clamp(28px, 8.5vw, 40px); line-height: 1.06; }
+  /* Hide the brain orbital on mobile — it's a desktop affordance. */
+  .merge-canvas { display: none; }
+
+  /* The 2x2 grid becomes a 1-col stack of always-flipped (green) tiles
+     because on a phone the user just wants to see the wins per archetype,
+     not scroll through 4 acts. We render before+after rows together. */
+  .merge-tiles-grid {
+    position: static;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 14px;
+    max-width: 100%;
+    pointer-events: auto;
+  }
+  .industry-tile {
+    transform: none !important;
+    padding: 18px 18px;
+    background: rgba(13,15,21,.94);
+    border-color: var(--accent) !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,.4), 0 0 24px var(--accent-faint);
+  }
+  .industry-tile.q-tl, .industry-tile.q-tr, .industry-tile.q-bl, .industry-tile.q-br {
+    transform-origin: center;
+  }
+  .it-status {
+    background: rgba(122,240,198,.12) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+  }
+  /* Override row colors so they always show the GREEN after-state on mobile. */
+  /* (The component logic still computes based on scroll, but since stage has
+      no scroll on mobile, flipMetrics stays low. We force the visual.) */
+
+  .merge-results {
+    position: static;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 36px;
+    opacity: 1 !important;
+    transform: none !important;
+    max-width: 100%;
+  }
+  .merge-result { padding: 14px 14px; }
+  .mr-num { font-size: 26px; }
+  .mr-lbl { font-size: 9px; }
+
+  /* ─── Story scene — full-bleed stacked scenes (no sticky pin) ─────────── */
+  .story-stage {
+    height: auto !important;
+  }
+  .story-pin {
+    position: static;
+    height: auto;
+    padding: 60px 20px 40px;
+    display: block;
+  }
+  .story-eyebrow {
+    flex-direction: column; align-items: flex-start; gap: 8px;
+    margin-bottom: 24px; padding-bottom: 16px;
+  }
+  .story-body {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 20px;
+  }
+  .story-copy { max-width: 100%; }
+  .story-title { font-size: clamp(24px, 7vw, 34px); line-height: 1.1; }
+  .story-text { font-size: 14.5px; }
+  .story-visual { min-height: 320px; max-height: none; }
+  .scene-frame { min-height: 320px; }
+  .story-timeline {
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 28px;
+    padding-top: 14px;
+  }
+  .story-step-time { font-size: 9px; }
+
+  /* ─── Two-track / Four-track / similar grids ───────────────────────────── */
+  .compare-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
+  .compare-card { padding: 28px 22px; min-height: auto; }
+  .compare-card .title { font-size: 22px; }
+  .compare-card .list li { font-size: 14px; }
+
+  .stats-row { grid-template-columns: 1fr; margin-top: 48px; }
+  .stat { padding: 36px 22px; border-right: none; border-bottom: 1px solid var(--hairline); }
+  .stat:last-child { border-bottom: none; }
+  .stat-num { font-size: clamp(48px, 16vw, 80px); }
+
+  /* ─── Product suite ────────────────────────────────────────────────────── */
+  .product-hero { grid-template-columns: 1fr; gap: 28px; padding: 56px 0 36px; }
+  .product-hero h3 { font-size: clamp(32px, 9vw, 44px) !important; }
+  .product-strip { grid-template-columns: 1fr !important; gap: 14px; margin-top: 40px; }
+  .product-tile { min-height: 320px !important; padding: 24px 20px 22px; }
+  .product-tile .img-area { min-height: 160px; }
+  .product-tile .name { font-size: 20px; }
+
+  /* ─── TMS section ──────────────────────────────────────────────────────── */
+  .tms-section { padding: 84px 20px; }
+  .tms-grid { grid-template-columns: 1fr; gap: 36px; }
+  .tms-copy h2 { font-size: clamp(28px, 8.5vw, 40px); }
+  .phone-frame {
+    width: 280px; height: 580px;
+    margin: 0 auto;
+    transform: scale(.96);
+  }
+  .tms-controls { gap: 6px; }
+  .tms-controls button { padding: 8px 12px; font-size: 10px; }
+  .tms-stats-strip {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px; margin-top: 40px;
+  }
+  .tms-stat-tile { padding: 16px 14px; }
+  .tms-stat-tile .tn { font-size: 24px; }
+  .tms-stat-tile .tl { font-size: 9px; }
+  .tms-stat-tile .tb { font-size: 12px; }
+
+  /* ─── Network section ──────────────────────────────────────────────────── */
+  .network-section { padding: 84px 20px; }
+  .network-grid { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
+  .network-stat-hero { padding: 36px 24px; }
+  .network-stat-num { font-size: clamp(72px, 22vw, 120px); }
+  .network-bullets li { font-size: 14.5px; }
+
+  /* ─── Last-mile ─────────────────────────────────────────────────────────── */
+  .lastmile-section { padding: 84px 20px; }
+  .lastmile-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
+  .lastmile-card { padding: 24px 22px; }
+
+  /* ─── Audit funnel ─────────────────────────────────────────────────────── */
+  .audit-funnel { padding: 84px 20px; }
+  .audit-options { grid-template-columns: 1fr; gap: 12px; }
+  .audit-tile { padding: 22px 20px; }
+  .audit-extra { flex-direction: column; align-items: flex-start; padding: 18px 20px; gap: 12px; }
+  .audit-funnel .question { font-size: clamp(24px, 7.5vw, 36px); margin-bottom: 32px; }
+
+  /* ─── Traction ─────────────────────────────────────────────────────────── */
+  .traction-grid { grid-template-columns: 1fr; margin-top: 40px; }
+  .traction-cell { padding: 28px 24px; border-right: none; border-bottom: 1px solid var(--hairline); }
+  .traction-cell:last-child { border-bottom: none; }
+  .traction-num { font-size: clamp(40px, 13vw, 64px); }
+
+  /* ─── CTA section ──────────────────────────────────────────────────────── */
+  .cta-section { padding: 100px 20px; }
+  .cta-section h2 { font-size: clamp(34px, 11vw, 56px); }
+  .cta-section .serif-line { font-size: clamp(30px, 10vw, 52px); }
+  .cta-section .btns { flex-direction: column; align-items: stretch; gap: 10px; }
+  .cta-section .btn { width: 100%; justify-content: center; }
+
+  /* ─── Footer ───────────────────────────────────────────────────────────── */
+  .site-footer { padding: 48px 20px 28px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 18px; margin-top: 32px; }
+
+  /* ─── Tweaks panel (mobile) ────────────────────────────────────────────── */
+  .twk-panel { width: calc(100vw - 24px) !important; max-width: 320px; right: 12px !important; bottom: 12px !important; }
+
+  /* ─── Detail-page hero (cortex, wms, tms, products) ───────────────────── */
+  .detail-hero {
+    padding: 110px 20px 50px;
+    min-height: auto;
+  }
+  .detail-hero-inner { grid-template-columns: 1fr; gap: 36px; }
+  .detail-hero-visual { order: -1; max-width: 320px; margin: 0 auto; }
+  .detail-h1 { font-size: clamp(40px, 11vw, 60px); }
+
+  /* Detail-page grids */
+  .capability-split { grid-template-columns: 1fr; gap: 16px; }
+  .capability-col { padding: 28px 22px; }
+  .feature-grid { grid-template-columns: 1fr; gap: 12px; }
+  .feature-card { padding: 22px 20px; }
+  .trust-grid { grid-template-columns: 1fr; gap: 14px; }
+  .predict-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .product-detail { grid-template-columns: 1fr; gap: 24px; padding: 56px 0; }
+  .product-detail.is-reverse .product-detail-visual { order: -1 !important; }
+  .product-detail-visual { aspect-ratio: 16/10; }
+  .tms-flow { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tms-flow-step { padding: 18px 16px; }
+
+  /* ─── Misc ─────────────────────────────────────────────────────────────── */
+  .product-hero-image img { object-position: center; }
+}
+
+/* ─── Narrow phone tweaks ─────────────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .section, .tms-section, .network-section, .lastmile-section, .audit-funnel { padding-left: 16px; padding-right: 16px; }
+  .merge-pin, .story-pin { padding-left: 16px; padding-right: 16px; }
+  .h-display { font-size: 32px; }
+  .merge-results { grid-template-columns: 1fr 1fr; }
+  .predict-grid { grid-template-columns: 1fr; }
+}

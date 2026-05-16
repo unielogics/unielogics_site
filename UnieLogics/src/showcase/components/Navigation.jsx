@@ -1,0 +1,91 @@
+// Navigation — design header ported to the SPA.
+// Scroll-aware light/dark, active-route highlight, mobile sheet.
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { Anchor } from '../lib/nav'
+
+const LINKS = [
+  { href: 'cortex.html', label: 'Cortex', key: 'cortex' },
+  { href: 'wms.html', label: 'UnieWMS', key: 'wms' },
+  { href: 'tms.html', label: 'TMS', key: 'tms' },
+  { href: 'products.html', label: 'Products', key: 'products' },
+  { href: 'index.html#audit', label: 'Audit', key: 'audit' },
+]
+
+const PATH_KEY = {
+  '/cortex': 'cortex',
+  '/wms': 'wms',
+  '/tms': 'tms',
+  '/products': 'products',
+}
+
+export default function Navigation() {
+  const location = useLocation()
+  const active = PATH_KEY[location.pathname] || ''
+  const [light, setLight] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const sections = document.querySelectorAll('.section.light, .light-nav-zone')
+      let inLight = false
+      sections.forEach((s) => {
+        const r = s.getBoundingClientRect()
+        if (r.top <= 80 && r.bottom >= 80) inLight = true
+      })
+      setLight(inLight)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [location.pathname])
+
+  // Close the sheet whenever the route changes.
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [location.pathname])
+
+  const onLink = () => setMobileOpen(false)
+
+  return (
+    <>
+      <nav className={`nav ${light ? 'nav-light' : ''}`}>
+        <Anchor href="index.html" className="nav-logo">
+          <span className="logo-mark"></span>
+          UnieLogics
+        </Anchor>
+        <div className="nav-links">
+          {LINKS.map((l) => (
+            <Anchor
+              key={l.key}
+              href={l.href}
+              style={active === l.key ? { color: 'var(--accent)' } : {}}
+            >
+              {l.label}
+            </Anchor>
+          ))}
+        </div>
+        <Anchor href="index.html#audit" className="nav-cta">Request audit →</Anchor>
+        <button
+          className="nav-mobile-toggle"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          onClick={() => setMobileOpen((o) => !o)}
+        >
+          {mobileOpen ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="7" x2="21" y2="7"></line><line x1="3" y1="13" x2="21" y2="13"></line><line x1="3" y1="19" x2="21" y2="19"></line></svg>
+          )}
+        </button>
+      </nav>
+      <div className={`nav-mobile-sheet ${mobileOpen ? 'is-open' : ''}`}>
+        <Anchor href="cortex.html" onClick={onLink}>UnieCortex · The brain</Anchor>
+        <Anchor href="wms.html" onClick={onLink}>UnieWMS · Warehouse</Anchor>
+        <Anchor href="tms.html" onClick={onLink}>Driver App · AI dispatch</Anchor>
+        <Anchor href="products.html" onClick={onLink}>All products</Anchor>
+        <Anchor href="index.html#audit" onClick={onLink}>Run an audit</Anchor>
+        <Anchor href="index.html#audit" onClick={onLink} className="nav-mobile-cta">Request audit →</Anchor>
+      </div>
+    </>
+  )
+}
