@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Anchor } from '../showcase/lib/nav'
 import { submitLead } from '../lib/leadApi'
 
+const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
+
 const BACKGROUND_OPTIONS = [
   { id: 'ai', label: 'AI / ML', icon: 'cpu' },
   { id: 'ecommerce', label: 'Ecommerce', icon: 'store' },
@@ -83,7 +85,7 @@ export default function Footer() {
       <div className="footer-grid">
         <div>
           <div className="nav-logo" style={{ marginBottom: 18 }}>
-            <span className="logo-mark"></span>
+            <img className="logo-img" src={BRAND_ICON} alt="UnieLogics" />
             UnieLogics
           </div>
           <p className="footer-tag">

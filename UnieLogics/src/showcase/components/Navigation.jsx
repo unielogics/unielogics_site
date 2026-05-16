@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Anchor } from '../lib/nav'
 
+const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
+
 const LINKS = [
   { href: 'cortex.html', label: 'Cortex', key: 'cortex' },
   { href: 'wms.html', label: 'UnieWMS', key: 'wms' },
@@ -51,7 +53,7 @@ export default function Navigation() {
     <>
       <nav className={`nav ${light ? 'nav-light' : ''}`}>
         <Anchor href="index.html" className="nav-logo">
-          <span className="logo-mark"></span>
+          <img className="logo-img" src={BRAND_ICON} alt="UnieLogics" />
           UnieLogics
         </Anchor>
         <div className="nav-links">

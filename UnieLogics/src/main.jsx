@@ -5,6 +5,7 @@ import './index.css'
 import './showcase/styles/showcase.css'
 import './showcase/styles/detail-pages.css'
 import './showcase/styles/showcase-mobile.css'
+import './showcase/styles/footer.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
