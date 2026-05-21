@@ -7,19 +7,12 @@ import { Anchor } from '../lib/nav'
 const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
 
 const LINKS = [
-  { href: 'cortex.html', label: 'Cortex', key: 'cortex' },
-  { href: 'wms.html', label: 'UnieWMS', key: 'wms' },
-  { href: 'tms.html', label: 'TMS', key: 'tms' },
-  { href: 'products.html', label: 'Products', key: 'products' },
-  { href: 'index.html#audit', label: 'Audit', key: 'audit' },
-  { href: '/join', label: 'Join the network', key: 'join' },
+  { href: '/audit', label: 'Audit', key: 'audit' },
+  { href: '/join', label: 'Join Our Supply Chain', key: 'join' },
 ]
 
 const PATH_KEY = {
-  '/cortex': 'cortex',
-  '/wms': 'wms',
-  '/tms': 'tms',
-  '/products': 'products',
+  '/audit': 'audit',
   '/join': 'join',
 }
 
@@ -69,7 +62,7 @@ export default function Navigation() {
             </Anchor>
           ))}
         </div>
-        <Anchor href="index.html#audit" className="nav-cta">Request audit →</Anchor>
+        <Anchor href="/audit" className="nav-cta">Audit my business →</Anchor>
         <button
           className="nav-mobile-toggle"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -83,13 +76,9 @@ export default function Navigation() {
         </button>
       </nav>
       <div className={`nav-mobile-sheet ${mobileOpen ? 'is-open' : ''}`}>
-        <Anchor href="cortex.html" onClick={onLink}>UnieCortex · The brain</Anchor>
-        <Anchor href="wms.html" onClick={onLink}>UnieWMS · Warehouse</Anchor>
-        <Anchor href="tms.html" onClick={onLink}>Driver App · AI dispatch</Anchor>
-        <Anchor href="products.html" onClick={onLink}>All products</Anchor>
-        <Anchor href="index.html#audit" onClick={onLink}>Run an audit</Anchor>
-        <Anchor href="/join" onClick={onLink}>Join the network</Anchor>
-        <Anchor href="index.html#audit" onClick={onLink} className="nav-mobile-cta">Request audit →</Anchor>
+        <Anchor href="/audit" onClick={onLink}>Audit my business</Anchor>
+        <Anchor href="/join" onClick={onLink}>Join Our Supply Chain</Anchor>
+        <Anchor href="/audit" onClick={onLink} className="nav-mobile-cta">Audit my business →</Anchor>
       </div>
     </>
   )

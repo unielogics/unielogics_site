@@ -94,21 +94,21 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4>Platform</h4>
+          <h4>Supply chain</h4>
           <ul>
-            <li><Anchor href="cortex.html">UnieCortex</Anchor></li>
-            <li><Anchor href="wms.html">UnieWMS</Anchor></li>
-            <li><Anchor href="tms.html">TMS Driver App</Anchor></li>
-            <li><Anchor href="products.html">All products</Anchor></li>
+            <li><Anchor href="/audit">Audit my business</Anchor></li>
+            <li><Anchor href="/audit?type=label-spine">Audit my shipping</Anchor></li>
+            <li><Anchor href="/audit?type=task-workflow">Audit my fulfillment</Anchor></li>
+            <li><Anchor href="/audit?type=network">Audit my freight</Anchor></li>
           </ul>
         </div>
 
         <div>
-          <h4>Network</h4>
+          <h4>Operators</h4>
           <ul>
-            <li><a href="https://uniewms.com" target="_blank" rel="noreferrer">UnieWMS</a></li>
-            <li><a href="https://prepcenternearme.com" target="_blank" rel="noreferrer">PrepCenterNearMe</a></li>
-            <li><Anchor href="index.html#audit">Request audit</Anchor></li>
+            <li><Anchor href="/join">Join Our Supply Chain</Anchor></li>
+            <li><Anchor href="/join#intelligence">The intelligence layer</Anchor></li>
+            <li><Anchor href="/join#products">Product suite</Anchor></li>
             <li><a href="mailto:contact@unielogics.com">Contact</a></li>
           </ul>
         </div>

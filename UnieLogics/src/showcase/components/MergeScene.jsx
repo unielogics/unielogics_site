@@ -116,16 +116,16 @@ export function MergeScene() {
         <div className="merge-pin">
           <div className="merge-header">
             <div className="merge-eyebrow mono">
-              {p < 0.22 ? 'Today · Four industries · Four languages' :
-                p < 0.42 ? 'Up close · The failures, by type' :
-                  p < 0.60 ? 'Cortex · The connective tissue' :
-                    'Cortex overlooking · Per-type improvements'}
+              {p < 0.22 ? 'Today · Four broken corners · One bill' :
+                p < 0.42 ? 'Up close · Where the money leaks' :
+                  p < 0.60 ? 'One brain · Watching all four at once' :
+                    'After · Real savings, real fast'}
             </div>
             <h2 className="merge-title">
-              {p < 0.22 ? <>Every layer of your supply chain<br />speaks a <em className="serif">different language.</em></> :
-                p < 0.42 ? <>The same problem,<br />told <em className="serif">four different ways.</em></> :
-                  p < 0.60 ? <>One brain. Four parties.<br /><em className="serif">Same page.</em></> :
-                    <>The numbers <em className="serif">flip.</em><br />At every stage. Continuously.</>}
+              {p < 0.22 ? <>Your supply chain is fragmented —<br /><em className="serif">that's why it costs too much.</em></> :
+                p < 0.42 ? <>Four different failures.<br /><em className="serif">One monthly bill.</em></> :
+                  p < 0.60 ? <>We watch all four corners.<br /><em className="serif">And we run them together.</em></> :
+                    <>The numbers <em className="serif">flip.</em><br />On every shipment. Continuously.</>}
             </h2>
           </div>
 

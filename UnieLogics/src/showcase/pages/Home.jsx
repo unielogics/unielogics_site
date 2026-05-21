@@ -1,19 +1,17 @@
-// Home — the cinematic showcase. Composition from the design app.jsx
-// (TweaksPanel excluded; Navigation + Footer render at app level).
+// Home — the consumer landing page.
+// Voice: shippers / brands / sellers who need a supply chain run for them.
 import { MergeScene } from '../components/MergeScene'
 import { StoryScene } from '../components/StoryScene'
 import {
   Hero,
+  ThreeServicesSection,
   BrainSection,
   FourTrackSection,
   BeforeAfterSection,
   EndToEndSection,
   OpenNetworkSection,
   LastMileSection,
-  ProductSuiteSection,
-  TMSSection,
   NetworkSection,
-  TwoDoorsSection,
   AuditFunnel,
   TractionSection,
   CTASection,
@@ -23,21 +21,19 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ThreeServicesSection />
       <MergeScene />
       <span id="story"></span>
       <StoryScene />
       <BrainSection />
       <FourTrackSection />
       <BeforeAfterSection />
-      <EndToEndSection />
-      <OpenNetworkSection />
+      <EndToEndSection voice="consumer" />
+      <OpenNetworkSection voice="consumer" />
       <LastMileSection />
-      <ProductSuiteSection />
-      <TMSSection />
-      <NetworkSection />
-      <TwoDoorsSection />
+      <NetworkSection voice="consumer" />
       <AuditFunnel />
-      <TractionSection />
+      <TractionSection voice="consumer" />
       <CTASection />
     </>
   )

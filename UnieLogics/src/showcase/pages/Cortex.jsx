@@ -72,7 +72,7 @@ export default function Cortex() {
           <div style={{ maxWidth: 920 }}>
             <div className="eyebrow">Four-track intelligence</div>
             <h2 className="h-display">
-              You don't have to trust the AI.<br />
+              Intelligence that finds you savings.<br />
               <em className="serif" style={{ color: 'var(--accent-2)' }}>You get to compare it.</em>
             </h2>
             <p className="lede">

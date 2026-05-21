@@ -1,8 +1,17 @@
-// Join — provider workflow ("I run a business that fits the network").
-// Multi-step form, plain-language, parallels /audit but for providers.
+// Join Our Supply Chain — the full provider story + apply form.
+// The narrative sits up top; the apply form lives at #apply.
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { submitJoinRequest } from '../../lib/joinApi'
+import {
+  JoinHero,
+  OpenNetworkSection,
+  EndToEndSection,
+  NetworkSection,
+  IntelligenceLayerSection,
+  ProductRailSection,
+  TractionSection,
+} from '../components/sections'
 
 const PROVIDER_TYPES = [
   { id: 'warehouse', label: 'Warehouse / 3PL', desc: 'You run a fulfillment center, prep house, or 3PL — you have space, shelves, and people picking orders.' },
@@ -129,7 +138,7 @@ function Question({ q, value, setValue }) {
   )
 }
 
-export default function Join() {
+function JoinForm() {
   const [searchParams] = useSearchParams()
   const [providerType, setProviderType] = useState(null)
   const [capabilities, setCapabilities] = useState({})
@@ -197,15 +206,12 @@ export default function Join() {
   const selectedType = PROVIDER_TYPES.find((p) => p.id === providerType)
 
   return (
-    <main>
-      <div className="wrap get-started-wrap">
+    <div className="wrap get-started-wrap" id="apply">
         <section className="get-started-unified">
           <div className="get-started-header">
-            <h1 className="page-title">Join the network</h1>
+            <h1 className="page-title">Apply to join the network</h1>
             <p className="page-subtitle">
-              You run a warehouse, fleet, OMS, or driver business — we want you plugged in. Tell us
-              what you do; we'll show you what the brain looks like from your window, and how to
-              start receiving matched work.
+              Tell us what you run. A real person responds within 2 business days with onboarding next steps.
             </p>
             {!done && (
               <>
@@ -421,7 +427,62 @@ export default function Join() {
             </form>
           )}
         </section>
+    </div>
+  )
+}
+
+// ─── FAQ block (small, plain language) ─────────────────────────────────────
+function JoinFAQ() {
+  const items = [
+    {
+      q: 'What does my business actually share?',
+      a: "Only what you approve. We connect via API or simple file imports — and you decide which signals flow. We never sell your data or your customer list.",
+    },
+    {
+      q: 'Where does the AI actually run?',
+      a: "Inside your own systems. The intelligence layer runs against your data without copying it to a shared cloud. You own what comes out the other side.",
+    },
+    {
+      q: 'How long does onboarding take?',
+      a: "Most warehouses connect in 2–4 weeks. Carriers and drivers can be up and running in days. We have an onboarding lead for every applicant.",
+    },
+    {
+      q: 'Do I have to switch my WMS / TMS / OMS?',
+      a: "No. We sit across what you already run. If you want to use UnieWMS or UnieTMS, you can — but it's optional.",
+    },
+  ]
+  return (
+    <section className="section light">
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow">Frequently asked</div>
+          <h2 className="h-display">Plain answers, <em className="serif">no fine print.</em></h2>
+        </div>
+        <div className="join-faq-grid">
+          {items.map((it, i) => (
+            <div key={i} className="join-faq-item">
+              <h3 className="join-faq-q">{it.q}</h3>
+              <p className="join-faq-a">{it.a}</p>
+            </div>
+          ))}
+        </div>
       </div>
+    </section>
+  )
+}
+
+export default function Join() {
+  return (
+    <main>
+      <JoinHero />
+      <OpenNetworkSection voice="provider" />
+      <EndToEndSection voice="provider" />
+      <NetworkSection voice="provider" />
+      <IntelligenceLayerSection />
+      <ProductRailSection />
+      <TractionSection voice="provider" />
+      <JoinFAQ />
+      <JoinForm />
     </main>
   )
 }

@@ -14,24 +14,20 @@ export function Hero() {
       <div className="container hero-split">
         <div>
           <div className="hero-tagline-mark">
-            UnieLogics · Supply chain intelligence, end to end
+            UnieLogics · Supply chain, run for you
           </div>
           <h1 className="h-hero hero-title">
-            A supply chain that
-            <span className="serif-line">thinks.</span>
+            Supply Chain That
+            <span className="serif-line">Works For You.</span>
           </h1>
           <p className="hero-sub">
-            One intelligence layer across every stage of the chain — <strong style={{ color: 'var(--fg)' }}>supplier signal to customer doorstep, and the returns loop back.</strong> Cortex reads every stream (orders, picks, lanes, rates, returns), predicts the next move, and orchestrates the four systems that run your operation — WMS, TMS, OMS, and couriers. End to end. Continuously. <strong style={{ color: 'var(--fg)' }}>Open to every warehouse, carrier, seller, and driver in the network</strong> — no walled garden, no single operator hoarding the brain.
+            We run the <strong style={{ color: 'var(--fg)' }}>warehouse, the parcels, and the freight</strong> — three things you don't have to operate anymore. One supply chain, three services on call, backed by intelligence that finds you savings on every shipment.
           </p>
-          <div className="hero-split-line">
-            Whether you need supply-chain help, or you run a warehouse, fleet, OMS or driver business that wants to plug in — start here.
-          </div>
           <div className="hero-cta">
-            <Anchor href="/audit" className="btn btn-primary">Get a 10-minute audit <span className="arrow">→</span></Anchor>
-            <Anchor href="/join" className="btn">Join the network <span className="arrow">→</span></Anchor>
+            <Anchor href="/audit" className="btn btn-primary">Audit your business · instant improvements, no commitment <span className="arrow">→</span></Anchor>
           </div>
           <div className="hero-tertiary">
-            <Anchor href="#brain">See how Cortex thinks ↓</Anchor>
+            <Anchor href="/join">You run a warehouse, fleet, OMS, or broker yourself? → Join Our Supply Chain</Anchor>
           </div>
         </div>
         <div className="hero-orbital-wrap">
@@ -60,12 +56,12 @@ export function DisconnectSection() {
     <section className="disconnect-section" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 880 }}>
-          <div className="eyebrow reveal">The state of logistics</div>
+          <div className="eyebrow reveal">Why your supply chain costs too much</div>
           <h2 className="h-display reveal delay-1">
-            Every layer of your supply chain<br />speaks a <em className="serif">different language.</em>
+            Four broken corners.<br /><em className="serif">One bill, every month.</em>
           </h2>
           <p className="lede reveal delay-2">
-            Your WMS doesn't see your courier rates. Your TMS doesn't see your warehouse labor. Your OMS doesn't know which DC has the inventory closest to the customer. You're not paying for inefficiency — you're paying for <strong style={{ color: 'var(--fg)' }}>the gap between systems that were never meant to talk to each other.</strong>
+            Your warehouse doesn't talk to your shipping. Your shipping doesn't talk to your freight. Your orders don't know which warehouse to ship from. You're not paying for inefficiency — you're paying for <strong style={{ color: 'var(--fg)' }}>the gaps between four systems that were never meant to talk to each other.</strong>
           </p>
         </div>
 
@@ -73,79 +69,79 @@ export function DisconnectSection() {
           <div className="disco-tile reveal">
             <div className="disco-tile-head">
               <div>
-                <div className="disco-tile-system">Warehouse · WMS</div>
-                <h4>UnieWMS</h4>
-                <div className="disco-tile-sub">Elizabeth NJ · 09:14</div>
+                <div className="disco-tile-system">Your fulfillment</div>
+                <h4>Warehouse</h4>
+                <div className="disco-tile-sub">Where orders get picked and packed</div>
               </div>
-              <span className="disco-tile-status">Isolated</span>
+              <span className="disco-tile-status">Slow</span>
             </div>
             <div className="disco-rows">
-              <div className="disco-row"><span>Active SKUs</span><span className="v">2,412</span></div>
-              <div className="disco-row"><span>Pickers on floor</span><span className="v">14</span></div>
-              <div className="disco-row is-err"><span>Idle pickers</span><span className="v">2 · 90s+</span></div>
-              <div className="disco-row is-err"><span>Outbound · SLA at risk</span><span className="v">4 orders</span></div>
-              <div className="disco-row"><span>Last sync to TMS</span><span className="v">— never —</span></div>
+              <div className="disco-row"><span>Orders out the door</span><span className="v">slow</span></div>
+              <div className="disco-row is-err"><span>Inventory in the wrong place</span><span className="v">often</span></div>
+              <div className="disco-row is-err"><span>Pick-pack errors</span><span className="v">creep up</span></div>
+              <div className="disco-row"><span>Returns restocked</span><span className="v">days late</span></div>
+              <div className="disco-row"><span>What's actually in stock</span><span className="v">— a guess —</span></div>
             </div>
           </div>
 
           <div className="disco-tile reveal delay-1">
             <div className="disco-tile-head">
               <div>
-                <div className="disco-tile-system">Transport · TMS</div>
-                <h4>UnieFreight</h4>
-                <div className="disco-tile-sub">National · 09:14</div>
+                <div className="disco-tile-system">Your freight</div>
+                <h4>LTL & FTL</h4>
+                <div className="disco-tile-sub">Pallets and full trailers moving between locations</div>
               </div>
-              <span className="disco-tile-status">Isolated</span>
+              <span className="disco-tile-status">Wasteful</span>
             </div>
             <div className="disco-rows">
-              <div className="disco-row"><span>Lanes active</span><span className="v">143</span></div>
-              <div className="disco-row is-err"><span>Empty miles · today</span><span className="v">28%</span></div>
-              <div className="disco-row is-err"><span>Available capacity</span><span className="v">unknown</span></div>
-              <div className="disco-row"><span>Carrier TX-44 status</span><span className="v">empty · returning</span></div>
-              <div className="disco-row"><span>Match to WMS demand</span><span className="v">— manual —</span></div>
+              <div className="disco-row"><span>Trucks rolling empty</span><span className="v">28% of miles</span></div>
+              <div className="disco-row is-err"><span>Pallets waiting</span><span className="v">days</span></div>
+              <div className="disco-row is-err"><span>Capacity finder</span><span className="v">— phone calls —</span></div>
+              <div className="disco-row"><span>Carrier rates</span><span className="v">a guess</span></div>
+              <div className="disco-row"><span>Return trips matched</span><span className="v">— never —</span></div>
             </div>
           </div>
 
           <div className="disco-tile reveal delay-2">
             <div className="disco-tile-head">
               <div>
-                <div className="disco-tile-system">Orders · OMS</div>
-                <h4>Order Management</h4>
-                <div className="disco-tile-sub">All channels · 09:14</div>
+                <div className="disco-tile-system">Your orders</div>
+                <h4>Margin</h4>
+                <div className="disco-tile-sub">Selling without knowing if you made money</div>
               </div>
-              <span className="disco-tile-status">Isolated</span>
+              <span className="disco-tile-status">Blind</span>
             </div>
             <div className="disco-rows">
-              <div className="disco-row"><span>Orders / hour</span><span className="v">8,402</span></div>
-              <div className="disco-row is-err"><span>Margin priced at order</span><span className="v">— no —</span></div>
-              <div className="disco-row is-err"><span>Marketplace fees modeled</span><span className="v">— 2024 —</span></div>
-              <div className="disco-row"><span>Routes to closest DC</span><span className="v">— guesses —</span></div>
-              <div className="disco-row"><span>SLA reality check</span><span className="v">— post-hoc —</span></div>
+              <div className="disco-row"><span>Promised before profit checked</span><span className="v">always</span></div>
+              <div className="disco-row is-err"><span>True margin per order</span><span className="v">— unknown —</span></div>
+              <div className="disco-row is-err"><span>Marketplace fees modeled</span><span className="v">last year's</span></div>
+              <div className="disco-row"><span>Ships from closest warehouse</span><span className="v">— a guess —</span></div>
+              <div className="disco-row"><span>Loss discovered</span><span className="v">at invoice time</span></div>
             </div>
           </div>
 
           <div className="disco-tile reveal delay-3">
             <div className="disco-tile-head">
               <div>
-                <div className="disco-tile-system">Last-mile · Couriers</div>
-                <h4>Carrier Mix</h4>
-                <div className="disco-tile-sub">FedEx · UPS · USPS · 09:14</div>
+                <div className="disco-tile-system">Your parcels</div>
+                <h4>Shipping</h4>
+                <div className="disco-tile-sub">Every box that goes out the door</div>
               </div>
-              <span className="disco-tile-status">Isolated</span>
+              <span className="disco-tile-status">Overpriced</span>
             </div>
             <div className="disco-rows">
-              <div className="disco-row"><span>Carriers in mix</span><span className="v">12</span></div>
-              <div className="disco-row is-err"><span>Invoice anomalies / mo</span><span className="v">+$42K · unrecovered</span></div>
-              <div className="disco-row is-err"><span>Rate counterfactuals</span><span className="v">— never run —</span></div>
-              <div className="disco-row"><span>Contract review cycle</span><span className="v">annual</span></div>
-              <div className="disco-row"><span>What-if simulations</span><span className="v">— offline —</span></div>
+              <div className="disco-row"><span>Same carrier on every label</span><span className="v">always</span></div>
+              <div className="disco-row is-err"><span>Cheapest option compared</span><span className="v">— never —</span></div>
+              <div className="disco-row is-err"><span>Invoice overcharges</span><span className="v">+$42K / mo · unrecovered</span></div>
+              <div className="disco-row"><span>Rates renegotiated</span><span className="v">annually</span></div>
+              <div className="disco-row"><span>Cost trajectory</span><span className="v">creeps every quarter</span></div>
             </div>
           </div>
         </div>
 
         <div className="disco-bridges-note reveal delay-4">
           <span className="line"></span>
-          <span>Seven stages · four systems · zero shared brain — every business in the network paying for the gap</span>
+          <span>Four broken corners · zero shared brain — and you pay the difference, every single month</span>
           <span className="line"></span>
         </div>
       </div>
@@ -162,17 +158,17 @@ export function BrainSection() {
         <div className="eyebrow reveal" style={{ justifyContent: 'center', display: 'inline-flex' }}>UnieCortex</div>
         <h2 className="brain-hero reveal delay-1">
           One <em>brain.</em><br />
-          <span className="accent">Seven stages. Every decision.</span>
+          <span className="accent">Watching every shipment.</span>
         </h2>
         <p className="lede reveal delay-2" style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-          Cortex is the intelligence layer your supply chain was missing. It reads every stream — orders, picks, lanes, rates, returns — and makes the next move obvious. Then it executes it. And every business in the network gets a window into it.
+          A single intelligence layer reads every order, every pick, every truck, every rate, every return — and finds you savings on every shipment, automatically. You don't have to operate it; we do.
         </p>
         <div className="brain-orbital-wrap reveal delay-3">
           <CortexOrbital size={760} compact={false} showLabels={true} />
         </div>
         <div className="brain-cta reveal delay-4">
-          <Anchor href="cortex.html" className="btn btn-primary">Inside Cortex <span className="arrow">→</span></Anchor>
-          <Anchor href="#story" className="btn">Watch it run a shift</Anchor>
+          <Anchor href="/audit" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+          <Anchor href="#story" className="btn">Watch a shipment run</Anchor>
         </div>
       </div>
     </section>
@@ -224,7 +220,7 @@ export function FourTrackSection() {
         <div style={{ maxWidth: 920 }}>
           <div className="eyebrow reveal">The proof, before you commit</div>
           <h2 className="h-display reveal delay-1">
-            You don't have to trust the AI.<br />
+            Intelligence that finds you savings.<br />
             <em className="serif" style={{ color: 'var(--accent)' }}>You get to compare it.</em>
           </h2>
           <p className="lede reveal delay-2">
@@ -282,31 +278,47 @@ export function FourTrackSection() {
 }
 
 // ─── Network section — 16% YoY across 5 specific levers ─────────────────────
-export function NetworkSection() {
+// `voice="consumer"` (Home) or `voice="provider"` (default; Join page).
+export function NetworkSection({ voice = 'provider' }) {
   const ref = useReveal()
-  const levers = [
+  const providerLevers = [
     { n: '01', metric: '+$1,840', unit: 'per truck · monthly', title: 'Independent capacity, finally earning.', body: 'Per-truck, per-warehouse, per-business owner: capacity that used to sit idle gets matched to demand. Independent operators see earnings rise without changing their hours.' },
     { n: '02', metric: '+38%', unit: 'volume of activity', title: 'More jobs run through the same asset.', body: 'Drop-off frequency, route density, and pickup velocity all climb. The same truck or facility handles measurably more business per shift, per week, per quarter.' },
     { n: '03', metric: '−14%', unit: 'fuel use · per warehouse', title: 'Significantly less fuel burned.', body: 'Cortex collapses redundant trips, optimizes inbound staging, and right-sizes shuttle loads. Per-warehouse fuel cost drops materially within the first quarter.' },
     { n: '04', metric: '−22%', unit: 'delivery time · network avg', title: 'Better delivery times for everyone.', body: 'Inventory placement guided by Cortex puts product closer to demand before it spikes. Every party — seller, carrier, recipient — sees the parcel arrive faster.' },
     { n: '05', metric: '±6%', unit: 'seasonal variance · vs ±28%', title: 'Fluctuation, normalized.', body: 'Cortex smooths the activity curve across the year. Operations stay steady through Q4 peaks and Q1 troughs — predictable headcount, predictable margins, predictable cash flow.' },
   ]
+  const consumerLevers = [
+    { n: '01', metric: '−18%', unit: 'shipping cost · per order', title: 'Cheaper shipping, automatically.', body: 'Every parcel goes out on the cheapest carrier that meets your deadline — picked per shipment, not negotiated once a year.' },
+    { n: '02', metric: '−22%', unit: 'delivery time', title: 'Faster delivery, less complaining.', body: 'Inventory placed near where your customers actually live. Orders ship from the closest warehouse and arrive sooner — every time.' },
+    { n: '03', metric: '+8.1%', unit: 'margin · at the moment of sale', title: 'Margin you know upfront.', body: "We model true landed cost — fees, shipping, returns — before you promise an order, so you stop selling at a loss without knowing it." },
+    { n: '04', metric: '47%', unit: 'faster handling', title: 'Orders out the door faster.', body: 'Better pick paths, smarter slotting, sharper inbound — your orders move through our warehouses measurably faster.' },
+    { n: '05', metric: '$42K', unit: 'recovered · per month', title: 'Every carrier invoice audited.', body: "Late deliveries, dimensional re-weighs, address corrections — we catch what shouldn't have been charged and file refunds before the deadline." },
+  ]
+  const isConsumer = voice === 'consumer'
+  const levers = isConsumer ? consumerLevers : providerLevers
   return (
     <section className="network-section" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 920 }}>
-          <div className="eyebrow reveal">The supply-chain network effect</div>
+          <div className="eyebrow reveal">{isConsumer ? 'What you get' : 'The supply-chain network effect'}</div>
           <h2 className="h-display reveal delay-1">
-            +16% per year. <em className="serif">Every party that adopts.</em>
+            {isConsumer ? (
+              <>Real savings. <em className="serif">Real fast.</em></>
+            ) : (
+              <>+16% per year. <em className="serif">Every party that adopts.</em></>
+            )}
           </h2>
           <p className="lede reveal delay-2">
-            Cortex doesn't just optimize the work you have. It compounds across five operational levers — earnings, activity, fuel, delivery, and steadiness — for every truck, every warehouse, every business in the network.
+            {isConsumer
+              ? 'Five things we move the needle on the moment you plug in: shipping cost, delivery time, margin per order, warehouse speed, and recovered carrier overcharges.'
+              : 'Cortex doesn\'t just optimize the work you have. It compounds across five operational levers — earnings, activity, fuel, delivery, and steadiness — for every truck, every warehouse, every business in the network.'}
           </p>
         </div>
 
         <div className="network-yoy-hero reveal delay-3">
-          <div className="network-stat-num tnum">+16<span className="unit">%</span></div>
-          <div className="network-stat-label">Estimated YoY improvement · per adopting party</div>
+          <div className="network-stat-num tnum">{isConsumer ? <>−18<span className="unit">%</span></> : <>+16<span className="unit">%</span></>}</div>
+          <div className="network-stat-label">{isConsumer ? 'Average shipping savings · across active customers' : 'Estimated YoY improvement · per adopting party'}</div>
         </div>
 
         <div className="network-levers">
@@ -342,24 +354,24 @@ export function LastMileSection() {
             <em className="serif" style={{ color: 'var(--accent-2)' }}>Last-mile savings that compound.</em>
           </h2>
           <p className="lede reveal delay-2">
-            Cortex understands where every SKU should physically live — not just at the warehouse level, but at the zone, aisle, and bin. The shorter the path from shelf to doorstep, the cheaper the last mile gets. And the last mile is where the margin lives.
+            We figure out where every one of your products should physically live — at which warehouse, in which zone, in which bin. The shorter the path from shelf to doorstep, the cheaper the last mile gets. And the last mile is where the margin lives.
           </p>
         </div>
 
         <div className="lastmile-grid">
           <div className="lastmile-card reveal">
-            <div className="lm-eyebrow">National placement</div>
+            <div className="lm-eyebrow">Smarter placement</div>
             <h3>Inventory ends up closest to demand.</h3>
-            <p>Cortex models demand-weighted parcel cost across your warehouse footprint and tells you which SKUs to position where — before the demand arrives. Every parcel ships from the closest possible warehouse.</p>
+            <p>We model expected demand across our warehouse footprint and stage your inventory where customers actually live — before they order. Every parcel ships from the closest warehouse.</p>
             <div className="lm-stat">
               <div className="lm-stat-num tnum">−22%</div>
               <div className="lm-stat-lbl">Avg parcel distance</div>
             </div>
           </div>
           <div className="lastmile-card reveal delay-1">
-            <div className="lm-eyebrow">Carrier mix</div>
+            <div className="lm-eyebrow">Cheapest carrier per shipment</div>
             <h3>The cheapest carrier for THIS parcel.</h3>
-            <p>Live rate counterfactuals run on every order: what would FedEx charge? UPS? USPS? A regional? The system picks the cheapest service that meets the SLA — per shipment, not per contract.</p>
+            <p>We run live rate comparisons on every order: what would FedEx charge? UPS? USPS? A regional carrier? We pick the cheapest one that hits your deadline — per shipment, not per contract.</p>
             <div className="lm-stat">
               <div className="lm-stat-num tnum">−18%</div>
               <div className="lm-stat-lbl">Last-mile cost per order</div>
@@ -368,7 +380,7 @@ export function LastMileSection() {
           <div className="lastmile-card reveal delay-2">
             <div className="lm-eyebrow">Invoice recovery</div>
             <h3>Every label, audited.</h3>
-            <p>Late deliveries, address corrections, dimensional re-weighs — every line on every carrier invoice gets benchmarked against what it should have cost. Refunds surface automatically. Filed before the deadline.</p>
+            <p>Late deliveries, address corrections, dimensional re-weighs — we benchmark every line on every carrier invoice against what it should have cost. Refunds surface automatically; we file them before the deadline.</p>
             <div className="lm-stat">
               <div className="lm-stat-num tnum">$42K</div>
               <div className="lm-stat-lbl">Avg recovered · per month</div>
@@ -383,10 +395,10 @@ export function LastMileSection() {
 export function AuditFunnel() {
   const ref = useReveal()
   const options = [
-    { type: 'label-spine', tag: 'Label Spine Audit', title: 'Shipping is too expensive', promise: 'Drop your label CSV. We benchmark every shipment against the rate it should have paid, and hand you the recoverable dollar band.' },
-    { type: 'task-workflow', tag: 'Task & Workflow Audit', title: 'The warehouse feels slow', promise: 'Drop your WMS task export. We score labor velocity, throughput, and zone coverage — and tell you which operators, lanes, and bins are dragging the rest.' },
-    { type: 'order-financial', tag: 'Order Financial Audit', title: 'Margins are disappearing', promise: 'Drop your marketplace P&L. We rebuild margin by lane and region with the 2026 fee model already applied.' },
-    { type: 'network', tag: 'Network Audit', title: 'My network footprint feels wrong', promise: 'Drop your warehouse locations. We score state-level coverage, demand-weighted parcel cost, and the complementary DC that would close your biggest gap.' },
+    { type: 'label-spine', tag: 'Shipping audit', title: 'My shipping is too expensive', promise: "Send us a list of your recent shipments. We benchmark every label against the cheapest carrier that could have hit the deadline, and show you exactly how much you've been overpaying." },
+    { type: 'task-workflow', tag: 'Fulfillment audit', title: 'My orders go out too slow', promise: 'Tell us how you ship today. We score where time is leaking — receiving, picking, packing, dispatch — and show you what a faster, cheaper fulfillment setup would look like.' },
+    { type: 'order-financial', tag: 'Margin audit', title: 'My margins are disappearing', promise: "Share your recent sales data. We rebuild margin per order — fees, shipping, returns all in — so you stop selling at a loss without knowing it." },
+    { type: 'network', tag: 'Network audit', title: 'My shipments come from the wrong place', promise: 'Tell us where your customers actually live. We model where your inventory should sit to ship from the closest warehouse on every order.' },
   ]
 
   return (
@@ -413,12 +425,12 @@ export function AuditFunnel() {
             <h4 className="ax-title">I want to sell more profitable SKUs</h4>
           </div>
           <p className="ax-desc" style={{ flex: 1, minWidth: 260 }}>
-            Hand us ASINs or UPCs. We blend Keepa demand history, fulfillment economics, and placement allocation into a landed-cost-per-SKU view.
+            Send us your product list. We blend demand history, true landed cost, and where to place inventory — and show you which products are actually making you money.
           </p>
           <Anchor href="/audit?type=product-catalog" className="btn" style={{ flex: '0 0 auto' }}>Start →</Anchor>
         </div>
         <div className="audit-trust">
-          Every audit returns a before / after proposal · every recommendation needs your approval before it runs · your data stays inside your own systems, and the intelligence still reaches the whole network
+          Every audit returns a before / after proposal · no commitment · your data stays yours
         </div>
       </div>
     </section>
@@ -490,41 +502,41 @@ export function BeforeAfterSection() {
     <section className="section light" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 900 }}>
-          <div className="eyebrow reveal">Two different chains</div>
+          <div className="eyebrow reveal">Before and after</div>
           <h2 className="h-display reveal delay-1">
-            The transition is not incremental. It is <em className="serif">categorical.</em>
+            Your supply chain, <em className="serif">before and after.</em>
           </h2>
           <p className="lede reveal delay-2">
-            What the supply chain looks like without an intelligence layer — versus what it becomes once UnieCortex is running across the network.
+            What your supply chain costs you today — versus what it looks like once we're running it for you.
           </p>
         </div>
 
         <div className="compare-grid">
           <div className="compare-card before reveal">
             <div className="label">Before · Today</div>
-            <h3 className="title">Reactive. Fragmented. Manual.</h3>
+            <h3 className="title">You pay too much. You wait too long.</h3>
             <ul className="list">
-              <li>15–30% of truck miles run empty. Billions in lost revenue annually.</li>
-              <li>Carrier margins compress to 3–6%. One downturn ends the business.</li>
-              <li>Coordination happens by phone, email, and spreadsheet.</li>
-              <li>Inventory placement reacts to demand — never anticipates it.</li>
-              <li>Pricing accuracy varies by lane, by hour, by mood.</li>
-              <li>Every operator optimizes their corner. The whole stays broken.</li>
+              <li>Shipping rates negotiated once a year, used on every label after.</li>
+              <li>Carrier overcharges go unrecovered — $42K a month for a mid-sized seller.</li>
+              <li>Inventory sits in the wrong warehouse, shipping farther than it should.</li>
+              <li>Margin per order is unknown until the invoice comes back.</li>
+              <li>Returns sit for days; restock signals never reach the catalog.</li>
+              <li>You coordinate the gap between warehouse, freight, and parcels yourself.</li>
             </ul>
-            <div className="footnote">Status quo · Industry baseline</div>
+            <div className="footnote">Status quo · What you live with today</div>
           </div>
           <div className="compare-card after reveal delay-2">
             <div className="label">After · UnieLogics</div>
-            <h3 className="title">Predictive. Unified. Autonomous.</h3>
+            <h3 className="title">You ship cheaper. You ship faster. You don't operate any of it.</h3>
             <ul className="list">
-              <li>Empty miles filled by predictive backhaul — before trucks leave the dock.</li>
-              <li>Carrier margins expanded by routing efficiency, not rate hikes.</li>
-              <li>Every business in the network executes against shared, system-wide objectives.</li>
-              <li>Inventory placed where demand will appear, not where it last appeared.</li>
-              <li>Pricing accuracy improved 18% across active freight lanes.</li>
-              <li>One intelligence layer. Continuously optimizing total throughput.</li>
+              <li>Cheapest carrier picked per shipment — not per contract.</li>
+              <li>Every invoice audited; overcharges recovered automatically.</li>
+              <li>Inventory placed close to where your customers actually live.</li>
+              <li>True margin known the moment the order is placed.</li>
+              <li>Returns restocked fast; the catalog learns from what came back.</li>
+              <li>One supply chain run for you — warehouse, parcels, and freight.</li>
             </ul>
-            <div className="footnote">UnieCortex · Operating</div>
+            <div className="footnote">UnieLogics · Running it for you</div>
           </div>
         </div>
 
@@ -969,36 +981,50 @@ export function WhyNowSection() {
 }
 
 // ─── Traction (dark) ────────────────────────────────────────────────────────
-export function TractionSection() {
+// `voice="consumer"` (Home) or `voice="provider"` (default; Join page).
+export function TractionSection({ voice = 'provider' }) {
   const ref = useReveal()
+  const isConsumer = voice === 'consumer'
   return (
     <section className="section" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 900 }}>
-          <div className="eyebrow reveal">Traction</div>
+          <div className="eyebrow reveal">{isConsumer ? 'You\'re joining a warm network' : 'Traction'}</div>
           <h2 className="h-display reveal delay-1">
-            UnieLogics is not starting from <em className="serif">zero.</em>
+            {isConsumer ? (
+              <>The network is already <em className="serif">running.</em></>
+            ) : (
+              <>UnieLogics is not starting from <em className="serif">zero.</em></>
+            )}
           </h2>
           <p className="lede reveal delay-2">
-            Marketplace access, LTL interest, and a warehouse pipeline are already in place. We are not selling vision. We are connecting businesses that already want to be connected.
+            {isConsumer
+              ? "More than 5,000 brands, two freight networks, and 23 warehouses are already plugged in. The moment you start, you're inside a working supply chain — not waiting for one to be built."
+              : 'Marketplace access, LTL interest, and a warehouse pipeline are already in place. We are not selling vision. We are connecting businesses that already want to be connected.'}
           </p>
         </div>
 
         <div className="traction-grid reveal delay-3">
           <div className="traction-cell">
             <div className="traction-num tnum"><span className="accent">5,000</span>+</div>
-            <div className="traction-label">Marketplace LOI</div>
-            <div className="traction-body">Signed letter of intent with a marketplace partner representing access to 5,000+ ecommerce sellers — both a distribution channel and a monetization layer.</div>
+            <div className="traction-label">{isConsumer ? 'Brands already onboarding' : 'Marketplace LOI'}</div>
+            <div className="traction-body">{isConsumer
+              ? '5,000+ ecommerce brands are coming in through a marketplace partner — meaning the moment you join, you\'re shipping inside a network of buyers and sellers, not a single store.'
+              : 'Signed letter of intent with a marketplace partner representing access to 5,000+ ecommerce sellers — both a distribution channel and a monetization layer.'}</div>
           </div>
           <div className="traction-cell">
             <div className="traction-num tnum"><span className="accent">2</span></div>
-            <div className="traction-label">LTL pilot discussions</div>
-            <div className="traction-body">Active interest from two LTL firms exploring AI for shipment coordination, pricing intelligence, and routing optimization.</div>
+            <div className="traction-label">{isConsumer ? 'Freight networks live' : 'LTL pilot discussions'}</div>
+            <div className="traction-body">{isConsumer
+              ? 'Two LTL freight networks are already running through us — meaning your pallets and full trailers move on real capacity from day one, not a marketing promise.'
+              : 'Active interest from two LTL firms exploring AI for shipment coordination, pricing intelligence, and routing optimization.'}</div>
           </div>
           <div className="traction-cell">
             <div className="traction-num tnum"><span className="accent">23</span></div>
-            <div className="traction-label">Warehouses pending</div>
-            <div className="traction-body">Pipeline of 23 warehouse locations pending implementation. Target deployment wedge: 10–15 warehouses + 50+ LTL drivers.</div>
+            <div className="traction-label">{isConsumer ? 'Warehouses ready for you' : 'Warehouses pending'}</div>
+            <div className="traction-body">{isConsumer
+              ? '23 warehouse locations across the country are coming online — so your inventory sits close to where your customers actually live.'
+              : 'Pipeline of 23 warehouse locations pending implementation. Target deployment wedge: 10–15 warehouses + 50+ LTL drivers.'}</div>
           </div>
         </div>
       </div>
@@ -1012,15 +1038,15 @@ export function CTASection() {
     <section className="cta-section" id="audit">
       <div className="container-tight">
         <h2>
-          Join the <em className="serif">open</em> supply chain.<br />
-          <span className="serif-line">Powered by Cortex.</span>
+          Let us run your <em className="serif">supply chain.</em><br />
+          <span className="serif-line">Start with a free audit.</span>
         </h2>
         <p className="lede" style={{ textAlign: 'center' }}>
-          Supply chain intelligence, end to end, open to your operation. One brain across every stage — and every business in the network gets a window into it.
+          Tell us where it hurts — shipping, fulfillment, freight, or margin — and we'll show you what we'd do about it. 10 minutes. No commitment. Real numbers, not a pitch.
         </p>
         <div className="btns">
-          <Anchor href="/audit?type=network" className="btn btn-primary">Request a network audit <span className="arrow">→</span></Anchor>
-          <Anchor href="/join" className="btn">Join the network</Anchor>
+          <Anchor href="/audit" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+          <Anchor href="/join" className="btn">Join Our Supply Chain</Anchor>
         </div>
       </div>
     </section>
@@ -1028,9 +1054,10 @@ export function CTASection() {
 }
 
 // ─── End-to-end stage walkthrough (light) ───────────────────────────────────
-export function EndToEndSection() {
+// `voice="consumer"` (Home) or `voice="provider"` (default; Join page).
+export function EndToEndSection({ voice = 'provider' }) {
   const ref = useReveal()
-  const stages = [
+  const providerStages = [
     { n: '01', name: 'Supply', body: 'Blends supplier ETAs with demand to shape the inbound plan.', metric: null, who: 'warehouses, sellers' },
     { n: '02', name: 'Inbound & receiving', body: 'Reads dock and dwell signal; flags drift before it cascades.', metric: null, who: 'warehouses, carriers' },
     { n: '03', name: 'Warehouse execution', body: 'Re-sequences picks, rescues idle pickers, scores slotting per demand.', metric: '47% faster handling', who: 'warehouses, sellers' },
@@ -1039,16 +1066,33 @@ export function EndToEndSection() {
     { n: '06', name: 'Transport & last-mile', body: 'Auto-matches drivers, fills empty return trips, pays on proof of delivery.', metric: '0:00:04 POD → payment', who: 'carriers, drivers, brokers' },
     { n: '07', name: 'Returns & the loop', body: 'Reverse-flow signal turns into catalog and slotting corrections.', metric: null, who: 'warehouses, sellers' },
   ]
+  const consumerStages = [
+    { n: '01', name: 'Supply', body: 'We forecast what you need where, so the right inventory lands before demand spikes.', metric: null },
+    { n: '02', name: 'We receive it', body: 'Your goods land at our warehouses. We check, scan, and put it away for you.', metric: null },
+    { n: '03', name: 'We pick & pack', body: "When orders hit, we find them faster than your team would. 47% faster, in fact.", metric: '47% faster handling' },
+    { n: '04', name: 'We price every order', body: "We model true margin before you promise the order — fees, shipping, returns, all in.", metric: '+8.1% margin at order' },
+    { n: '05', name: 'We ship it', body: 'Every parcel goes out on the cheapest carrier that hits the deadline. Per shipment.', metric: '−18% last-mile cost' },
+    { n: '06', name: 'We move freight', body: "Pallets and full trailers go on the right truck the moment they're ready. No phone tag.", metric: '0:00:04 POD → payment' },
+    { n: '07', name: 'We cover returns', body: 'When something comes back, we restock it and use the signal to make the next sale better.', metric: null },
+  ]
+  const isConsumer = voice === 'consumer'
+  const stages = isConsumer ? consumerStages : providerStages
   return (
     <section className="section light" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 920 }}>
-          <div className="eyebrow reveal">End to end</div>
+          <div className="eyebrow reveal">{isConsumer ? 'How we run it for you' : 'End to end'}</div>
           <h2 className="h-display reveal delay-1">
-            One brain across <em className="serif">every stage of the chain.</em>
+            {isConsumer ? (
+              <>Your shipment, <em className="serif">end to end.</em></>
+            ) : (
+              <>One brain across <em className="serif">every stage of the chain.</em></>
+            )}
           </h2>
           <p className="lede reveal delay-2">
-            Most platforms own a slice — the warehouse, or the truck, or the order. Cortex reads the whole chain at once and turns each stage into the next decision. From the supplier signal to the customer doorstep and back again through returns. Nothing is handed off blind.
+            {isConsumer
+              ? "From the moment your inventory shows up at our warehouse to the moment a customer holds the box — and back through any return — we run every step. You stay focused on selling."
+              : "Most platforms own a slice — the warehouse, or the truck, or the order. Cortex reads the whole chain at once and turns each stage into the next decision. From the supplier signal to the customer doorstep and back again through returns. Nothing is handed off blind."}
           </p>
         </div>
 
@@ -1059,15 +1103,19 @@ export function EndToEndSection() {
               <div className="endtoend-stage-name">{s.name}</div>
               <p className="endtoend-card-body">{s.body}</p>
               {s.metric && <div className="endtoend-card-metric">{s.metric}</div>}
-              <div className="endtoend-card-who">
-                <span>Who sees it:</span> {s.who}
-              </div>
+              {!isConsumer && (
+                <div className="endtoend-card-who">
+                  <span>Who sees it:</span> {s.who}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
         <p className="endtoend-foot reveal delay-4">
-          One brain. Every stage. Open to every business in the network — warehouses, carriers, sellers, drivers.
+          {isConsumer
+            ? 'Seven stages. One supply chain. We run it — you get the savings.'
+            : 'One brain. Every stage. Open to every business in the network — warehouses, carriers, sellers, drivers.'}
         </p>
       </div>
     </section>
@@ -1075,42 +1123,75 @@ export function EndToEndSection() {
 }
 
 // ─── Open by design — the open-network contrast (light) ─────────────────────
-export function OpenNetworkSection() {
+// `voice="consumer"` (Home) or `voice="provider"` (default; Join page).
+export function OpenNetworkSection({ voice = 'provider' }) {
   const ref = useReveal()
+  const isConsumer = voice === 'consumer'
   return (
     <section className="section light" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 920 }}>
-          <div className="eyebrow reveal">Open by design</div>
+          <div className="eyebrow reveal">{isConsumer ? 'Open by design' : 'Open by design'}</div>
           <h2 className="h-display reveal delay-1">
-            Not a single operator's supply chain.<br />
-            <em className="serif" style={{ color: 'var(--accent-2)' }}>The supply chain everyone can plug into.</em>
+            {isConsumer ? (
+              <>You don't have to pick a single warehouse,<br />
+                <em className="serif" style={{ color: 'var(--accent-2)' }}>or a single carrier.</em></>
+            ) : (
+              <>Not a single operator's supply chain.<br />
+                <em className="serif" style={{ color: 'var(--accent-2)' }}>The supply chain everyone can plug into.</em></>
+            )}
           </h2>
           <p className="lede reveal delay-2">
-            Most end-to-end supply-chain offerings are run <em>by</em> one company <em>for</em> the rest of the market. UnieLogics is the opposite. The intelligence is the platform — and every business in the network gets to see it. Warehouses, carriers, sellers, drivers, brokers. Same brain. Different windows.
+            {isConsumer
+              ? "Most supply-chain offerings lock you into one company's warehouse and one company's trucks. We're the opposite. We work across a network of warehouses, parcel carriers, and freight operators — and pick the right one for every shipment. You get the savings; we handle the picking."
+              : "Most end-to-end supply-chain offerings are run by one company for the rest of the market. UnieLogics is the opposite. The intelligence is the platform — and every business in the network gets to see it. Warehouses, carriers, sellers, drivers, brokers. Same brain. Different windows."}
           </p>
         </div>
 
         <div className="shift-grid">
-          <div className="shift-card is-final reveal">
-            <div className="index">01 · Everyone sees the brain</div>
-            <h3 className="h-card">One Cortex, many windows.</h3>
-            <p className="body">Warehouses see slotting and labor. Carriers see return-trip matches and live rates. Sellers see margin and where to place inventory. Drivers see matched loads. Brokers see who has capacity. Each business looks through its own window.</p>
-          </div>
-          <div className="shift-card is-final reveal delay-1">
-            <div className="index">02 · Bring your own systems</div>
-            <h3 className="h-card">No mandate to switch.</h3>
-            <p className="body">Cortex sits across the WMS, TMS, OMS, and carriers you already run — and across the partners you already work with. Plug in; nothing forced to rip out.</p>
-          </div>
-          <div className="shift-card is-final reveal delay-2">
-            <div className="index">03 · Data stays with you</div>
-            <h3 className="h-card">Open network ≠ shared dataset.</h3>
-            <p className="body">Each business's signal stays inside its own systems. Cortex coordinates by consent — every recommendation needs your approval before it runs. End to end.</p>
-          </div>
+          {isConsumer ? (
+            <>
+              <div className="shift-card is-final reveal">
+                <div className="index">01 · Pick the cheapest carrier</div>
+                <h3 className="h-card">Per shipment, not per contract.</h3>
+                <p className="body">FedEx, UPS, USPS, regional carriers, LTL freight — we run live rate comparisons on every parcel and pallet. The right one goes on every shipment.</p>
+              </div>
+              <div className="shift-card is-final reveal delay-1">
+                <div className="index">02 · Use the closest warehouse</div>
+                <h3 className="h-card">Inventory near your demand.</h3>
+                <p className="body">Your goods can sit in one warehouse or several — we model where to place them so every order ships from the closest location to the buyer.</p>
+              </div>
+              <div className="shift-card is-final reveal delay-2">
+                <div className="index">03 · Keep your independence</div>
+                <h3 className="h-card">Your data stays yours.</h3>
+                <p className="body">We never sell your sales data, your customer list, or your catalog. We coordinate the shipping; you keep the relationship with your customer.</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="shift-card is-final reveal">
+                <div className="index">01 · Everyone sees the brain</div>
+                <h3 className="h-card">One Cortex, many windows.</h3>
+                <p className="body">Warehouses see slotting and labor. Carriers see return-trip matches and live rates. Sellers see margin and where to place inventory. Drivers see matched loads. Brokers see who has capacity. Each business looks through its own window.</p>
+              </div>
+              <div className="shift-card is-final reveal delay-1">
+                <div className="index">02 · Bring your own systems</div>
+                <h3 className="h-card">No mandate to switch.</h3>
+                <p className="body">Cortex sits across the WMS, TMS, OMS, and carriers you already run — and across the partners you already work with. Plug in; nothing forced to rip out.</p>
+              </div>
+              <div className="shift-card is-final reveal delay-2">
+                <div className="index">03 · Data stays with you</div>
+                <h3 className="h-card">Open network ≠ shared dataset.</h3>
+                <p className="body">Each business's signal stays inside its own systems. Cortex coordinates by consent — every recommendation needs your approval before it runs. End to end.</p>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="opennet-strip reveal delay-3">
-          No walled garden · No single-operator lock-in · Every business in the network sees the next move
+          {isConsumer
+            ? 'No single-warehouse lock-in · No single-carrier contract · Always the right one for every shipment'
+            : 'No walled garden · No single-operator lock-in · Every business in the network sees the next move'}
         </div>
       </div>
     </section>
@@ -1145,6 +1226,246 @@ export function TwoDoorsSection() {
             <div className="twodoor-for">For: warehouses / 3PLs, carriers / drivers, OMS / marketplaces, brokers.</div>
             <span className="twodoor-arrow">Join the network →</span>
           </Anchor>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Three services — consumer-facing offerings (light) ────────────────────
+export function ThreeServicesSection() {
+  const ref = useReveal()
+  const services = [
+    {
+      n: '01',
+      name: 'Fulfillment',
+      pitch: 'Drop your inventory at our warehouses. We receive it, store it, pick it, pack it, and ship it — across every channel you sell on.',
+      how: 'You send us stock. We turn orders into delivered boxes.',
+      auditType: 'task-workflow',
+      cta: 'Audit my fulfillment',
+    },
+    {
+      n: '02',
+      name: 'Shipping',
+      pitch: 'Every parcel goes out on the cheapest carrier that meets your deadline — picked per shipment, not negotiated once a year.',
+      how: 'We compare FedEx, UPS, USPS, and regional carriers on every label.',
+      auditType: 'label-spine',
+      cta: 'Audit my shipping',
+    },
+    {
+      n: '03',
+      name: 'LTL & FTL',
+      pitch: 'Pallets, full trailers, and everything in between. Loads matched to the right truck automatically — no broker, no phone tag.',
+      how: 'Tell us where it needs to go. We move it.',
+      auditType: 'network',
+      cta: 'Audit my freight',
+    },
+  ]
+  return (
+    <section className="section light three-services-section" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">Three services. One supply chain.</div>
+          <h2 className="h-display reveal delay-1">
+            What we can <em className="serif">run for you.</em>
+          </h2>
+          <p className="lede reveal delay-2">
+            Pick one. Pick all three. We handle warehousing, parcel shipping, and freight moves — backed by the intelligence layer that finds savings on every shipment.
+          </p>
+        </div>
+
+        <div className="three-services-grid reveal delay-3">
+          {services.map((s) => (
+            <Anchor key={s.n} href={`/audit?type=${s.auditType}`} className="service-tile">
+              <div className="service-tile-n">{s.n}</div>
+              <h3 className="service-tile-name">{s.name}</h3>
+              <p className="service-tile-pitch">{s.pitch}</p>
+              <div className="service-tile-how"><span>How it works:</span> {s.how}</div>
+              <span className="service-tile-cta">{s.cta} →</span>
+            </Anchor>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Join page hero (dark) ─────────────────────────────────────────────────
+export function JoinHero() {
+  return (
+    <section className="join-hero">
+      <div className="container join-hero-inner">
+        <div className="join-hero-copy">
+          <div className="micro" style={{ color: 'var(--accent)', marginBottom: 18 }}>● Join Our Supply Chain · For operators</div>
+          <h1 className="detail-h1">
+            Join the <em className="serif">open</em> supply chain.
+          </h1>
+          <p className="lede" style={{ marginTop: 24, maxWidth: 620 }}>
+            You run a warehouse, a fleet, a truck, an OMS, or a brokerage. We're the open network that pulls more matched work toward you while keeping you independent. One brain across every stage — and your business gets a window into it.
+          </p>
+          <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <Anchor href="#apply" className="btn btn-primary">Apply to join <span className="arrow">→</span></Anchor>
+            <Anchor href="#intelligence" className="btn">See the intelligence layer</Anchor>
+          </div>
+        </div>
+        <div className="join-hero-visual">
+          <CortexOrbital size={560} showLabels={true} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Intelligence layer — Cortex deep-dive on the Join page ────────────────
+export function IntelligenceLayerSection() {
+  const ref = useReveal()
+  return (
+    <section className="section light" id="intelligence" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">The intelligence layer · UnieCortex</div>
+          <h2 className="h-display reveal delay-1">
+            One brain. Reading everything. <em className="serif" style={{ color: 'var(--accent-2)' }}>Recommending the next move.</em>
+          </h2>
+          <p className="lede reveal delay-2">
+            UnieCortex sits across every stage of the chain — orders, picks, lanes, rates, returns — and turns the whole stream into a single coordinated decision. The AI runs inside your own systems, not in a shared cloud. Every recommendation needs your approval before it runs.
+          </p>
+        </div>
+
+        <div className="capability-split">
+          <div className="capability-col">
+            <div className="capability-col-tag mono">Micro · the bin, the task, the parcel</div>
+            <h3>Resolves friction before it cascades.</h3>
+            <ul>
+              <li>Pick paths re-sequenced per wave, not per shift</li>
+              <li>Labor velocity scored per task, per operator, per zone</li>
+              <li>Carrier and service chosen per order, not per contract</li>
+              <li>Fee anomalies flagged on every invoice before they're paid</li>
+              <li>Putaway placement scored against demand, not just empty space</li>
+            </ul>
+          </div>
+          <div className="capability-col">
+            <div className="capability-col-tag mono">Macro · the network, the season, the year</div>
+            <h3>Orchestrates total throughput.</h3>
+            <ul>
+              <li>Warehouse footprint scored against demand-weighted parcel cost</li>
+              <li>Seasonal staffing forecasts tied to inbound and order velocity</li>
+              <li>Network design — where the next warehouse should be, and why</li>
+              <li>Multi-warehouse routing across parcel, LTL, and FTL in one optimization</li>
+              <li>Marketplace fee modeling baked into every margin call</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="trust-grid" style={{ marginTop: 56 }}>
+          <div className="trust-card">
+            <div className="trust-card-num mono">01</div>
+            <h3>Runs on your systems</h3>
+            <p>Every model — routing, scoring, agents — runs inside <strong>your</strong> network. Your shipment, billing, order, and employee data never leaves your perimeter. This isn't a privacy mode. It's the only mode.</p>
+          </div>
+          <div className="trust-card">
+            <div className="trust-card-num mono">02</div>
+            <h3>You approve every move</h3>
+            <p>Cortex proposes. You approve. Every wave, every putaway, every carrier change is a proposal with a before-state, an after-state, and a reason — gated on human consent.</p>
+          </div>
+          <div className="trust-card">
+            <div className="trust-card-num mono">03</div>
+            <h3>Open integrations</h3>
+            <p>Live rates from carrier APIs. Demand history. Address validation. Marketplace APIs. Nothing locked behind a Cortex-only system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Product rail — UnieWMS / UnieTMS / UnieConnect compressed (dark) ──────
+export function ProductRailSection() {
+  const ref = useReveal()
+  const products = [
+    {
+      id: 'wms',
+      anchor: 'wms',
+      name: 'UnieWMS',
+      status: 'Live',
+      stage: 'Stages 02–03 · Inbound, receiving, warehouse execution',
+      audience: 'For warehouse operators and 3PLs',
+      pitch: 'The warehouse management system Cortex actually trusts. Turn-key, multi-client, multi-facility — connects in 2–4 weeks. Every operational event instrumented and replay-able.',
+      bullets: [
+        'Real-time orchestration across receiving, storage, picking, packing, dispatch',
+        'Predictive correction and anomaly detection',
+        'Multi-client, multi-facility sync',
+        'Pre-negotiated LTL & parcel rates from day one',
+      ],
+      link: 'https://uniewms.com',
+      linkLabel: 'Open UnieWMS',
+    },
+    {
+      id: 'tms',
+      anchor: 'tms',
+      name: 'UnieTMS · Driver App',
+      status: 'Waitlist',
+      stage: 'Stage 06 · Transport & last-mile',
+      audience: 'For drivers, carriers, and brokers',
+      pitch: 'The driver app that operates itself. Loads matched, dispatched, accepted, picked up, delivered, paid — no coordinator on the other end of the phone.',
+      bullets: [
+        'One-tap load acceptance with rate, return-trip, and ETA up-front',
+        'Photo-verified pickup and proof-of-delivery capture',
+        'Payment cleared in seconds after delivery — no invoice cycles',
+        'Independent drivers stay independent — no fleet contract',
+      ],
+      link: null,
+      linkLabel: null,
+    },
+    {
+      id: 'connect',
+      anchor: 'products',
+      name: 'UnieConnect',
+      status: 'Beta',
+      stage: 'Stage 04 · Orders & margin',
+      audience: 'For sellers, brands, and marketplaces',
+      pitch: 'The OMS command center. Every order priced for true margin before it ships. Orders, customers, marketplace listings, and inventory in one operating view.',
+      bullets: [
+        "Margin modeled at the moment of sale — fees, shipping, returns",
+        'Order-level profit by lane, region, and channel',
+        'Inventory network view across every connected warehouse',
+        'Cortex suggestions surface as actions you approve',
+      ],
+      link: null,
+      linkLabel: null,
+    },
+  ]
+  return (
+    <section className="section" id="products" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">The product rail</div>
+          <h2 className="h-display reveal delay-1">
+            Three products. <em className="serif">One brain.</em>
+          </h2>
+          <p className="lede reveal delay-2">
+            UnieWMS runs the warehouse. UnieTMS runs the truck. UnieConnect runs the orders. Cortex sits across all three and turns them into a single coordinated supply chain.
+          </p>
+        </div>
+
+        <div className="product-rail-grid reveal delay-3">
+          {products.map((p) => (
+            <div key={p.id} id={p.anchor} className="product-rail-card">
+              <div className="product-rail-head">
+                <div className="product-rail-name">{p.name}</div>
+                <span className="product-rail-status">{p.status}</span>
+              </div>
+              <div className="product-rail-stage mono">{p.stage}</div>
+              <div className="product-rail-audience mono">{p.audience}</div>
+              <p className="product-rail-pitch">{p.pitch}</p>
+              <ul className="product-rail-bullets">
+                {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
+              </ul>
+              {p.link && (
+                <Anchor href={p.link} className="product-rail-link">{p.linkLabel} →</Anchor>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
