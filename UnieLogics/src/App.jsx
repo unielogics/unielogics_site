@@ -7,6 +7,8 @@ import Cortex from './showcase/pages/Cortex'
 import Wms from './showcase/pages/Wms'
 import Tms from './showcase/pages/Tms'
 import Products from './showcase/pages/Products'
+import Audit from './showcase/pages/Audit'
+import Join from './showcase/pages/Join'
 import Services from './pages/Services'
 import Solutions from './pages/Solutions'
 import IndustryProblems from './pages/IndustryProblems'
@@ -24,6 +26,8 @@ function App() {
         <Route path="/wms" element={<Wms />} />
         <Route path="/tms" element={<Tms />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/audit" element={<Audit />} />
+        <Route path="/join" element={<Join />} />
         <Route path="/services" element={<Services />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/industry-problems" element={<IndustryProblems />} />

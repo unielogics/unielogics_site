@@ -12,6 +12,7 @@ const LINKS = [
   { href: 'tms.html', label: 'TMS', key: 'tms' },
   { href: 'products.html', label: 'Products', key: 'products' },
   { href: 'index.html#audit', label: 'Audit', key: 'audit' },
+  { href: '/join', label: 'Join the network', key: 'join' },
 ]
 
 const PATH_KEY = {
@@ -19,6 +20,7 @@ const PATH_KEY = {
   '/wms': 'wms',
   '/tms': 'tms',
   '/products': 'products',
+  '/join': 'join',
 }
 
 export default function Navigation() {
@@ -86,6 +88,7 @@ export default function Navigation() {
         <Anchor href="tms.html" onClick={onLink}>Driver App · AI dispatch</Anchor>
         <Anchor href="products.html" onClick={onLink}>All products</Anchor>
         <Anchor href="index.html#audit" onClick={onLink}>Run an audit</Anchor>
+        <Anchor href="/join" onClick={onLink}>Join the network</Anchor>
         <Anchor href="index.html#audit" onClick={onLink} className="nav-mobile-cta">Request audit →</Anchor>
       </div>
     </>

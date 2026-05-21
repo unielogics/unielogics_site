@@ -125,7 +125,7 @@ export function MergeScene() {
               {p < 0.22 ? <>Every layer of your supply chain<br />speaks a <em className="serif">different language.</em></> :
                 p < 0.42 ? <>The same problem,<br />told <em className="serif">four different ways.</em></> :
                   p < 0.60 ? <>One brain. Four parties.<br /><em className="serif">Same page.</em></> :
-                    <>The numbers <em className="serif">flip.</em><br />Per archetype. Continuously.</>}
+                    <>The numbers <em className="serif">flip.</em><br />At every stage. Continuously.</>}
             </h2>
           </div>
 

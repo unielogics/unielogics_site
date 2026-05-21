@@ -6,6 +6,7 @@ const SCENES = [
   {
     time: '09:14',
     chapter: '01',
+    stage: 'Stage 04 · Orders & margin',
     title: 'Cortex flags 4 orders.',
     body: "Four ecommerce orders just landed in OMS — high-margin, same-day SLA, all routed through Elizabeth. Cortex scores them in 140ms and pushes them to the top of the picker queue at Bay 14.",
     metric: { label: 'OMS · scored', value: '4 / 8,402' },
@@ -14,32 +15,36 @@ const SCENES = [
   {
     time: '09:22',
     chapter: '02',
+    stage: 'Stage 03 · Warehouse execution',
     title: 'Picker rerouted. Path rebuilt.',
-    body: "Marcus was halfway through his wave for low-priority B-zone. Cortex pulls him forward, hands him a new path through C-203 → C-208 → D-114 → D-117 — the optimal sequence for the 4 boxes. 14 fewer steps. Three minutes saved.",
+    body: "Marcus was halfway through his batch of orders for low-priority B-zone. Cortex pulls him forward, hands him a new path through C-203 → C-208 → D-114 → D-117 — the optimal sequence for the 4 boxes. 14 fewer steps. Three minutes saved.",
     metric: { label: 'WMS · pick optimization', value: '−14 steps' },
     save: 18,
   },
   {
     time: '09:34',
     chapter: '03',
+    stage: 'Stage 05 · Outbound & carrier mix',
     title: 'Packed. Scanned. Staged.',
-    body: "Pallets land on the outbound dock with 6 minutes of slack. BOL auto-generated. Labels printed. The shipment is ready — and Cortex already knows which carrier is closest, with backhaul capacity to spare.",
+    body: "Pallets land on the outbound dock with 6 minutes of slack. BOL auto-generated. Labels printed. The shipment is ready — and Cortex already knows which carrier is closest, with return-trip capacity to spare.",
     metric: { label: 'WMS → TMS handoff', value: '+6 min slack' },
     save: 42,
   },
   {
     time: '09:40',
     chapter: '04',
+    stage: 'Stage 06 · Transport & last-mile',
     title: 'Driver matched. Auto-dispatched.',
-    body: "TX-44, a Carrier Elite-tier truck, pulled into the lot. Empty trailer. Cortex offered the Elizabeth → Bethlehem run 12 minutes before Marcus finished packing. The driver tapped accept. No phone. No broker. No back-and-forth.",
+    body: "TX-44, an Elite-rated truck, pulled into the lot. Empty trailer. Cortex offered the Elizabeth → Bethlehem run 12 minutes before Marcus finished packing. The driver tapped accept. No phone. No broker. No back-and-forth.",
     metric: { label: 'TMS · match', value: 'TX-44 · Elite 0.94' },
     save: 84,
   },
   {
     time: '13:08',
     chapter: '05',
+    stage: 'Stage 06 · Proof of delivery & payment',
     title: 'Delivered. Payment cleared. Loop closed.',
-    body: "POD captured at 1450 E Lehigh St, Bethlehem PA — 7 minutes ahead of the window. Cortex released the carrier's $640 in 4 seconds, updated their tier to 0.94, and started scoring the next match before the truck left the lot.",
+    body: "Proof of delivery captured at 1450 E Lehigh St, Bethlehem PA — 7 minutes ahead of the window. Cortex released the carrier's $640 in 4 seconds, updated their driver rating to 0.94, and started scoring the next match before the truck left the lot.",
     metric: { label: 'Loop · closed', value: '$640 · 0:00:04' },
     save: 184,
   },
@@ -93,6 +98,7 @@ export function StoryScene() {
             <div className="story-copy">
               <div className="story-chapter mono">CH · {current.chapter}</div>
               <div className="story-time mono">{current.time}</div>
+              {current.stage && <div className="story-stage mono">{current.stage}</div>}
               <h3 className="story-title" key={'h-' + sceneIdx}>{current.title}</h3>
               <p className="story-text" key={'p-' + sceneIdx}>{current.body}</p>
               <div className="story-metric mono">

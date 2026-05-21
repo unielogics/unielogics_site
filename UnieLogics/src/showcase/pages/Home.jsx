@@ -4,12 +4,16 @@ import { MergeScene } from '../components/MergeScene'
 import { StoryScene } from '../components/StoryScene'
 import {
   Hero,
+  BrainSection,
   FourTrackSection,
   BeforeAfterSection,
+  EndToEndSection,
+  OpenNetworkSection,
   LastMileSection,
   ProductSuiteSection,
   TMSSection,
   NetworkSection,
+  TwoDoorsSection,
   AuditFunnel,
   TractionSection,
   CTASection,
@@ -22,12 +26,16 @@ export default function Home() {
       <MergeScene />
       <span id="story"></span>
       <StoryScene />
+      <BrainSection />
       <FourTrackSection />
       <BeforeAfterSection />
+      <EndToEndSection />
+      <OpenNetworkSection />
       <LastMileSection />
       <ProductSuiteSection />
       <TMSSection />
       <NetworkSection />
+      <TwoDoorsSection />
       <AuditFunnel />
       <TractionSection />
       <CTASection />

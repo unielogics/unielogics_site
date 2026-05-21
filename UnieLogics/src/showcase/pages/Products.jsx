@@ -11,12 +11,14 @@ const PRODUCTS = [
     link: 'cortex.html',
     image: null,
     useOrbital: true,
-    oneliner: 'The intelligence layer your WMS, OMS, and drivers were missing.',
+    stage: 'Across all 7 stages',
+    audience: 'for everyone in the network',
+    oneliner: 'The intelligence layer your end-to-end supply chain was missing.',
     bullets: [
       'Real-time orchestration across every connected system',
       'Four-track comparison: baseline, base AI, full network AI, theoretical optimum',
-      'Local-first inference — your data never leaves your network',
-      'Approve / deny gated — never autonomous without your nod',
+      'The AI runs inside your own systems, not in a shared cloud — your data never leaves your perimeter',
+      'Every recommendation needs your approval before it runs',
     ],
     closing: 'The brain. Every other product feeds it, and every other product executes its output.',
   },
@@ -27,6 +29,8 @@ const PRODUCTS = [
     statusClass: '',
     link: 'wms.html',
     image: 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/uniewms+(2).png',
+    stage: 'Stages 02–03 · Inbound, receiving, warehouse execution',
+    audience: 'for warehouse operators and 3PLs',
     oneliner: 'The operational core. Warehouse management Cortex actually trusts.',
     bullets: [
       'Real-time inventory orchestration across receiving, storage, picking, packing, dispatch',
@@ -44,12 +48,14 @@ const PRODUCTS = [
     link: '#',
     image: null,
     useConnect: true,
+    stage: 'Stage 04 · Orders & margin',
+    audience: 'for sellers, brands, and marketplaces',
     oneliner: 'The OMS command center. Orders, customers, marketplace listings — one operating view.',
     bullets: [
       "Every order priced for margin before it's promised — current marketplace fees baked in",
       'Order-level profit by lane, region, and channel',
-      'Inventory network view across every connected DC',
-      'Cortex suggestions surface as approve / deny actions, not background changes',
+      'Inventory network view across every connected warehouse',
+      'Cortex suggestions surface as actions you approve, not background changes',
     ],
     closing: "The command center where the business is actually run — with Cortex sitting in the operator's seat.",
   },
@@ -61,14 +67,16 @@ const PRODUCTS = [
     link: 'tms.html',
     image: null,
     useDriverPhone: true,
+    stage: 'Stage 06 · Transport & last-mile',
+    audience: 'for drivers, carriers, and brokers',
     oneliner: 'The breakthrough piece. Loads auto-matched to independent drivers — no broker, no phone.',
     bullets: [
-      'One-tap load acceptance with rate, backhaul, and ETA up-front',
-      'Photo-verified pickup + POD capture',
-      'Payment released in seconds after POD',
+      'One-tap load acceptance with rate, return-trip opportunity, and ETA up-front',
+      'Photo-verified pickup + proof of delivery capture',
+      'Payment released in seconds after proof of delivery',
       'Independent stays independent — no fleet contract, no long-term lock-in',
     ],
-    closing: 'Turns every independent driver into addressable, score-able, dispatch-ready network capacity.',
+    closing: 'Turns every independent driver into matchable, rated, dispatch-ready network capacity.',
   },
 ]
 
@@ -144,16 +152,16 @@ export default function Products() {
       <section className="detail-hero">
         <div className="container detail-hero-inner">
           <div className="detail-hero-copy">
-            <div className="micro" style={{ color: 'var(--accent)', marginBottom: 18 }}>● Product suite</div>
+            <div className="micro" style={{ color: 'var(--accent)', marginBottom: 18 }}>● Product suite · One chain. One brain. Every business in the network has a window.</div>
             <h1 className="detail-h1">
               Four products. <em className="serif">One brain.</em>
             </h1>
             <p className="lede" style={{ marginTop: 24, maxWidth: 580 }}>
-              Cortex sits at the center. UnieWMS, UnieConnect, and the Driver App are how it sees the network — and how it executes through it.
+              Cortex sits at the center. UnieWMS, UnieConnect, and the Driver App are how it sees the chain — and how every business in the network plugs in.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Anchor href="cortex.html" className="btn btn-primary">Start with Cortex <span className="arrow">→</span></Anchor>
-              <Anchor href="index.html#audit" className="btn">Audit your business</Anchor>
+              <Anchor href="/join" className="btn">Plug your business in</Anchor>
             </div>
           </div>
           <div className="detail-hero-visual">
@@ -167,9 +175,14 @@ export default function Products() {
           {PRODUCTS.map((p, i) => (
             <div key={p.id} className={`product-detail ${i % 2 === 1 ? 'is-reverse' : ''}`}>
               <div>
-                <div className="micro" style={{ color: 'var(--accent)', marginBottom: 14 }}>
+                <div className="micro" style={{ color: 'var(--accent)', marginBottom: 6 }}>
                   ● {p.name} · {p.status}
                 </div>
+                {p.stage && (
+                  <div className="micro" style={{ color: 'var(--fg-3)', marginBottom: 14 }}>
+                    {p.stage} · {p.audience}
+                  </div>
+                )}
                 <h3>{p.name}</h3>
                 <p style={{ fontSize: 18.5, lineHeight: 1.5 }}>{p.oneliner}</p>
                 <ul>
@@ -182,7 +195,7 @@ export default function Products() {
                       Open {p.name} <span className="arrow">→</span>
                     </Anchor>
                   )}
-                  <Anchor href="index.html#audit" className="btn">Run an audit</Anchor>
+                  <Anchor href="/audit" className="btn">Run an audit</Anchor>
                 </div>
               </div>
               <div className="product-detail-visual">
@@ -214,11 +227,11 @@ export default function Products() {
 
       <section className="cta-section">
         <div className="container-tight">
-          <h2>One network.<br /><span className="serif-line">Total coordination.</span></h2>
-          <p className="lede" style={{ textAlign: 'center' }}>Start with one product. Grow into the whole suite. Cortex gets smarter as it sees more of your picture.</p>
+          <h2>One chain.<br /><span className="serif-line">Total coordination.</span></h2>
+          <p className="lede" style={{ textAlign: 'center' }}>Start with one product. Grow into the whole suite. Cortex gets smarter as more of the chain — and more of the network — plugs in.</p>
           <div className="btns">
-            <Anchor href="index.html#audit" className="btn btn-primary">Audit your business <span className="arrow">→</span></Anchor>
-            <Anchor href="cortex.html" className="btn">Inside Cortex</Anchor>
+            <Anchor href="/audit" className="btn btn-primary">Get a 10-minute audit <span className="arrow">→</span></Anchor>
+            <Anchor href="/join" className="btn">Join the network</Anchor>
           </div>
         </div>
       </section>

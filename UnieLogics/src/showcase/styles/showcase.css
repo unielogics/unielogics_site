@@ -1202,6 +1202,10 @@ footer.site-footer {
   font-family: var(--mono); font-size: 13px; font-weight: 500;
   color: var(--fg-2); letter-spacing: .1em;
 }
+.story-stage {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  color: var(--accent-2); margin-top: 4px;
+}
 .story-title {
   font-family: var(--sans); font-weight: 600;
   font-size: clamp(28px, 3.4vw, 44px);
@@ -2130,3 +2134,174 @@ footer.site-footer {
 .audit-trust { color: var(--fg-3) !important; }
 
 .compare-card.before { background: rgba(255,90,31,.06) !important; }
+
+/* ─── Hero audience splitter + tertiary link ─────────────────────────────── */
+.hero-split-line {
+  margin: 24px 0 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: var(--fg-3);
+  max-width: 640px;
+  line-height: 1.55;
+}
+.hero-tertiary {
+  margin-top: 18px;
+}
+.hero-tertiary a {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--fg-3);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.hero-tertiary a:hover { color: var(--fg); border-color: var(--fg-2); }
+
+/* ─── End-to-end stage walkthrough (light) ────────────────────────────────── */
+.endtoend-rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 56px 0 0 0;
+}
+.endtoend-card {
+  background: #fff;
+  border: 1px solid var(--light-hairline);
+  border-radius: 14px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.endtoend-stage-n {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: -.03em;
+  color: var(--light-fg-2);
+  line-height: 1;
+}
+.endtoend-stage-name {
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -.01em;
+  color: var(--light-fg);
+}
+.endtoend-card-body {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--light-fg-2);
+  margin: 0;
+}
+.endtoend-card-metric {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .02em;
+  color: var(--accent-2);
+  margin-top: auto;
+  padding-top: 8px;
+}
+.endtoend-card-who {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: var(--light-fg-3);
+  padding-top: 10px;
+  border-top: 1px solid var(--light-hairline);
+}
+.endtoend-card-who span { text-transform: uppercase; margin-right: 6px; color: var(--light-fg-2); }
+.endtoend-foot {
+  text-align: center;
+  margin: 40px auto 0;
+  max-width: 760px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--light-fg-3);
+}
+
+/* ─── Open by design — closing strip ─────────────────────────────────────── */
+.opennet-strip {
+  margin: 40px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--light-fg-3);
+}
+
+/* ─── Two doors — audience splitter (light) ──────────────────────────────── */
+.twodoors-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 56px;
+}
+.twodoor-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid var(--light-hairline);
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.twodoor-tile:hover {
+  border-color: var(--accent);
+  box-shadow: 0 18px 50px rgba(10,10,10,.08);
+  transform: translateY(-2px);
+}
+.twodoor-tile-alt:hover { border-color: var(--accent-2); }
+.twodoor-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.twodoor-tile-alt .twodoor-tag { color: var(--accent-2); }
+.twodoor-title {
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -.015em;
+  color: var(--light-fg);
+  margin: 0;
+  line-height: 1.25;
+}
+.twodoor-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--light-fg-2);
+  margin: 0;
+}
+.twodoor-for {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: var(--light-fg-3);
+  padding-top: 6px;
+  border-top: 1px solid var(--light-hairline);
+  margin-top: auto;
+}
+.twodoor-arrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 6px;
+}
+.twodoor-tile-alt .twodoor-arrow { color: var(--accent-2); }
+@media (max-width: 768px) {
+  .twodoors-grid { grid-template-columns: 1fr; }
+  .endtoend-rail { grid-template-columns: 1fr; }
+}

@@ -25,12 +25,12 @@ export default function Tms() {
       <section className="detail-hero" style={{ background: 'linear-gradient(180deg, #050505, #0a0a0a)' }}>
         <div className="container detail-hero-inner">
           <div className="detail-hero-copy">
-            <div className="micro" style={{ color: '#FF8A5C', marginBottom: 18 }}>● TMS Driver App · The missing autonomous piece</div>
+            <div className="micro" style={{ color: '#FF8A5C', marginBottom: 18 }}>● UnieTMS Driver App · Stage 06 of the chain</div>
             <h1 className="detail-h1">
               The driver app that <em className="serif" style={{ color: '#FF8A5C' }}>operates itself.</em>
             </h1>
             <p className="lede" style={{ marginTop: 24, maxWidth: 580 }}>
-              Loads matched, dispatched, accepted, picked up, delivered, paid — without a coordinator on the other end of the phone. The autonomous closure of the WMS → TMS handoff.
+              Loads matched, dispatched, accepted, picked up, delivered, paid — without a coordinator on the other end of the phone. The autonomous closure of the chain — warehouse to truck to doorstep, with no phone calls in between.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <Anchor href="#waitlist" className="btn btn-primary" style={{ background: '#FF5A1F', color: '#fff', borderColor: '#FF5A1F' }}>Join the driver waitlist <span className="arrow">→</span></Anchor>

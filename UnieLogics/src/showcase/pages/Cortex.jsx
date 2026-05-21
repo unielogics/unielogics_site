@@ -9,16 +9,16 @@ export default function Cortex() {
         <div className="container detail-hero-inner">
           <div className="detail-hero-copy">
             <div className="micro" style={{ color: 'var(--accent)', marginBottom: 18 }}>
-              ● UnieCortex · The operating intelligence
+              ● UnieCortex · The operating intelligence inside the chain
             </div>
             <h1 className="detail-h1">
               The brain behind <em className="serif">every</em> decision.
             </h1>
             <p className="lede" style={{ marginTop: 24, maxWidth: 580 }}>
-              Cortex is the intelligence layer your WMS, TMS, OMS, and couriers were missing. One brain reading every stream — orders, picks, lanes, rates, returns — and making the next move obvious. Then executing it. Approve / deny gated. Local-first inference. Your data never leaves your network.
+              Cortex is the intelligence layer your end-to-end supply chain was missing. One brain reading every stream — orders, picks, lanes, rates, returns — and making the next move obvious. Then executing it. Every recommendation needs your approval before it runs. The AI runs inside your own systems, not in a shared cloud. Your data never leaves your perimeter.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <Anchor href="index.html#audit" className="btn btn-primary">Audit your business <span className="arrow">→</span></Anchor>
+              <Anchor href="/audit?type=complete-business" className="btn btn-primary">Request a Complete Business Audit <span className="arrow">→</span></Anchor>
               <Anchor href="#capabilities" className="btn">Capabilities</Anchor>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function Cortex() {
               The only intelligence that operates at <em className="serif">both ends</em> of the telescope.
             </h2>
             <p className="lede">
-              Most platforms pick a side. Cortex runs both at once — because a perfect pick path doesn't matter if the parcel was shipped from the wrong DC.
+              Most platforms own a slice of the chain. Cortex sees all seven stages at once — because a perfect pick path doesn't matter if the parcel was shipped from the wrong warehouse.
             </p>
           </div>
 
@@ -182,10 +182,11 @@ export default function Cortex() {
             <span className="serif-line">through Cortex.</span>
           </h2>
           <p className="lede" style={{ textAlign: 'center' }}>
-            10-minute audit. One CSV. Before/after recoverable dollars, ranked. Your data never leaves your network.
+            A complete operating-intelligence review across every system — ending with a
+            scheduled deep-dive. Your data never leaves your network.
           </p>
           <div className="btns">
-            <Anchor href="index.html#audit" className="btn btn-primary">Start your audit <span className="arrow">→</span></Anchor>
+            <Anchor href="/audit?type=complete-business" className="btn btn-primary">Request a Complete Business Audit <span className="arrow">→</span></Anchor>
             <Anchor href="index.html" className="btn">Back home</Anchor>
           </div>
         </div>

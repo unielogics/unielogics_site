@@ -14,18 +14,24 @@ export function Hero() {
       <div className="container hero-split">
         <div>
           <div className="hero-tagline-mark">
-            UnieLogics · The operating intelligence
+            UnieLogics · Supply chain intelligence, end to end
           </div>
           <h1 className="h-hero hero-title">
-            Logistics that
+            A supply chain that
             <span className="serif-line">thinks.</span>
           </h1>
           <p className="hero-sub">
-            One intelligence layer across the four systems that actually run your operation — <strong style={{ color: 'var(--fg)' }}>WMS, TMS, OMS, and Couriers.</strong> Cortex audits every link, predicts the next move, and orchestrates from the bin to the doorstep. Continuously. Without a coordinator on the other end of the phone.
+            One intelligence layer across every stage of the chain — <strong style={{ color: 'var(--fg)' }}>supplier signal to customer doorstep, and the returns loop back.</strong> Cortex reads every stream (orders, picks, lanes, rates, returns), predicts the next move, and orchestrates the four systems that run your operation — WMS, TMS, OMS, and couriers. End to end. Continuously. <strong style={{ color: 'var(--fg)' }}>Open to every warehouse, carrier, seller, and driver in the network</strong> — no walled garden, no single operator hoarding the brain.
           </p>
+          <div className="hero-split-line">
+            Whether you need supply-chain help, or you run a warehouse, fleet, OMS or driver business that wants to plug in — start here.
+          </div>
           <div className="hero-cta">
-            <Anchor href="#audit" className="btn btn-primary">Audit your business · 10-min report <span className="arrow">→</span></Anchor>
-            <Anchor href="#brain" className="btn">See how Cortex thinks ↓</Anchor>
+            <Anchor href="/audit" className="btn btn-primary">Get a 10-minute audit <span className="arrow">→</span></Anchor>
+            <Anchor href="/join" className="btn">Join the network <span className="arrow">→</span></Anchor>
+          </div>
+          <div className="hero-tertiary">
+            <Anchor href="#brain">See how Cortex thinks ↓</Anchor>
           </div>
         </div>
         <div className="hero-orbital-wrap">
@@ -34,12 +40,12 @@ export function Hero() {
       </div>
       <div className="hero-meta">
         <div>
-          <div>+16% YoY · per adopting node</div>
+          <div>+16% YoY · per adopting business</div>
           <div style={{ marginTop: 4, opacity: .6 }}>Compounds with every system you connect</div>
         </div>
         <div className="scroll-cue">Scroll</div>
         <div style={{ textAlign: 'right' }}>
-          <div>5,147 nodes · live</div>
+          <div>5,147 businesses · live</div>
           <div style={{ marginTop: 4, opacity: .6 }}>23 warehouses · 50+ drivers · 5,000+ sellers</div>
         </div>
       </div>
@@ -139,7 +145,7 @@ export function DisconnectSection() {
 
         <div className="disco-bridges-note reveal delay-4">
           <span className="line"></span>
-          <span>Four systems · zero shared brain · billions in compounding loss</span>
+          <span>Seven stages · four systems · zero shared brain — every business in the network paying for the gap</span>
           <span className="line"></span>
         </div>
       </div>
@@ -156,10 +162,10 @@ export function BrainSection() {
         <div className="eyebrow reveal" style={{ justifyContent: 'center', display: 'inline-flex' }}>UnieCortex</div>
         <h2 className="brain-hero reveal delay-1">
           One <em>brain.</em><br />
-          <span className="accent">Four systems. Every decision.</span>
+          <span className="accent">Seven stages. Every decision.</span>
         </h2>
         <p className="lede reveal delay-2" style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-          Cortex is the intelligence layer your WMS, TMS, OMS, and couriers were missing. It reads every stream — orders, picks, lanes, rates, returns — and makes the next move obvious. Then it executes it.
+          Cortex is the intelligence layer your supply chain was missing. It reads every stream — orders, picks, lanes, rates, returns — and makes the next move obvious. Then it executes it. And every business in the network gets a window into it.
         </p>
         <div className="brain-orbital-wrap reveal delay-3">
           <CortexOrbital size={760} compact={false} showLabels={true} />
@@ -258,7 +264,7 @@ export function FourTrackSection() {
             <div className="twotrack-cost tnum">${counter.cortex.toLocaleString()}</div>
             <div className="twotrack-delta tnum">−${(counter.baseline - counter.cortex).toLocaleString()} · −{savingsPct}%</div>
             <ul className="twotrack-bullets">
-              <li>Network-aware route optimization across all participating nodes</li>
+              <li>Network-aware route optimization across all participating businesses</li>
               <li>Multi-modal: parcel + LTL + FTL solved as one problem</li>
               <li>Real-time backhaul match before the driver leaves</li>
               <li>Carrier mix priced per shipment, not per contract</li>
@@ -289,7 +295,7 @@ export function NetworkSection() {
     <section className="network-section" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 920 }}>
-          <div className="eyebrow reveal">The network effect</div>
+          <div className="eyebrow reveal">The supply-chain network effect</div>
           <h2 className="h-display reveal delay-1">
             +16% per year. <em className="serif">Every party that adopts.</em>
           </h2>
@@ -330,7 +336,7 @@ export function LastMileSection() {
     <section className="lastmile-section" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 920 }}>
-          <div className="eyebrow reveal">Placement is the lever</div>
+          <div className="eyebrow reveal">Stage 06 · Last-mile</div>
           <h2 className="h-display reveal delay-1">
             Better placement.<br />
             <em className="serif" style={{ color: 'var(--accent-2)' }}>Last-mile savings that compound.</em>
@@ -344,7 +350,7 @@ export function LastMileSection() {
           <div className="lastmile-card reveal">
             <div className="lm-eyebrow">National placement</div>
             <h3>Inventory ends up closest to demand.</h3>
-            <p>Cortex models demand-weighted parcel cost across your warehouse footprint and tells you which SKUs to position where — before the demand arrives. Every parcel ships from the closest possible node.</p>
+            <p>Cortex models demand-weighted parcel cost across your warehouse footprint and tells you which SKUs to position where — before the demand arrives. Every parcel ships from the closest possible warehouse.</p>
             <div className="lm-stat">
               <div className="lm-stat-num tnum">−22%</div>
               <div className="lm-stat-lbl">Avg parcel distance</div>
@@ -377,28 +383,28 @@ export function LastMileSection() {
 export function AuditFunnel() {
   const ref = useReveal()
   const options = [
-    { tag: 'Label Spine Audit', title: 'Shipping is too expensive', promise: 'Drop your label CSV. We benchmark every shipment against the rate it should have paid, and hand you the recoverable dollar band.' },
-    { tag: 'Task & Workflow Audit', title: 'The warehouse feels slow', promise: 'Drop your WMS task export. We score labor velocity, throughput, and zone coverage — and tell you which operators, lanes, and bins are dragging the rest.' },
-    { tag: 'Order Financial Audit', title: 'Margins are disappearing', promise: 'Drop your marketplace P&L. We rebuild margin by lane and region with the 2026 fee model already applied.' },
-    { tag: 'Network Audit', title: 'My network footprint feels wrong', promise: 'Drop your warehouse locations. We score state-level coverage, demand-weighted parcel cost, and the complementary DC that would close your biggest gap.' },
+    { type: 'label-spine', tag: 'Label Spine Audit', title: 'Shipping is too expensive', promise: 'Drop your label CSV. We benchmark every shipment against the rate it should have paid, and hand you the recoverable dollar band.' },
+    { type: 'task-workflow', tag: 'Task & Workflow Audit', title: 'The warehouse feels slow', promise: 'Drop your WMS task export. We score labor velocity, throughput, and zone coverage — and tell you which operators, lanes, and bins are dragging the rest.' },
+    { type: 'order-financial', tag: 'Order Financial Audit', title: 'Margins are disappearing', promise: 'Drop your marketplace P&L. We rebuild margin by lane and region with the 2026 fee model already applied.' },
+    { type: 'network', tag: 'Network Audit', title: 'My network footprint feels wrong', promise: 'Drop your warehouse locations. We score state-level coverage, demand-weighted parcel cost, and the complementary DC that would close your biggest gap.' },
   ]
 
   return (
     <section className="audit-funnel" id="audit" ref={ref}>
       <div className="container">
-        <div className="eyebrow reveal" style={{ justifyContent: 'center', display: 'inline-flex', width: '100%' }}>10-minute audit</div>
+        <div className="eyebrow reveal" style={{ justifyContent: 'center', display: 'inline-flex', width: '100%' }}>End-to-end audit · 10 minutes</div>
         <h2 className="question reveal delay-1">
           Tell us where it hurts.<br />
           We'll show you <em>the audit</em> that fixes it.
         </h2>
         <div className="audit-options">
           {options.map((o, i) => (
-            <button key={i} className="audit-tile reveal" style={{ transitionDelay: `${i * 60}ms` }}>
+            <Anchor key={i} href={`/audit?type=${o.type}`} className="audit-tile reveal" style={{ transitionDelay: `${i * 60}ms` }}>
               <div className="audit-tile-tag">→ {o.tag}</div>
               <h3 className="audit-tile-title">{o.title}</h3>
               <p className="audit-tile-promise">{o.promise}</p>
               <span className="audit-tile-arrow">Start this audit</span>
-            </button>
+            </Anchor>
           ))}
         </div>
         <div className="audit-extra reveal delay-3">
@@ -409,10 +415,10 @@ export function AuditFunnel() {
           <p className="ax-desc" style={{ flex: 1, minWidth: 260 }}>
             Hand us ASINs or UPCs. We blend Keepa demand history, fulfillment economics, and placement allocation into a landed-cost-per-SKU view.
           </p>
-          <Anchor href="#audit" className="btn" style={{ flex: '0 0 auto' }}>Start →</Anchor>
+          <Anchor href="/audit?type=product-catalog" className="btn" style={{ flex: '0 0 auto' }}>Start →</Anchor>
         </div>
         <div className="audit-trust">
-          Every audit returns a before / after proposal · approve / deny gated · your data never leaves your network
+          Every audit returns a before / after proposal · every recommendation needs your approval before it runs · your data stays inside your own systems, and the intelligence still reaches the whole network
         </div>
       </div>
     </section>
@@ -467,7 +473,7 @@ export function CortexHeader() {
       <div className="container-tight">
         <div className="eyebrow reveal">UnieCortex · Operating Intelligence</div>
         <h2 className="h-display reveal delay-1">
-          One layer. <em className="serif">Every</em> node. Every decision.
+          One layer. <em className="serif">Every</em> stage. Every decision.
         </h2>
         <p className="lede reveal delay-2">
           The intelligence brain that holds the entire logistics network in view while simultaneously resolving the tiniest operational frictions. Scroll.
@@ -484,12 +490,12 @@ export function BeforeAfterSection() {
     <section className="section light" ref={ref}>
       <div className="container">
         <div style={{ maxWidth: 900 }}>
-          <div className="eyebrow reveal">Two different worlds</div>
+          <div className="eyebrow reveal">Two different chains</div>
           <h2 className="h-display reveal delay-1">
             The transition is not incremental. It is <em className="serif">categorical.</em>
           </h2>
           <p className="lede reveal delay-2">
-            What logistics looks like without an intelligence layer — versus what it becomes once UnieCortex is running across the network.
+            What the supply chain looks like without an intelligence layer — versus what it becomes once UnieCortex is running across the network.
           </p>
         </div>
 
@@ -513,7 +519,7 @@ export function BeforeAfterSection() {
             <ul className="list">
               <li>Empty miles filled by predictive backhaul — before trucks leave the dock.</li>
               <li>Carrier margins expanded by routing efficiency, not rate hikes.</li>
-              <li>Every node executes against shared, system-wide objectives.</li>
+              <li>Every business in the network executes against shared, system-wide objectives.</li>
               <li>Inventory placed where demand will appear, not where it last appeared.</li>
               <li>Pricing accuracy improved 18% across active freight lanes.</li>
               <li>One intelligence layer. Continuously optimizing total throughput.</li>
@@ -540,7 +546,7 @@ export function BeforeAfterSection() {
           </div>
         </div>
         <p className="micro reveal delay-4" style={{ marginTop: 24 }}>
-          Results compound across the network. The more nodes participate, the stronger the signal.
+          Results compound across the network. The more businesses participate, the stronger the signal.
         </p>
       </div>
     </section>
@@ -556,10 +562,10 @@ export function ProductSuiteSection() {
         <div style={{ maxWidth: 900 }}>
           <div className="eyebrow reveal">The product suite</div>
           <h2 className="h-display reveal delay-1">
-            One <em className="serif">network.</em> Three products. One brain.
+            One <em className="serif">chain.</em> Three products. One brain.
           </h2>
           <p className="lede reveal delay-2">
-            Cortex is the intelligence. These are the three systems it runs through — the warehouse, the order command center, and the driver in the cab. Adopt one. Adopt all three. The brain gets sharper as it sees more of your picture.
+            Cortex is the intelligence. These are the three systems it runs through — feeding it the warehouse, the order command center, and the driver in the cab. Adopt one. Adopt all three. The brain gets sharper as it sees more of your picture.
           </p>
         </div>
 
@@ -716,7 +722,7 @@ export function TMSSection() {
       <div className="container">
         <div className="tms-grid">
           <div className="tms-copy">
-            <div className="eyebrow reveal" style={{ color: '#FF8A5C' }}>The breakthrough</div>
+            <div className="eyebrow reveal" style={{ color: '#FF8A5C' }}>Stage 06 · The breakthrough</div>
             <h2 className="h-display reveal delay-1">
               Every independent operator,<br />running at <em className="serif" style={{ color: '#FF8A5C' }}>maximum capacity.</em>
             </h2>
@@ -940,7 +946,7 @@ export function WhyNowSection() {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M9 9h6v6H9z" /><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" /></svg>
             </div>
             <h3>Network-aware compute</h3>
-            <p className="body">Local-first inference processes millions of simultaneous logistics decisions in seconds — every node in the network learns from every other node, continuously.</p>
+            <p className="body">Local-first inference processes millions of simultaneous logistics decisions in seconds — every business in the network learns from every other, continuously.</p>
           </div>
           <div className="force-card reveal delay-1">
             <div className="glyph">
@@ -974,7 +980,7 @@ export function TractionSection() {
             UnieLogics is not starting from <em className="serif">zero.</em>
           </h2>
           <p className="lede reveal delay-2">
-            Marketplace access, LTL interest, and a warehouse pipeline are already in place. We are not selling vision. We are connecting nodes that already want to be connected.
+            Marketplace access, LTL interest, and a warehouse pipeline are already in place. We are not selling vision. We are connecting businesses that already want to be connected.
           </p>
         </div>
 
@@ -1006,15 +1012,139 @@ export function CTASection() {
     <section className="cta-section" id="audit">
       <div className="container-tight">
         <h2>
-          Join the future<br />
-          <span className="serif-line">through Cortex.</span>
+          Join the <em className="serif">open</em> supply chain.<br />
+          <span className="serif-line">Powered by Cortex.</span>
         </h2>
         <p className="lede" style={{ textAlign: 'center' }}>
-          Our audit engine analyzes thousands of data points to reveal hidden capacity gaps, operational inefficiencies, and cost-saving opportunities — with executable optimization pathways, not just reports.
+          Supply chain intelligence, end to end, open to your operation. One brain across every stage — and every business in the network gets a window into it.
         </p>
         <div className="btns">
-          <Anchor href="#audit" className="btn btn-primary">Request a network audit <span className="arrow">→</span></Anchor>
-          <Anchor href="cortex.html" className="btn">Explore UnieCortex</Anchor>
+          <Anchor href="/audit?type=network" className="btn btn-primary">Request a network audit <span className="arrow">→</span></Anchor>
+          <Anchor href="/join" className="btn">Join the network</Anchor>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── End-to-end stage walkthrough (light) ───────────────────────────────────
+export function EndToEndSection() {
+  const ref = useReveal()
+  const stages = [
+    { n: '01', name: 'Supply', body: 'Blends supplier ETAs with demand to shape the inbound plan.', metric: null, who: 'warehouses, sellers' },
+    { n: '02', name: 'Inbound & receiving', body: 'Reads dock and dwell signal; flags drift before it cascades.', metric: null, who: 'warehouses, carriers' },
+    { n: '03', name: 'Warehouse execution', body: 'Re-sequences picks, rescues idle pickers, scores slotting per demand.', metric: '47% faster handling', who: 'warehouses, sellers' },
+    { n: '04', name: 'Orders & margin', body: "Prices every order against landed cost before it's promised.", metric: '+8.1% margin at order', who: 'sellers, brands' },
+    { n: '05', name: 'Outbound & carrier mix', body: 'Picks the cheapest carrier that meets the deadline — per shipment.', metric: '−18% last-mile cost', who: 'warehouses, carriers, sellers' },
+    { n: '06', name: 'Transport & last-mile', body: 'Auto-matches drivers, fills empty return trips, pays on proof of delivery.', metric: '0:00:04 POD → payment', who: 'carriers, drivers, brokers' },
+    { n: '07', name: 'Returns & the loop', body: 'Reverse-flow signal turns into catalog and slotting corrections.', metric: null, who: 'warehouses, sellers' },
+  ]
+  return (
+    <section className="section light" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">End to end</div>
+          <h2 className="h-display reveal delay-1">
+            One brain across <em className="serif">every stage of the chain.</em>
+          </h2>
+          <p className="lede reveal delay-2">
+            Most platforms own a slice — the warehouse, or the truck, or the order. Cortex reads the whole chain at once and turns each stage into the next decision. From the supplier signal to the customer doorstep and back again through returns. Nothing is handed off blind.
+          </p>
+        </div>
+
+        <div className="endtoend-rail reveal delay-3">
+          {stages.map((s) => (
+            <div key={s.n} className="endtoend-card">
+              <div className="endtoend-stage-n">{s.n}</div>
+              <div className="endtoend-stage-name">{s.name}</div>
+              <p className="endtoend-card-body">{s.body}</p>
+              {s.metric && <div className="endtoend-card-metric">{s.metric}</div>}
+              <div className="endtoend-card-who">
+                <span>Who sees it:</span> {s.who}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="endtoend-foot reveal delay-4">
+          One brain. Every stage. Open to every business in the network — warehouses, carriers, sellers, drivers.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+// ─── Open by design — the open-network contrast (light) ─────────────────────
+export function OpenNetworkSection() {
+  const ref = useReveal()
+  return (
+    <section className="section light" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">Open by design</div>
+          <h2 className="h-display reveal delay-1">
+            Not a single operator's supply chain.<br />
+            <em className="serif" style={{ color: 'var(--accent-2)' }}>The supply chain everyone can plug into.</em>
+          </h2>
+          <p className="lede reveal delay-2">
+            Most end-to-end supply-chain offerings are run <em>by</em> one company <em>for</em> the rest of the market. UnieLogics is the opposite. The intelligence is the platform — and every business in the network gets to see it. Warehouses, carriers, sellers, drivers, brokers. Same brain. Different windows.
+          </p>
+        </div>
+
+        <div className="shift-grid">
+          <div className="shift-card is-final reveal">
+            <div className="index">01 · Everyone sees the brain</div>
+            <h3 className="h-card">One Cortex, many windows.</h3>
+            <p className="body">Warehouses see slotting and labor. Carriers see return-trip matches and live rates. Sellers see margin and where to place inventory. Drivers see matched loads. Brokers see who has capacity. Each business looks through its own window.</p>
+          </div>
+          <div className="shift-card is-final reveal delay-1">
+            <div className="index">02 · Bring your own systems</div>
+            <h3 className="h-card">No mandate to switch.</h3>
+            <p className="body">Cortex sits across the WMS, TMS, OMS, and carriers you already run — and across the partners you already work with. Plug in; nothing forced to rip out.</p>
+          </div>
+          <div className="shift-card is-final reveal delay-2">
+            <div className="index">03 · Data stays with you</div>
+            <h3 className="h-card">Open network ≠ shared dataset.</h3>
+            <p className="body">Each business's signal stays inside its own systems. Cortex coordinates by consent — every recommendation needs your approval before it runs. End to end.</p>
+          </div>
+        </div>
+
+        <div className="opennet-strip reveal delay-3">
+          No walled garden · No single-operator lock-in · Every business in the network sees the next move
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Two doors — audience splitter (light) ──────────────────────────────────
+export function TwoDoorsSection() {
+  const ref = useReveal()
+  return (
+    <section className="section light twodoors-section" ref={ref}>
+      <div className="container">
+        <div style={{ maxWidth: 920 }}>
+          <div className="eyebrow reveal">Two ways in</div>
+          <h2 className="h-display reveal delay-1">
+            Which one are <em className="serif">you?</em>
+          </h2>
+        </div>
+
+        <div className="twodoors-grid reveal delay-2">
+          <Anchor href="/audit" className="twodoor-tile">
+            <div className="twodoor-tag">→ I need supply-chain help</div>
+            <h3 className="twodoor-title">You sell, ship, or run a business that already has a supply chain.</h3>
+            <p className="twodoor-body">You want it cheaper, faster, smarter. Start with a free 10-minute audit; we'll show you where the money is leaking and how to plug the leak.</p>
+            <div className="twodoor-for">For: brands, sellers, shippers, and operators looking to optimize.</div>
+            <span className="twodoor-arrow">Get a 10-minute audit →</span>
+          </Anchor>
+          <Anchor href="/join" className="twodoor-tile twodoor-tile-alt">
+            <div className="twodoor-tag">→ I run a business that fits the network</div>
+            <h3 className="twodoor-title">You operate a warehouse, run a fleet or drive a truck, build an OMS or marketplace, or broker freight.</h3>
+            <p className="twodoor-body">You want a brain that pulls more work toward you while keeping you independent. Plug in and the network starts feeding you.</p>
+            <div className="twodoor-for">For: warehouses / 3PLs, carriers / drivers, OMS / marketplaces, brokers.</div>
+            <span className="twodoor-arrow">Join the network →</span>
+          </Anchor>
         </div>
       </div>
     </section>
