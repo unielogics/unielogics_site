@@ -5,6 +5,9 @@ import { ScrollManager } from './showcase/lib/nav'
 import Home from './showcase/pages/Home'
 import Audit from './showcase/pages/Audit'
 import Join from './showcase/pages/Join'
+import Wms from './showcase/pages/Wms'
+import Tms from './showcase/pages/Tms'
+import UnieConnectPage from './showcase/pages/UnieConnectPage'
 import Services from './pages/Services'
 import Solutions from './pages/Solutions'
 import IndustryProblems from './pages/IndustryProblems'
@@ -20,9 +23,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/audit" element={<Audit />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/wms" element={<Wms />} />
+        <Route path="/tms" element={<Tms />} />
+        <Route path="/connect" element={<UnieConnectPage />} />
         <Route path="/cortex" element={<Navigate to="/join#intelligence" replace />} />
-        <Route path="/wms" element={<Navigate to="/join#wms" replace />} />
-        <Route path="/tms" element={<Navigate to="/join#tms" replace />} />
         <Route path="/products" element={<Navigate to="/join#products" replace />} />
         <Route path="/services" element={<Services />} />
         <Route path="/solutions" element={<Solutions />} />

@@ -2408,8 +2408,9 @@ footer.site-footer {
 .product-rail-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 28px 24px;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
   background: rgba(255,255,255,.025);
   border: 1px solid var(--hairline);
   border-radius: 14px;
@@ -2483,6 +2484,96 @@ footer.site-footer {
 @media (max-width: 900px) {
   .product-rail-grid { grid-template-columns: 1fr; }
 }
+
+/* Rail visual — hero image / SVG sitting flush at top of each card */
+.product-rail-visual {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #0b0d12, #060810);
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.product-rail-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-rail-visual-driver {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px 0;
+  background: linear-gradient(135deg, #1a1614, #0a0a0a);
+}
+.product-rail-visual-connect {
+  width: 100%;
+  height: 100%;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-rail-visual-connect svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Body — text content beneath the visual */
+.product-rail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 22px 22px;
+  flex: 1;
+}
+
+/* Actions row — primary "Inside <product>" + optional external link */
+.product-rail-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 12px;
+}
+.product-rail-link-primary {
+  font-weight: 600;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+.product-rail-link-ext {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  text-decoration: none;
+  transition: color .2s;
+}
+.product-rail-link-ext:hover { color: var(--fg-2); }
+
+/* Tertiary link used on detail-page heroes (e.g. external uniewms.com) */
+.btn-tertiary {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  transition: color .2s, border-color .2s;
+}
+.btn-tertiary:hover { color: var(--fg); border-color: var(--fg-2); }
 
 /* ─── Join page FAQ (light) ───────────────────────────────────────────────── */
 .join-faq-grid {

@@ -1397,8 +1397,17 @@ export function ProductRailSection() {
         'Multi-client, multi-facility sync',
         'Pre-negotiated LTL & parcel rates from day one',
       ],
-      link: 'https://uniewms.com',
-      linkLabel: 'Open UnieWMS',
+      pagePath: '/wms',
+      pageLabel: 'Inside UnieWMS',
+      externalLink: 'https://uniewms.com',
+      externalLabel: 'Open UnieWMS ↗',
+      renderVisual: () => (
+        <img
+          src="https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/uniewms+(2).png"
+          alt="UnieWMS dashboard"
+          loading="lazy"
+        />
+      ),
     },
     {
       id: 'tms',
@@ -1414,8 +1423,13 @@ export function ProductRailSection() {
         'Payment cleared in seconds after delivery — no invoice cycles',
         'Independent drivers stay independent — no fleet contract',
       ],
-      link: null,
-      linkLabel: null,
+      pagePath: '/tms',
+      pageLabel: 'Inside UnieTMS',
+      renderVisual: () => (
+        <div className="product-rail-visual-driver">
+          <DriverAppThumb />
+        </div>
+      ),
     },
     {
       id: 'connect',
@@ -1431,8 +1445,13 @@ export function ProductRailSection() {
         'Inventory network view across every connected warehouse',
         'Cortex suggestions surface as actions you approve',
       ],
-      link: null,
-      linkLabel: null,
+      pagePath: '/connect',
+      pageLabel: 'Inside UnieConnect',
+      renderVisual: () => (
+        <div className="product-rail-visual-connect">
+          <UnieConnectThumb />
+        </div>
+      ),
     },
   ]
   return (
@@ -1451,19 +1470,25 @@ export function ProductRailSection() {
         <div className="product-rail-grid reveal delay-3">
           {products.map((p) => (
             <div key={p.id} id={p.anchor} className="product-rail-card">
-              <div className="product-rail-head">
-                <div className="product-rail-name">{p.name}</div>
-                <span className="product-rail-status">{p.status}</span>
+              <div className="product-rail-visual">{p.renderVisual()}</div>
+              <div className="product-rail-body">
+                <div className="product-rail-head">
+                  <div className="product-rail-name">{p.name}</div>
+                  <span className="product-rail-status">{p.status}</span>
+                </div>
+                <div className="product-rail-stage mono">{p.stage}</div>
+                <div className="product-rail-audience mono">{p.audience}</div>
+                <p className="product-rail-pitch">{p.pitch}</p>
+                <ul className="product-rail-bullets">
+                  {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                </ul>
+                <div className="product-rail-actions">
+                  <Anchor href={p.pagePath} className="product-rail-link product-rail-link-primary">{p.pageLabel} →</Anchor>
+                  {p.externalLink && (
+                    <Anchor href={p.externalLink} className="product-rail-link product-rail-link-ext">{p.externalLabel}</Anchor>
+                  )}
+                </div>
               </div>
-              <div className="product-rail-stage mono">{p.stage}</div>
-              <div className="product-rail-audience mono">{p.audience}</div>
-              <p className="product-rail-pitch">{p.pitch}</p>
-              <ul className="product-rail-bullets">
-                {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
-              </ul>
-              {p.link && (
-                <Anchor href={p.link} className="product-rail-link">{p.linkLabel} →</Anchor>
-              )}
             </div>
           ))}
         </div>
