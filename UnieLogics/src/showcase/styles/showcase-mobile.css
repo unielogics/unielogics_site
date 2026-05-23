@@ -115,15 +115,39 @@
     margin: 0 auto;
   }
   .hero-tagline-mark { font-size: 10px; margin-bottom: 18px; letter-spacing: .14em; }
-  .hero-title { font-size: clamp(40px, 12vw, 60px); line-height: 0.96; }
-  .hero-title .serif-line { font-size: clamp(36px, 11vw, 56px); }
+  .hero-title {
+    font-size: clamp(34px, 9.5vw, 50px);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+  }
+  .hero-title .serif-line { font-size: clamp(30px, 8.5vw, 46px); }
   .hero-sub {
     margin-top: 22px;
     font-size: 15.5px;
     line-height: 1.5;
+    overflow-wrap: anywhere;
   }
-  .hero-cta { margin-top: 28px; flex-direction: column; align-items: stretch; gap: 10px; }
-  .hero-cta .btn { width: 100%; justify-content: center; padding: 14px 20px; font-size: 14px; }
+  .hero-cta {
+    margin-top: 28px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 14px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+  }
+  .hero-tertiary a {
+    overflow-wrap: anywhere;
+    display: inline-block;
+    max-width: 100%;
+  }
   .hero-meta {
     position: static;
     margin-top: 48px;
@@ -152,7 +176,7 @@
     height: 100vh;
     grid-template-rows: auto 1fr;
     padding: 74px 16px 18px;
-    overflow: hidden;
+    overflow: clip;
   }
   .merge-pin::before { background: radial-gradient(ellipse 70% 50% at 50% 50%, var(--accent-faint), transparent 70%); }
   .merge-header { padding-top: 4px; padding-bottom: 0; text-align: left; }
@@ -183,7 +207,7 @@
     grid-template-rows: auto 1fr auto;
     padding: 72px 16px 16px;
     gap: 10px;
-    overflow: hidden;
+    overflow: clip;
   }
   .story-eyebrow {
     flex-direction: row; align-items: center; justify-content: space-between;
@@ -198,7 +222,7 @@
     height: 100%;
     min-height: 0;
     align-content: start;
-    overflow: hidden;
+    overflow: clip;
   }
   .story-copy { max-width: 100%; gap: 7px; }
   .story-chapter { font-size: 9px; }

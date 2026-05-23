@@ -176,7 +176,7 @@ body{
   background: var(--bg);
   color: var(--fg);
   letter-spacing: .02em;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 #root{
   min-height: 100%;
@@ -601,12 +601,12 @@ main{
 @media (max-width: 640px){
   .hero-cta,
   .hero .cta-row{
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
   }
   .hero-cta .btn{
-    flex-shrink: 0;
-    white-space: nowrap;
+    flex-shrink: 1;
+    white-space: normal;
   }
 }
 .btn-primary{
