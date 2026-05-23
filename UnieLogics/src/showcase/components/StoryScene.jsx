@@ -98,7 +98,7 @@ export function StoryScene() {
             <div className="story-copy">
               <div className="story-chapter mono">CH · {current.chapter}</div>
               <div className="story-time mono">{current.time}</div>
-              {current.stage && <div className="story-stage mono">{current.stage}</div>}
+              {current.stage && <div className="story-stage-label mono">{current.stage}</div>}
               <h3 className="story-title" key={'h-' + sceneIdx}>{current.title}</h3>
               <p className="story-text" key={'p-' + sceneIdx}>{current.body}</p>
               <div className="story-metric mono">
