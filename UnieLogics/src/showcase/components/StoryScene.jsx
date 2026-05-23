@@ -397,19 +397,19 @@ function Scene05Delivered({ progress }) {
       <div className="results-strip">
         <div className="result-tile">
           <div className="result-num tnum">$184</div>
-          <div className="result-lbl mono">Saved · this shipment</div>
+          <div className="result-lbl mono">Saved</div>
         </div>
         <div className="result-tile">
           <div className="result-num tnum">+6 min</div>
-          <div className="result-lbl mono">Slack delivered to SLA</div>
+          <div className="result-lbl mono">Ahead of SLA</div>
         </div>
         <div className="result-tile">
           <div className="result-num tnum">0.94</div>
-          <div className="result-lbl mono">Driver tier · ▲ 0.02</div>
+          <div className="result-lbl mono">Tier ▲ 0.02</div>
         </div>
         <div className="result-tile">
           <div className="result-num tnum">4s</div>
-          <div className="result-lbl mono">Payment cleared</div>
+          <div className="result-lbl mono">Paid in</div>
         </div>
       </div>
     </div>

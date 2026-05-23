@@ -232,6 +232,24 @@
   .story-metric { font-size: 9.5px; padding: 7px 0; }
   .story-visual { min-height: 0; height: 100%; max-height: none; }
   .scene-frame { min-height: 0; }
+  /* Compact the scene-header so it fits one line on mobile */
+  .scene-header {
+    padding: 8px 12px;
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    gap: 8px;
+  }
+  /* Scene 05 results strip — tighten so the four tiles fit the frame */
+  .results-strip {
+    padding: 8px 8px;
+    gap: 6px;
+  }
+  .result-tile {
+    padding: 6px 8px;
+    border-radius: 6px;
+  }
+  .result-num { font-size: 15px; letter-spacing: -.02em; }
+  .result-lbl { font-size: 8px; letter-spacing: .05em; margin-top: 1px; }
   .story-timeline {
     grid-template-columns: repeat(5, 1fr);
     margin-top: 0;
