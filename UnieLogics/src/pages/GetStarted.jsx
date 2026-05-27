@@ -200,26 +200,29 @@ export default function GetStarted() {
                   <p className="micro" style={{ marginBottom: '24px' }}>Scale and timeline help us tailor our response.</p>
                   <div style={{ maxWidth: 480, margin: '0 auto' }}>
                     <div className="form-group" style={{ marginBottom: '20px' }}>
-                      <label>Approximate monthly volume (orders or shipments)</label>
+                      <label>Approximate monthly volume (orders or shipments) *</label>
                       <input
                         type="text"
+                        required
                         placeholder="e.g. 5,000 orders"
                         value={qualifying.volume}
                         onChange={(e) => setQualifying((q) => ({ ...q, volume: e.target.value }))}
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: '20px' }}>
-                      <label>Number of locations</label>
+                      <label>Number of locations *</label>
                       <input
                         type="text"
+                        required
                         placeholder="e.g. 3"
                         value={qualifying.locations}
                         onChange={(e) => setQualifying((q) => ({ ...q, locations: e.target.value }))}
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: '20px' }}>
-                      <label>When do you want to start?</label>
+                      <label>When do you want to start? *</label>
                       <select
+                        required
                         value={qualifying.timeline}
                         onChange={(e) => setQualifying((q) => ({ ...q, timeline: e.target.value }))}
                       >
@@ -233,7 +236,14 @@ export default function GetStarted() {
                   </div>
                   <div className="cta-row" style={{ justifyContent: 'center', marginTop: '28px', gap: '12px' }}>
                     <button type="button" className="btn secondary" onClick={() => setStep(2)}>Back</button>
-                    <button type="button" className="btn" onClick={() => setStep(4)}>Continue</button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => setStep(4)}
+                      disabled={!qualifying.volume.trim() || !qualifying.locations.trim() || !qualifying.timeline}
+                    >
+                      Continue
+                    </button>
                   </div>
                 </div>
               )}
@@ -272,17 +282,19 @@ export default function GetStarted() {
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: '20px' }}>
-                      <label>Phone</label>
+                      <label>Phone *</label>
                       <input
                         type="tel"
+                        required
                         value={contact.phone}
                         onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))}
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: '20px' }}>
-                      <label>How did you hear about us? <span className="micro">(optional)</span></label>
+                      <label>How did you hear about us? *</label>
                       <input
                         type="text"
+                        required
                         placeholder=""
                         value={contact.source}
                         onChange={(e) => setContact((c) => ({ ...c, source: e.target.value }))}
@@ -296,7 +308,20 @@ export default function GetStarted() {
                   )}
                   <div className="cta-row" style={{ justifyContent: 'center', marginTop: '28px', gap: '12px' }}>
                     <button type="button" className="btn secondary" onClick={() => setStep(3)} disabled={submitting}>Back</button>
-                    <button type="submit" className="btn" disabled={submitting}>{submitting ? 'Sending...' : 'Submit'}</button>
+                    <button
+                      type="submit"
+                      className="btn"
+                      disabled={
+                        submitting ||
+                        !contact.name.trim() ||
+                        !contact.company.trim() ||
+                        !contact.email.trim() ||
+                        !contact.phone.trim() ||
+                        !contact.source.trim()
+                      }
+                    >
+                      {submitting ? 'Sending...' : 'Submit'}
+                    </button>
                   </div>
                 </div>
               )}

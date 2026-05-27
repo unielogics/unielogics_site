@@ -168,19 +168,35 @@ function JoinForm() {
   const totalSteps = steps.length
   const typeQuestions = providerType ? TYPE_QUESTIONS[providerType] || [] : []
 
+  const allCapabilitiesAnswered = () =>
+    typeQuestions.every((q) => {
+      const v = capabilities[q.key]
+      if (q.kind === 'multi') return Array.isArray(v) && v.length > 0
+      if (q.kind === 'text') return typeof v === 'string' && v.trim().length > 0
+      return !!v // select, single, yesno
+    })
+
   const canContinue = () => {
     switch (stepKey) {
       case 'provider': return !!providerType
-      case 'capabilities': return true
+      case 'capabilities': return allCapabilitiesAnswered()
       case 'scale':
-        return !!scale.monthlyCapacityBand && !!scale.yearsOperating
+        return !!scale.monthlyCapacityBand &&
+          !!scale.yearsOperating &&
+          Array.isArray(scale.regionsCovered) &&
+          scale.regionsCovered.length > 0
       case 'integrations':
-        return !!integrations.willingToShareSignal
+        return !!integrations.willingToShareSignal &&
+          Array.isArray(integrations.systems) &&
+          integrations.systems.length > 0
       case 'contact':
         return (
           contact.fullName.trim() &&
           contact.workEmail.trim() &&
           contact.company.trim() &&
+          contact.roleTitle.trim() &&
+          contact.phone.trim() &&
+          contact.companyWebsite.trim() &&
           consent
         )
       default: return true
@@ -384,18 +400,18 @@ function JoinForm() {
                       onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))} />
                   </div>
                   <div className="form-group audit-q">
-                    <label>Role / title <span className="micro">(optional)</span></label>
-                    <input type="text" value={contact.roleTitle}
+                    <label>Role / title *</label>
+                    <input type="text" required value={contact.roleTitle}
                       onChange={(e) => setContact((c) => ({ ...c, roleTitle: e.target.value }))} />
                   </div>
                   <div className="form-group audit-q">
-                    <label>Phone <span className="micro">(optional)</span></label>
-                    <input type="tel" value={contact.phone}
+                    <label>Phone *</label>
+                    <input type="tel" required value={contact.phone}
                       onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))} />
                   </div>
                   <div className="form-group audit-q">
-                    <label>Company website <span className="micro">(optional)</span></label>
-                    <input type="text" placeholder="acme3pl.com" value={contact.companyWebsite}
+                    <label>Company website *</label>
+                    <input type="text" required placeholder="acme3pl.com" value={contact.companyWebsite}
                       onChange={(e) => setContact((c) => ({ ...c, companyWebsite: e.target.value }))} />
                   </div>
                   <label className="audit-consent">

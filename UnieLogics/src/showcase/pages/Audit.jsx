@@ -144,13 +144,16 @@ export default function Audit() {
     if (t && AUDIT_TYPES.some((a) => a.id === t)) setAuditType(t)
   }, [searchParams])
 
-  // Validity for step indicator + submit button
+  // Validity for step indicator + submit button — every visible field is required.
   const auditPicked = !!auditType
   const contactValid =
     contact.firstName.trim() &&
     contact.lastName.trim() &&
     contact.workEmail.trim() &&
-    contact.company.trim()
+    !!contact.role &&
+    contact.company.trim() &&
+    contact.companyWebsite.trim() &&
+    contact.phone.trim()
   const notesProvided = notes.trim().length > 0
 
   // Step counter: 1 audit, 2 audit-picked, 3 contact-valid, 4 notes-provided, 5 submitting/done
@@ -163,7 +166,7 @@ export default function Audit() {
     return 1
   }, [auditPicked, contactValid, notesProvided, submitting, done])
 
-  const canSubmit = auditPicked && contactValid && !submitting
+  const canSubmit = auditPicked && contactValid && notesProvided && !submitting
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -363,10 +366,11 @@ export default function Audit() {
               </div>
               <div className="cx-field cx-field-full">
                 <label>
-                  Company website <span className="helper">· optional</span>
+                  Company website <span className="req">*</span>
                 </label>
                 <input
                   type="url"
+                  required
                   placeholder="https://yourbrand.com"
                   value={contact.companyWebsite}
                   onChange={(e) =>
@@ -376,11 +380,11 @@ export default function Audit() {
               </div>
               <div className="cx-field cx-field-full">
                 <label>
-                  Phone{' '}
-                  <span className="helper">· optional · for high-volume operators</span>
+                  Phone <span className="req">*</span>
                 </label>
                 <input
                   type="tel"
+                  required
                   placeholder="+1 555 0100"
                   value={contact.phone}
                   onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))}
@@ -393,7 +397,7 @@ export default function Audit() {
           <section className="cx-section" id="audit-notes">
             <div className="cx-section-label">
               <div className="cx-step-num">03</div>
-              <h2>Anything else we should know?</h2>
+              <h2>Anything else we should know? <span className="cx-required-pill">Required</span></h2>
               <p className="cx-section-helper">
                 Specific carriers in play, marketplace channels, weird edge-cases,
                 deadlines, links to data — anything that sharpens the audit.
@@ -403,6 +407,7 @@ export default function Audit() {
               <div className="cx-field cx-field-full">
                 <textarea
                   className="cx-textarea"
+                  required
                   placeholder="e.g. Mid-sized 3PL on the East Coast running 12 facilities. FedEx is our primary carrier but we suspect we're overpaying on dim weights. Aiming to have a recovery plan by Q3."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}

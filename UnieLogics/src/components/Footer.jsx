@@ -86,6 +86,8 @@ export default function Footer() {
     if (step === 1) return form.name.trim() && form.email.trim() && form.phone.trim()
     if (step === 2) return form.github.trim()
     if (step === 3) return form.background.length > 0
+    if (step === 4) return form.company.trim()
+    if (step === 5) return form.technologyToPublish.trim()
     return true
   }
 
@@ -196,14 +198,14 @@ export default function Footer() {
               )}
               {step === 4 && (
                 <div className="form-group footer-developer-field footer-developer-field-wide">
-                  <label htmlFor="dev-company">Company <span className="micro">(optional)</span></label>
-                  <input id="dev-company" type="text" placeholder="Current employer" value={form.company} onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))} />
+                  <label htmlFor="dev-company">Company *</label>
+                  <input id="dev-company" type="text" required placeholder="Current employer" value={form.company} onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))} />
                 </div>
               )}
               {step === 5 && (
                 <div className="form-group footer-developer-field footer-developer-field-wide">
-                  <label htmlFor="dev-technology">Any current technology in the industry you'd like to publish? <span className="micro">(optional)</span></label>
-                  <textarea id="dev-technology" rows={3} placeholder="Tools, APIs, open-source projects, etc." value={form.technologyToPublish} onChange={(e) => setForm((f) => ({ ...f, technologyToPublish: e.target.value }))} />
+                  <label htmlFor="dev-technology">Any current technology in the industry you'd like to publish? *</label>
+                  <textarea id="dev-technology" rows={3} required placeholder="Tools, APIs, open-source projects, etc." value={form.technologyToPublish} onChange={(e) => setForm((f) => ({ ...f, technologyToPublish: e.target.value }))} />
                 </div>
               )}
             </div>

@@ -207,16 +207,17 @@ export default function IndustryProblems() {
                 {honeypotField}
                 <h3 className="section-title">Contact us</h3>
                 <div className="form-group">
-                  <label htmlFor="ip-name">Name</label>
+                  <label htmlFor="ip-name">Name *</label>
                   <input
                     id="ip-name"
                     type="text"
+                    required
                     value={contact.name}
                     onChange={(e) => setContact((c) => ({ ...c, name: e.target.value }))}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="ip-email">Email</label>
+                  <label htmlFor="ip-email">Email *</label>
                   <input
                     id="ip-email"
                     type="email"
@@ -226,18 +227,20 @@ export default function IndustryProblems() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="ip-company">Company</label>
+                  <label htmlFor="ip-company">Company *</label>
                   <input
                     id="ip-company"
                     type="text"
+                    required
                     value={contact.company}
                     onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="ip-message">Message</label>
+                  <label htmlFor="ip-message">Message *</label>
                   <textarea
                     id="ip-message"
+                    required
                     value={contact.message}
                     onChange={(e) => setContact((c) => ({ ...c, message: e.target.value }))}
                     rows={4}
@@ -248,7 +251,19 @@ export default function IndustryProblems() {
                     {submitStatus.message}
                   </p>
                 )}
-                <button type="submit" className="btn" disabled={submitting}>{submitting ? 'Sending...' : 'Send message'}</button>
+                <button
+                  type="submit"
+                  className="btn"
+                  disabled={
+                    submitting ||
+                    !contact.name.trim() ||
+                    !contact.email.trim() ||
+                    !contact.company.trim() ||
+                    !contact.message.trim()
+                  }
+                >
+                  {submitting ? 'Sending...' : 'Send message'}
+                </button>
               </form>
             </div>
           </div>
