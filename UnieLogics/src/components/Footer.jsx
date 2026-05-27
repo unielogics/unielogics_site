@@ -32,6 +32,7 @@ export default function Footer() {
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
+  const [done, setDone] = useState(false)
 
   const toggleBackground = (id) => {
     setForm((f) => ({
@@ -66,13 +67,18 @@ export default function Footer() {
     })
     setSubmitting(false)
     if (result.success) {
-      setSubmitStatus({ ok: true, message: "Thanks! We'll be in touch to explore." })
+      setDone(true)
       setForm({ name: '', email: '', phone: '', github: '', background: [], company: '', technologyToPublish: '' })
       setHpEmail('')
       setStep(1)
     } else {
       setSubmitStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
     }
+  }
+
+  const resetDeveloperForm = () => {
+    setDone(false)
+    setSubmitStatus(null)
   }
 
   const totalSteps = 5
@@ -119,6 +125,19 @@ export default function Footer() {
         <div className="footer-developer-widget">
           <h4 className="footer-developer-widget-title">Curious if we're a fit?</h4>
           <p className="footer-developer-widget-tagline">AI, ecommerce, logistics—request to explore.</p>
+          {done ? (
+            <div className="footer-thanks" role="status" aria-live="polite">
+              <svg className="footer-thanks-check" viewBox="0 0 56 56" aria-hidden="true">
+                <circle className="footer-thanks-check-circle" cx="28" cy="28" r="25" fill="none" />
+                <path className="footer-thanks-check-tick" d="M16 29 L25 38 L41 20" fill="none" />
+              </svg>
+              <div className="footer-thanks-title">You're on the list.</div>
+              <p className="footer-thanks-sub">Thanks for raising your hand. A real person on our team will reach out shortly to explore what we can build together.</p>
+              <button type="button" className="footer-thanks-reset" onClick={resetDeveloperForm}>
+                Submit another →
+              </button>
+            </div>
+          ) : (
           <form className="footer-developer-form" onSubmit={handleDeveloperSubmit}>
             <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
               <label>
@@ -217,12 +236,13 @@ export default function Footer() {
                 </button>
               )}
             </div>
-            {submitStatus && (
-              <p className={submitStatus.ok ? 'success' : 'error'} style={{ marginTop: 12, marginBottom: 0 }}>
+            {submitStatus && !submitStatus.ok && (
+              <p className="error" style={{ marginTop: 12, marginBottom: 0 }}>
                 {submitStatus.message}
               </p>
             )}
           </form>
+          )}
         </div>
       </div>
 
