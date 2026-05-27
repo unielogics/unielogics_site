@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Anchor } from '../showcase/lib/nav'
 import { submitToUnieSales } from '../lib/leadApi'
+import { useHoneypot } from '../lib/Honeypot'
 
 const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
 
@@ -28,7 +29,7 @@ function DevIcon({ name, size = 24 }) {
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [form, setForm] = useState({ name: '', email: '', phone: '', github: '', background: [], company: '', technologyToPublish: '' })
-  const [hpEmail, setHpEmail] = useState('')
+  const { field: honeypotField, getValue: getHoneypot } = useHoneypot()
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
@@ -63,13 +64,12 @@ export default function Footer() {
         technologyToPublish: form.technologyToPublish.trim() || '',
         message: form.technologyToPublish.trim() || '',
       },
-      hp_email: hpEmail,
+      hp_email: getHoneypot(),
     })
     setSubmitting(false)
     if (result.success) {
       setDone(true)
       setForm({ name: '', email: '', phone: '', github: '', background: [], company: '', technologyToPublish: '' })
-      setHpEmail('')
       setStep(1)
     } else {
       setSubmitStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
@@ -139,19 +139,7 @@ export default function Footer() {
             </div>
           ) : (
           <form className="footer-developer-form" onSubmit={handleDeveloperSubmit}>
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
-              <label>
-                Don't fill this out
-                <input
-                  name="hp_email"
-                  type="text"
-                  autoComplete="off"
-                  tabIndex={-1}
-                  value={hpEmail}
-                  onChange={(e) => setHpEmail(e.target.value)}
-                />
-              </label>
-            </div>
+            {honeypotField}
             <div className="footer-developer-pagination">
               {[1, 2, 3, 4, 5].map((s) => (
                 <span

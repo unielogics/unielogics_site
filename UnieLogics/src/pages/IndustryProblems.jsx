@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { submitToUnieSales } from '../lib/leadApi'
+import { useHoneypot } from '../lib/Honeypot'
 
 const PROBLEMS = [
   {
@@ -30,7 +31,7 @@ const HERO_PARAGRAPH = [
 export default function IndustryProblems() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [contact, setContact] = useState({ name: '', email: '', company: '', message: '' })
-  const [hpEmail, setHpEmail] = useState('')
+  const { field: honeypotField, getValue: getHoneypot } = useHoneypot()
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
   const [carouselPaused, setCarouselPaused] = useState(false)
@@ -105,13 +106,12 @@ export default function IndustryProblems() {
         message: contact.message || '',
         subForm: 'industry-problems',
       },
-      hp_email: hpEmail,
+      hp_email: getHoneypot(),
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', email: '', company: '', message: '' })
-      setHpEmail('')
     } else {
       setSubmitStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
     }
@@ -204,19 +204,7 @@ export default function IndustryProblems() {
             </div>
             <div className="problems-contact-form-wrap">
               <form className="problems-contact-form" onSubmit={handleContactSubmit}>
-                <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
-                  <label>
-                    Don't fill this out
-                    <input
-                      name="hp_email"
-                      type="text"
-                      autoComplete="off"
-                      tabIndex={-1}
-                      value={hpEmail}
-                      onChange={(e) => setHpEmail(e.target.value)}
-                    />
-                  </label>
-                </div>
+                {honeypotField}
                 <h3 className="section-title">Contact us</h3>
                 <div className="form-group">
                   <label htmlFor="ip-name">Name</label>

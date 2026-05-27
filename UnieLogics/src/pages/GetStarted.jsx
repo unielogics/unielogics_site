@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
 import { submitToUnieSales } from '../lib/leadApi'
+import { useHoneypot } from '../lib/Honeypot'
 
 const PERSONAS = [
   { id: 'warehouse', label: 'Warehouse operator', desc: '3PL, fulfillment, or warehouse ops', icon: 'warehouse' },
@@ -51,7 +52,7 @@ export default function GetStarted() {
     timeline: ''
   })
   const [contact, setContact] = useState({ name: '', company: '', email: '', phone: '', source: '' })
-  const [hpEmail, setHpEmail] = useState('')
+  const { field: honeypotField, getValue: getHoneypot } = useHoneypot()
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null) // { ok: boolean, message: string }
 
@@ -104,13 +105,12 @@ export default function GetStarted() {
         },
         howHeard: contact.source || '',
       },
-      hp_email: hpEmail,
+      hp_email: getHoneypot(),
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', company: '', email: '', phone: '', source: '' })
-      setHpEmail('')
       setStep(1)
       setPersona(null)
       setSolution(null)
@@ -139,19 +139,7 @@ export default function GetStarted() {
             </div>
 
             <form className="get-started-form" onSubmit={(e) => { e.preventDefault(); if (step < 4) setStep((s) => s + 1); else handleSubmit(e); }}>
-              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
-                <label>
-                  Don't fill this out
-                  <input
-                    name="hp_email"
-                    type="text"
-                    autoComplete="off"
-                    tabIndex={-1}
-                    value={hpEmail}
-                    onChange={(e) => setHpEmail(e.target.value)}
-                  />
-                </label>
-              </div>
+              {honeypotField}
               {/* Step 1: Who are you? */}
               {step === 1 && (
                 <div className="form-step-panel reveal on">

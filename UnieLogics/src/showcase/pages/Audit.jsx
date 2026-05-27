@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { submitAuditRequest } from '../../lib/auditApi'
+import { useHoneypot } from '../../lib/Honeypot'
 import '../styles/audit-cortex.css'
 
 // ─── Audit type catalog — mirrors uniecortex.com/audit-request exactly.
@@ -123,7 +124,7 @@ export default function Audit() {
     phone: '',
   })
   const [notes, setNotes] = useState('')
-  const [hpEmail, setHpEmail] = useState('')
+  const { field: honeypotField, getValue: getHoneypot } = useHoneypot()
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState(null) // { ok, message }
   const [done, setDone] = useState(false)
@@ -174,7 +175,7 @@ export default function Audit() {
       contact,
       notes: notes.trim() || undefined,
       source: 'UnieLogics Audit Your Business',
-      hpEmail,
+      hpEmail: getHoneypot(),
     })
     setSubmitting(false)
     if (result.success) {
@@ -210,19 +211,7 @@ export default function Audit() {
         </section>
       ) : (
         <form onSubmit={handleSubmit}>
-          <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
-            <label>
-              Don't fill this out
-              <input
-                name="hp_email"
-                type="text"
-                autoComplete="off"
-                tabIndex={-1}
-                value={hpEmail}
-                onChange={(e) => setHpEmail(e.target.value)}
-              />
-            </label>
-          </div>
+          {honeypotField}
           {/* ─── Hero ─────────────────────────────────────────────────────── */}
           <section className="cx-hero">
             <span className="cx-hero-pill">FREE AUDIT · 10 MINUTES · LOCAL-FIRST</span>

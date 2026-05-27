@@ -4,6 +4,7 @@ import { services } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import Footer from '../components/Footer'
 import { submitToUnieSales } from '../lib/leadApi'
+import { useHoneypot } from '../lib/Honeypot'
 
 const SERVICE_ICONS = {
   audit: 'audit',
@@ -46,7 +47,7 @@ export default function Services() {
   const [persona, setPersona] = useState('')
   const [qualifying, setQualifying] = useState({ volume: '', locations: '', timeline: '' })
   const [contact, setContact] = useState({ name: '', company: '', email: '', phone: '', source: '' })
-  const [hpEmail, setHpEmail] = useState('')
+  const { field: honeypotField, getValue: getHoneypot } = useHoneypot()
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
@@ -116,13 +117,12 @@ export default function Services() {
         howHeard: contact.source || '',
         subForm: 'services',
       },
-      hp_email: hpEmail,
+      hp_email: getHoneypot(),
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', company: '', email: '', phone: '', source: '' })
-      setHpEmail('')
       setSelectedServices([])
       setPersona('')
       setQualifying({ volume: '', locations: '', timeline: '' })
@@ -213,19 +213,7 @@ export default function Services() {
               </div>
             </div>
             <form className="services-form" onSubmit={(e) => { e.preventDefault(); if (formStep < 4) setFormStep((s) => s + 1); else handleFormSubmit(e); }}>
-              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
-                <label>
-                  Don't fill this out
-                  <input
-                    name="hp_email"
-                    type="text"
-                    autoComplete="off"
-                    tabIndex={-1}
-                    value={hpEmail}
-                    onChange={(e) => setHpEmail(e.target.value)}
-                  />
-                </label>
-              </div>
+              {honeypotField}
               {formStep === 1 && (
                 <div className="form-step-panel reveal on">
                   <h3 className="form-step-title">Which services do you need?</h3>
