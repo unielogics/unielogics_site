@@ -1,62 +1,48 @@
 /**
- * Audit-request submission.
+ * Audit Your Business — submission.
  *
  * ── BACKEND CONTRACT ───────────────────────────────────────────────────────
- * The dedicated audit-activation endpoint does not exist yet. Until it does,
- * `submitAuditRequest()` flattens the structured payload into the `notes`
- * field and routes it through the existing lead pipeline (submitLead →
- * https://api.uniewms.com/api/v1/sales-request) so no request is ever lost.
+ * The new UnieSales public endpoint isn't wired yet. Until it is, we route
+ * through the existing lead pipeline (submitLead → /api/v1/sales-request)
+ * which now returns 410 Gone — so submissions effectively land in the void
+ * until Franco delivers the UnieSales URL. The structured payload below is
+ * still built and returned so callers can verify the shape.
  *
- * `buildAuditPayload()` returns the FULL structured object the backend should
- * eventually receive. When the real endpoint is ready, the only change needed
- * is inside `submitAuditRequest()`: POST `buildAuditPayload(state)` as JSON to
- * the new URL and stop flattening into notes. Nothing else in the app changes.
+ * When the UnieSales endpoint is ready, replace the submitLead call in
+ * `submitAuditRequest()` with a direct POST of `buildAuditPayload(state)`
+ * to the new URL. Nothing else needs to change.
  *
- * Expected backend behavior on the audit payload:
- *   1. Persist the audit request (identity + persona + auditType + answers).
- *   2. Issue a ONE-TIME activation token and email an activation link to
- *      identity.workEmail with instructions to run the auditing tool.
- *   3. For mode === 'complete', persist `scheduling` and confirm the slot.
+ * Expected backend behaviour on the audit payload:
+ *   1. Persist the audit request (auditType + identity + notes).
+ *   2. Issue a one-time activation token and email an activation link to
+ *      identity.workEmail with instructions to run the audit.
  *
- * Example payload (mode 'complete'):
+ * Example payload:
  * {
- *   "source": "UnieLogics Audit Request",
- *   "mode": "complete",
- *   "persona": "warehouse",
- *   "auditType": "complete-business",
+ *   "source": "UnieLogics Audit Your Business",
+ *   "auditType": "label-spine",
  *   "identity": {
- *     "fullName": "Jane Operator",
+ *     "firstName": "Jane",
+ *     "lastName": "Operator",
  *     "workEmail": "jane@acme3pl.com",
+ *     "role": "COO / Ops lead",
  *     "company": "Acme 3PL",
- *     "roleTitle": "VP Operations",
- *     "phone": "+1 555 0100",
- *     "companyWebsite": "acme3pl.com"
+ *     "companyWebsite": "https://acme3pl.com",
+ *     "phone": "+1 555 0100"
  *   },
- *   "common": {
- *     "primaryProblem": "Margins disappearing on small parcels",
- *     "monthlyVolumeBand": "10k-50k",
- *     "locationsCount": "2-5",
- *     "systemsInUse": ["WMS", "OMS", "carrier APIs"],
- *     "timeline": "1-3 months",
- *     "howHeard": "Referral"
- *   },
- *   "answers": {
- *     "carriersUsed": ["FedEx", "UPS", "USPS"],
- *     "marketplaces": ["Amazon", "Shopify"],
- *     "decisionRole": "Decision maker",
- *     "budgetAuthority": "yes",
- *     "focusAreas": ["Shipping cost", "Network footprint"]
- *   },
- *   "scheduling": { "date": "2026-06-02", "timeSlot": "10:30", "timezone": "America/New_York" },
- *   "consent": true,
- *   "meta": { "submittedAt": "2026-05-18T14:00:00.000Z", "pageUrl": "https://unielogics.com/audit?type=complete-business", "utm": {} }
+ *   "notes": "Mid-sized 3PL on the East Coast...",
+ *   "meta": {
+ *     "submittedAt": "2026-05-26T22:00:00.000Z",
+ *     "pageUrl": "https://unielogics.com/audit?type=label-spine",
+ *     "utm": {}
+ *   }
  * }
  * ───────────────────────────────────────────────────────────────────────────
  */
 
 import { submitLead } from './leadApi'
 
-const AUDIT_SOURCE = 'UnieLogics Audit Request'
+const DEFAULT_SOURCE = 'UnieLogics Audit Your Business'
 
 function readUtm() {
   if (typeof window === 'undefined') return {}
@@ -72,44 +58,29 @@ function readUtm() {
 /**
  * Build the full structured audit payload (the artifact handed to the backend).
  * Pure — no side effects.
- * @param {object} state Audit form state.
+ * @param {object} state Audit form state: { auditType, contact, notes, source? }
  */
 export function buildAuditPayload(state) {
   const {
-    persona = null,
     auditType = null,
-    mode = 'standard',
-    common = {},
-    answers = {},
     contact = {},
-    consent = false,
-    scheduling = null,
+    notes = '',
+    source = DEFAULT_SOURCE,
   } = state || {}
 
   return {
-    source: AUDIT_SOURCE,
-    mode,
-    persona,
+    source,
     auditType,
     identity: {
-      fullName: contact.fullName?.trim() || '',
+      firstName: contact.firstName?.trim() || '',
+      lastName: contact.lastName?.trim() || '',
       workEmail: contact.workEmail?.trim().toLowerCase() || '',
+      role: contact.role?.trim() || '',
       company: contact.company?.trim() || '',
-      roleTitle: contact.roleTitle?.trim() || '',
-      phone: contact.phone?.trim() || '',
       companyWebsite: contact.companyWebsite?.trim() || '',
+      phone: contact.phone?.trim() || '',
     },
-    common: {
-      primaryProblem: common.primaryProblem?.trim() || '',
-      monthlyVolumeBand: common.monthlyVolumeBand || '',
-      locationsCount: common.locationsCount || '',
-      systemsInUse: Array.isArray(common.systemsInUse) ? common.systemsInUse : [],
-      timeline: common.timeline || '',
-      howHeard: common.howHeard?.trim() || '',
-    },
-    answers: answers || {},
-    scheduling: mode === 'complete' ? scheduling || null : null,
-    consent: !!consent,
+    notes: notes?.trim() || '',
     meta: {
       submittedAt: new Date().toISOString(),
       pageUrl: typeof window !== 'undefined' ? window.location.href : '',
@@ -121,63 +92,47 @@ export function buildAuditPayload(state) {
 /** Human-readable flattening of the structured payload for the notes field. */
 function flattenToNotes(p) {
   const lines = [
-    'AUDIT REQUEST',
-    `Mode: ${p.mode}`,
+    'AUDIT YOUR BUSINESS — REQUEST',
     `Audit type: ${p.auditType || 'N/A'}`,
-    `Persona: ${p.persona || 'N/A'}`,
     '---',
-    `Role/title: ${p.identity.roleTitle || 'N/A'}`,
+    `Role: ${p.identity.role || 'N/A'}`,
     `Website: ${p.identity.companyWebsite || 'N/A'}`,
-    '---',
-    `Primary problem: ${p.common.primaryProblem || 'N/A'}`,
-    `Monthly volume: ${p.common.monthlyVolumeBand || 'N/A'}`,
-    `Locations: ${p.common.locationsCount || 'N/A'}`,
-    `Systems in use: ${p.common.systemsInUse.join(', ') || 'N/A'}`,
-    `Timeline: ${p.common.timeline || 'N/A'}`,
-    `How heard: ${p.common.howHeard || 'N/A'}`,
-    '---',
-    'Audit-specific answers:',
-    ...Object.entries(p.answers).map(
-      ([k, v]) => `  ${k}: ${Array.isArray(v) ? v.join(', ') : v}`,
-    ),
   ]
-  if (p.scheduling) {
-    lines.push(
-      '---',
-      `Requested call: ${p.scheduling.date} ${p.scheduling.timeSlot} (${p.scheduling.timezone})`,
-    )
+  if (p.notes) {
+    lines.push('---', 'Operator notes:', p.notes)
   }
-  lines.push('---', `Consent: ${p.consent ? 'yes' : 'no'}`)
   return lines.join('\n')
 }
 
 /**
- * Submit an audit request.
- * Today: routes through the existing lead endpoint (rich notes) so the lead is
- * captured. Returns the same shape as submitLead plus the structured payload.
+ * Submit an audit-your-business request.
  *
  * @returns {Promise<{ success: boolean, id?: string, error?: string, payload: object }>}
  */
 export async function submitAuditRequest(state) {
   const payload = buildAuditPayload(state)
 
-  if (!payload.identity.fullName || !payload.identity.workEmail) {
-    return { success: false, error: 'Name and work email are required', payload }
+  if (!payload.auditType) {
+    return { success: false, error: 'Please pick an audit type', payload }
   }
-  if (!payload.consent) {
-    return { success: false, error: 'Please accept the consent checkbox to continue', payload }
+  if (!payload.identity.firstName || !payload.identity.lastName || !payload.identity.workEmail) {
+    return { success: false, error: 'First name, last name, and work email are required', payload }
+  }
+  if (!payload.identity.company) {
+    return { success: false, error: 'Company is required', payload }
   }
 
   // ── Integration seam ──────────────────────────────────────────────────────
-  // When the dedicated endpoint exists, replace the block below with a direct
-  // POST of `payload` to the new URL.
+  // When the UnieSales endpoint exists, replace the submitLead call below
+  // with a direct POST of `payload` to https://api.uniesales.com/api/public/leads
+  // (or whatever the final URL ends up being).
   const result = await submitLead({
-    name: payload.identity.fullName,
+    name: `${payload.identity.firstName} ${payload.identity.lastName}`.trim(),
     email: payload.identity.workEmail,
     phone: payload.identity.phone || undefined,
     company: payload.identity.company || undefined,
     notes: flattenToNotes(payload),
-    source: AUDIT_SOURCE,
+    source: payload.source,
   })
   // ──────────────────────────────────────────────────────────────────────────
 
