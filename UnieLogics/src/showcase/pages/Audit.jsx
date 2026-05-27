@@ -13,17 +13,18 @@ import { useSearchParams } from 'react-router-dom'
 import { submitAuditRequest } from '../../lib/auditApi'
 import '../styles/audit-cortex.css'
 
-// ─── Audit type catalog — unielogics's six options, with cortex-style
-// subtitle / description / BEST FOR / TYPICAL metadata.
+// ─── Audit type catalog — mirrors uniecortex.com/audit-request exactly.
+// The `id` matches Cortex's Pydantic `audit_type` enum so the payload
+// posts straight through to /v1/public/intake.
 const AUDIT_TYPES = [
   {
-    id: 'label-spine',
-    title: 'Shipping & Label Audit',
+    id: 'carrier',
+    title: 'Carrier Audit',
     subtitle: 'Refunds in parcel invoices',
     description:
       'Audit FedEx · UPS · USPS · regional invoices for late deliveries, dim re-weighs, address corrections, fuel over-charges. Files claims before the dispute window closes.',
     bestFor: 'You ship 5,000+ parcels/month',
-    typical: '$42k / month recoverable',
+    typical: '$42k / month',
     iconTone: 'cyan',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -33,13 +34,13 @@ const AUDIT_TYPES = [
     ),
   },
   {
-    id: 'order-financial',
-    title: 'Order Financial Audit',
-    subtitle: 'Marketplace P&L · 2026 fees',
+    id: 'rate',
+    title: 'Rate Optimization',
+    subtitle: 'Counterfactual pricing per label',
     description:
-      'Drop your marketplace P&L. We re-build margin by lane + region with forward-looking fees applied. Surfaces where order economics break and which SKUs to drop.',
-    bestFor: 'You sell on Amazon · Shopify · multi',
-    typical: '+$18k re-allocation',
+      'Score every label against the cheapest carrier and service that still meets the SLA. Run on a CSV sample or your full shipping history.',
+    bestFor: "You're locked to one carrier",
+    typical: '−18% per parcel',
     iconTone: 'lavender',
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -48,11 +49,11 @@ const AUDIT_TYPES = [
     ),
   },
   {
-    id: 'task-workflow',
-    title: 'Warehouse & Workflow Audit',
+    id: 'warehouse',
+    title: 'Warehouse Audit',
     subtitle: 'Throughput · zones · operators',
     description:
-      'Drop WMS exports (order_lines, ASN, billing). We score labor velocity per zone, surface bottlenecks, and recommend the operator + layout changes with the highest impact.',
+      'Drop WMS exports (order_lines, ASN, billing). Cortex scores labor velocity per zone, surfaces bottlenecks, and recommends the operator + layout changes with the highest impact.',
     bestFor: 'You run a warehouse or 3PL',
     typical: '184 hr/week recoverable',
     iconTone: 'amber',
@@ -66,54 +67,28 @@ const AUDIT_TYPES = [
     ),
   },
   {
-    id: 'network',
-    title: 'Network Footprint Audit',
-    subtitle: 'Coverage · regions · DC gaps',
+    id: 'seller',
+    title: 'Seller Optimization',
+    subtitle: 'Marketplace P&L · 2026 fees',
     description:
-      'Score how well your current DC footprint covers the demand you serve. We identify the single DC that closes the biggest coverage + cost gap and what the ROI looks like.',
-    bestFor: 'You run multiple DCs or considering one',
-    typical: '−14 days to coast',
+      'Drop your marketplace P&L. Cortex re-builds margin by lane + region with forward-looking fees applied. Surfaces where order economics break and which SKUs to drop.',
+    bestFor: 'You sell on Amazon · Shopify · multi',
+    typical: '+$18k re-allocation',
     iconTone: 'emerald',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <circle cx="4" cy="6" r="2" />
-        <circle cx="20" cy="6" r="2" />
-        <circle cx="4" cy="18" r="2" />
-        <circle cx="20" cy="18" r="2" />
-        <line x1="6" y1="7" x2="10" y2="11" />
-        <line x1="18" y1="7" x2="14" y2="11" />
-        <line x1="6" y1="17" x2="10" y2="13" />
-        <line x1="18" y1="17" x2="14" y2="13" />
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l3 7h7l-5.5 4 2 8L12 17l-6.5 4 2-8L2 9h7z" />
       </svg>
     ),
   },
   {
-    id: 'product-catalog',
-    title: 'Product Catalog Audit',
-    subtitle: 'Landed cost per SKU',
-    description:
-      'Cross-reference your catalog against demand + fulfillment cost. Identifies the SKUs that lose money once shipping and storage are loaded in, and what to do about them.',
-    bestFor: 'You sell 500+ SKUs across channels',
-    typical: 'Top-decile cost outliers found',
-    iconTone: 'rose',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2l8 4v12l-8 4-8-4V6z" />
-        <line x1="12" y1="22" x2="12" y2="10" />
-        <line x1="4" y1="6" x2="12" y2="10" />
-        <line x1="20" y1="6" x2="12" y2="10" />
-      </svg>
-    ),
-  },
-  {
-    id: 'complete-business',
-    title: 'I\'m not sure yet',
+    id: 'unsure',
+    title: "I'm not sure yet",
     subtitle: 'Help me pick the right one',
     description:
-      'We\'ll review your operation and recommend the audit with the highest recoverable dollars for your specific situation. A 10-minute call. No commitment.',
+      "We'll review your operation and recommend the audit with the highest recoverable dollars for your specific situation. A 10-minute call. No commitment.",
     bestFor: 'You want a recommendation',
-    typical: 'We\'ll tell you',
+    typical: "We'll tell you",
     iconTone: 'muted',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -225,10 +200,10 @@ export default function Audit() {
             <span className="accent">Check your email.</span>
           </h1>
           <p>
-            We've sent your audit-request confirmation to{' '}
-            <strong style={{ color: 'var(--cx-text)' }}>{contact.workEmail}</strong>. We'll
-            route the right audit and reply with a one-time activation link within 1 business
-            day. Your data stays inside your own systems.
+            Your Cortex account access and onboarding link are on their way to{' '}
+            <strong style={{ color: 'var(--cx-text)' }}>{contact.workEmail}</strong>. Follow
+            the activation link in that email to log in and run your audit. Your data stays
+            inside your own systems.
           </p>
         </section>
       ) : (
@@ -241,9 +216,9 @@ export default function Audit() {
               <span className="line2">We'll route the right audit.</span>
             </h1>
             <p className="cx-hero-sub">
-              Six audit workflows. One operating intelligence. Pick the audit you want to
-              run, tell us about your operation, and we'll email your activation link and a
-              10-minute onboarding walk-through within 1 business day.
+              Five audit workflows. One brain. Pick the audit you want to run, tell us
+              about your operation, and we'll email your Cortex account access and a
+              10-minute onboarding link within 1 business day.
             </p>
             <div className="cx-hero-stats">
               <div>

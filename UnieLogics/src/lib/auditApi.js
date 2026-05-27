@@ -1,46 +1,25 @@
 /**
- * Audit Your Business — submission.
+ * Audit Your Business — direct submission to Cortex.
  *
- * ── BACKEND CONTRACT ───────────────────────────────────────────────────────
- * The new UnieSales public endpoint isn't wired yet. Until it is, we route
- * through the existing lead pipeline (submitLead → /api/v1/sales-request)
- * which now returns 410 Gone — so submissions effectively land in the void
- * until Franco delivers the UnieSales URL. The structured payload below is
- * still built and returned so callers can verify the shape.
+ * Posts the audit-request straight to CortexBackend's public intake at
+ *   POST https://api.uniecortex.com/v1/public/intake
+ * exactly as cortex's own /audit-request form does, so the existing
+ * onboarding workflow runs identically:
+ *   1. CortexBackend persists the audit_request
+ *   2. Auto-provisions an invitation + one-time access code
+ *   3. Emails the activation link to the operator's work email
  *
- * When the UnieSales endpoint is ready, replace the submitLead call in
- * `submitAuditRequest()` with a direct POST of `buildAuditPayload(state)`
- * to the new URL. Nothing else needs to change.
+ * No bridge, no UnieBackend hop — the user gets the same email + login
+ * experience as if they'd filled the form on uniecortex.com.
  *
- * Expected backend behaviour on the audit payload:
- *   1. Persist the audit request (auditType + identity + notes).
- *   2. Issue a one-time activation token and email an activation link to
- *      identity.workEmail with instructions to run the audit.
- *
- * Example payload:
- * {
- *   "source": "UnieLogics Audit Your Business",
- *   "auditType": "label-spine",
- *   "identity": {
- *     "firstName": "Jane",
- *     "lastName": "Operator",
- *     "workEmail": "jane@acme3pl.com",
- *     "role": "COO / Ops lead",
- *     "company": "Acme 3PL",
- *     "companyWebsite": "https://acme3pl.com",
- *     "phone": "+1 555 0100"
- *   },
- *   "notes": "Mid-sized 3PL on the East Coast...",
- *   "meta": {
- *     "submittedAt": "2026-05-26T22:00:00.000Z",
- *     "pageUrl": "https://unielogics.com/audit?type=label-spine",
- *     "utm": {}
- *   }
- * }
- * ───────────────────────────────────────────────────────────────────────────
+ * `audit_type` enum (Pydantic): carrier · rate · warehouse · seller · research · unsure
+ * The unielogics form exposes carrier · rate · warehouse · seller · unsure (5 cards,
+ * matches cortex's UI exactly).
  */
 
-import { submitLead } from './leadApi'
+const CORTEX_INTAKE_URL =
+  import.meta.env?.VITE_CORTEX_INTAKE_URL?.trim() ||
+  'https://api.uniecortex.com/v1/public/intake'
 
 const DEFAULT_SOURCE = 'UnieLogics Audit Your Business'
 
@@ -56,9 +35,8 @@ function readUtm() {
 }
 
 /**
- * Build the full structured audit payload (the artifact handed to the backend).
- * Pure — no side effects.
- * @param {object} state Audit form state: { auditType, contact, notes, source? }
+ * Build the audit_request payload in the exact shape Cortex's Pydantic
+ * AuditRequestIn schema accepts. Pure — no side effects.
  */
 export function buildAuditPayload(state) {
   const {
@@ -68,73 +46,103 @@ export function buildAuditPayload(state) {
     source = DEFAULT_SOURCE,
   } = state || {}
 
+  const pagePath =
+    typeof window !== 'undefined'
+      ? window.location.pathname + window.location.search
+      : '/audit'
+
   return {
-    source,
-    auditType,
-    identity: {
-      firstName: contact.firstName?.trim() || '',
-      lastName: contact.lastName?.trim() || '',
-      workEmail: contact.workEmail?.trim().toLowerCase() || '',
-      role: contact.role?.trim() || '',
+    form: 'audit_request',
+    audit_type: auditType,
+    problems: [],
+    baseline: {},
+    volume: {
+      parcels: '',
+      lanes: '',
+      skus: '',
+      revenue: '',
+    },
+    has_data_ready: false,
+    contact: {
+      first_name: contact.firstName?.trim() || '',
+      last_name: contact.lastName?.trim() || '',
+      email: contact.workEmail?.trim().toLowerCase() || '',
+      role: contact.role?.trim() || 'Other',
       company: contact.company?.trim() || '',
-      companyWebsite: contact.companyWebsite?.trim() || '',
+      company_site: contact.companyWebsite?.trim() || '',
       phone: contact.phone?.trim() || '',
     },
-    notes: notes?.trim() || '',
-    meta: {
-      submittedAt: new Date().toISOString(),
-      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
-      utm: readUtm(),
-    },
+    // Cortex's `notes` field — also stuff the source + UTM into it so
+    // the cortex operator knows which surface the lead came from.
+    notes: [
+      notes?.trim() || '',
+      '',
+      `Source: ${source}`,
+      `Page: ${typeof window !== 'undefined' ? window.location.href : 'n/a'}`,
+      ...Object.entries(readUtm()).map(([k, v]) => `${k}: ${v}`),
+    ]
+      .filter(Boolean)
+      .join('\n')
+      .slice(0, 4000),
+    page_path: pagePath.slice(0, 300),
   }
-}
-
-/** Human-readable flattening of the structured payload for the notes field. */
-function flattenToNotes(p) {
-  const lines = [
-    'AUDIT YOUR BUSINESS — REQUEST',
-    `Audit type: ${p.auditType || 'N/A'}`,
-    '---',
-    `Role: ${p.identity.role || 'N/A'}`,
-    `Website: ${p.identity.companyWebsite || 'N/A'}`,
-  ]
-  if (p.notes) {
-    lines.push('---', 'Operator notes:', p.notes)
-  }
-  return lines.join('\n')
 }
 
 /**
- * Submit an audit-your-business request.
+ * Submit an audit-request to Cortex's public intake.
  *
- * @returns {Promise<{ success: boolean, id?: string, error?: string, payload: object }>}
+ * @param {object} state Audit form state: { auditType, contact, notes, source? }
+ * @returns {Promise<{ success: boolean, reference?: string, error?: string, payload: object }>}
  */
 export async function submitAuditRequest(state) {
   const payload = buildAuditPayload(state)
 
-  if (!payload.auditType) {
+  // Client-side validation matching Cortex's Pydantic constraints
+  if (!payload.audit_type) {
     return { success: false, error: 'Please pick an audit type', payload }
   }
-  if (!payload.identity.firstName || !payload.identity.lastName || !payload.identity.workEmail) {
-    return { success: false, error: 'First name, last name, and work email are required', payload }
-  }
-  if (!payload.identity.company) {
-    return { success: false, error: 'Company is required', payload }
-  }
+  const c = payload.contact
+  if (!c.first_name) return { success: false, error: 'First name is required', payload }
+  if (!c.last_name) return { success: false, error: 'Last name is required', payload }
+  if (!c.email) return { success: false, error: 'Work email is required', payload }
+  if (!c.company) return { success: false, error: 'Company is required', payload }
 
-  // ── Integration seam ──────────────────────────────────────────────────────
-  // When the UnieSales endpoint exists, replace the submitLead call below
-  // with a direct POST of `payload` to https://api.uniesales.com/api/public/leads
-  // (or whatever the final URL ends up being).
-  const result = await submitLead({
-    name: `${payload.identity.firstName} ${payload.identity.lastName}`.trim(),
-    email: payload.identity.workEmail,
-    phone: payload.identity.phone || undefined,
-    company: payload.identity.company || undefined,
-    notes: flattenToNotes(payload),
-    source: payload.source,
-  })
-  // ──────────────────────────────────────────────────────────────────────────
+  try {
+    const res = await fetch(CORTEX_INTAKE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
 
-  return { ...result, payload }
+    const data = await res.json().catch(() => ({}))
+
+    if (!res.ok) {
+      // Cortex returns 429 on rate-limit, 422 on validation failure, 500 on server error.
+      const message =
+        (typeof data?.detail === 'string' && data.detail) ||
+        (Array.isArray(data?.detail) && data.detail[0]?.msg) ||
+        (res.status === 429
+          ? 'You\'re submitting too fast. Try again in a minute.'
+          : `Submission failed (HTTP ${res.status}). Please try again.`)
+      return { success: false, error: message, payload }
+    }
+
+    return {
+      success: true,
+      reference: data?.reference,
+      status: data?.status,
+      onboardingUrl: data?.onboarding_url || null,
+      emailSent: !!data?.email_sent,
+      payload,
+    }
+  } catch (err) {
+    return {
+      success: false,
+      error: err?.message || 'Network error. Please try again.',
+      payload,
+    }
+  }
 }
