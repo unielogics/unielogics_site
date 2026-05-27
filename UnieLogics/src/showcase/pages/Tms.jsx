@@ -34,7 +34,7 @@ export default function Tms() {
               Pallets and full trailers, matched to the right truck the moment they're ready. No broker, no phone tag, no carrier hunting. We move your freight automatically — and you watch it land on time.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
-              <Anchor href="/audit?type=network" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+              <Anchor href="/audit?type=network" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
               <Anchor href="/join#tms" className="btn">Join Our Supply Chain</Anchor>
               <Anchor href="#waitlist" className="btn-tertiary" style={{ color: '#FF8A5C' }}>Drive for us ↓</Anchor>
             </div>
@@ -147,7 +147,7 @@ export default function Tms() {
             10-minute audit. Tell us where your pallets and full trailers need to go. We show you what auto-dispatched freight would cost you — and how much faster it would land.
           </p>
           <div className="btns">
-            <Anchor href="/audit?type=network" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+            <Anchor href="/audit?type=network" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
             <Anchor href="/join#tms" className="btn">Drive for us · Join the network</Anchor>
           </div>
           <p className="micro" style={{ marginTop: 32, color: 'var(--fg-3)' }}>

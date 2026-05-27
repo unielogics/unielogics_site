@@ -96,10 +96,10 @@ export default function Footer() {
         <div>
           <h4>Supply chain</h4>
           <ul>
-            <li><Anchor href="/audit">Audit my business</Anchor></li>
-            <li><Anchor href="/audit?type=label-spine">Audit my shipping</Anchor></li>
-            <li><Anchor href="/audit?type=task-workflow">Audit my fulfillment</Anchor></li>
-            <li><Anchor href="/audit?type=network">Audit my freight</Anchor></li>
+            <li><Anchor href="/audit">Audit Your Business</Anchor></li>
+            <li><Anchor href="/audit?type=label-spine">Audit your shipping</Anchor></li>
+            <li><Anchor href="/audit?type=task-workflow">Audit your fulfillment</Anchor></li>
+            <li><Anchor href="/audit?type=network">Audit your freight</Anchor></li>
           </ul>
         </div>
 

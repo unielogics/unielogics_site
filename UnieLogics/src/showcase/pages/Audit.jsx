@@ -1,9 +1,12 @@
-// Audit — adaptive, multi-step audit-request flow.
+// Audit Your Business — adaptive, multi-step audit-request flow.
 // Deep-linked via /audit?type=<auditType>&persona=<persona>.
+// Visual treatment scoped via .audit-cortex (audit-cortex.css) to mirror
+// uniecortex.com — cyan-on-deep-navy with italic-serif emphasis.
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { SchedulePicker } from '../components/SchedulePicker'
 import { submitAuditRequest } from '../../lib/auditApi'
+import '../styles/audit-cortex.css'
 
 const PERSONAS = [
   { id: 'warehouse', label: 'Warehouse / 3PL', desc: 'Fulfillment or warehouse operations' },
@@ -183,6 +186,15 @@ export default function Audit() {
     if (p && PERSONAS.some((x) => x.id === p)) setPersona(p)
   }, [searchParams])
 
+  // Tab title reflects the page rename. Restore the site default on unmount.
+  useEffect(() => {
+    const prev = document.title
+    document.title = 'Audit Your Business — UnieLogics'
+    return () => {
+      document.title = prev
+    }
+  }, [])
+
   const mode = auditType === 'complete-business' ? 'complete' : 'standard'
 
   const steps = useMemo(() => {
@@ -241,19 +253,40 @@ export default function Audit() {
   const selectedType = AUDIT_TYPES.find((a) => a.id === auditType)
 
   return (
-    <main>
+    <main className="audit-cortex">
       <div className="wrap get-started-wrap">
         <section className="get-started-unified">
           <div className="get-started-header">
-            <h1 className="page-title">Request your audit</h1>
+            {/* Mono status bar — cortex-style live signal */}
+            <div className="cortex-status-bar" aria-hidden="true">
+              <span className="dot-online">AUDIT INTAKE · ONLINE</span>
+              <span className="sep">|</span>
+              <span>
+                LAST 7d · <span className="num">47</span> requests
+              </span>
+              <span className="sep">|</span>
+              <span>
+                AVG TURNAROUND · <span className="num">3 business days</span>
+              </span>
+              <span className="sep">|</span>
+              <span>
+                ENGINE · <span className="num">cortex v4.2.1</span>
+              </span>
+            </div>
+
+            <span className="cortex-eyebrow">Operating Intelligence · Audit</span>
+
+            <h1 className="page-title">
+              Audit <span className="accent-italic">Your Business</span>.
+            </h1>
             <p className="page-subtitle">
               Tell us who you are and where it hurts. We tailor the audit, then email you a
               one-time activation link to run it. Your data never leaves your network.
             </p>
             {!done && (
               <>
-                <div className="micro" style={{ marginTop: 16 }}>
-                  Step {stepIdx + 1} of {totalSteps}
+                <div className="micro" style={{ marginTop: 18 }}>
+                  Step {String(stepIdx + 1).padStart(2, '0')} of {String(totalSteps).padStart(2, '0')}
                 </div>
                 <div className="get-started-progress">
                   <div
@@ -470,7 +503,7 @@ export default function Audit() {
                   </button>
                 )}
                 <button type="submit" className="btn" disabled={!canContinue() || submitting}>
-                  {submitting ? 'Sending…' : isLastStep ? 'Request my audit' : 'Continue'}
+                  {submitting ? 'Sending…' : isLastStep ? 'Audit Your Business →' : 'Continue →'}
                 </button>
               </div>
             </form>

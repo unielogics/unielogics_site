@@ -7,7 +7,7 @@ import { Anchor } from '../lib/nav'
 const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
 
 const LINKS = [
-  { href: '/audit', label: 'Audit', key: 'audit' },
+  { href: '/audit', label: 'Audit Your Business', key: 'audit' },
   { href: '/join', label: 'Join Our Supply Chain', key: 'join' },
 ]
 
@@ -62,7 +62,7 @@ export default function Navigation() {
             </Anchor>
           ))}
         </div>
-        <Anchor href="/audit" className="nav-cta">Audit my business →</Anchor>
+        <Anchor href="/audit" className="nav-cta">Audit Your Business →</Anchor>
         <button
           className="nav-mobile-toggle"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -76,9 +76,9 @@ export default function Navigation() {
         </button>
       </nav>
       <div className={`nav-mobile-sheet ${mobileOpen ? 'is-open' : ''}`}>
-        <Anchor href="/audit" onClick={onLink}>Audit my business</Anchor>
+        <Anchor href="/audit" onClick={onLink}>Audit Your Business</Anchor>
         <Anchor href="/join" onClick={onLink}>Join Our Supply Chain</Anchor>
-        <Anchor href="/audit" onClick={onLink} className="nav-mobile-cta">Audit my business →</Anchor>
+        <Anchor href="/audit" onClick={onLink} className="nav-mobile-cta">Audit Your Business →</Anchor>
       </div>
     </>
   )

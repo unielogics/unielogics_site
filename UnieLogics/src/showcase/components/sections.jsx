@@ -167,7 +167,7 @@ export function BrainSection() {
           <CortexOrbital size={760} compact={false} showLabels={true} />
         </div>
         <div className="brain-cta reveal delay-4">
-          <Anchor href="/audit" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+          <Anchor href="/audit" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
           <Anchor href="#story" className="btn">Watch a shipment run</Anchor>
         </div>
       </div>
@@ -1045,7 +1045,7 @@ export function CTASection() {
           Tell us where it hurts — shipping, fulfillment, freight, or margin — and we'll show you what we'd do about it. 10 minutes. No commitment. Real numbers, not a pitch.
         </p>
         <div className="btns">
-          <Anchor href="/audit" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+          <Anchor href="/audit" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
           <Anchor href="/join" className="btn">Join Our Supply Chain</Anchor>
         </div>
       </div>

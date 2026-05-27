@@ -1,0 +1,323 @@
+/* Audit Your Business — Cortex-style theme overrides.
+ *
+ * Scoped to the .audit-cortex wrapper on the Audit page only. The rest of
+ * unielogics keeps its mint-green identity. Reference visual language taken
+ * from https://uniecortex.com/ (captured 2026-05-26):
+ *   - very dark navy background (#0a0e1a)
+ *   - cyan/sky-blue primary accent (#5dd6f7)
+ *   - italic serif for emphasis phrases
+ *   - mono status bar across hero
+ *   - small uppercase tracked eyebrows (0.18em)
+ *   - pill-shaped buttons with subtle cyan glow
+ */
+
+.audit-cortex {
+  /* Re-bind the global accent + surface tokens for everything under this scope */
+  --accent: #5dd6f7;
+  --accent-strong: #7be3ff;
+  --accent-glow: 0 0 28px rgba(93, 214, 247, 0.28);
+  --bg-deep: #0a0e1a;
+  --surface-card: rgba(255, 255, 255, 0.025);
+  --surface-card-hover: rgba(93, 214, 247, 0.05);
+  --surface-card-selected: rgba(93, 214, 247, 0.08);
+  --border-cortex: rgba(93, 214, 247, 0.18);
+  --border-cortex-strong: rgba(93, 214, 247, 0.42);
+  --text-primary: #e6edf6;
+  --text-muted: #9aa6b2;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, monospace;
+  --font-serif: "Tiempos Headline", "Source Serif Pro", "Georgia", serif;
+
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* Faint dot grid behind the hero — cortex uses one of these */
+.audit-cortex::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(93, 214, 247, 0.07) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.audit-cortex > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Hero status bar (mono) ──────────────────────────────────────────── */
+.audit-cortex .cortex-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 0 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.audit-cortex .cortex-status-bar .dot-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+}
+.audit-cortex .cortex-status-bar .dot-online::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(93, 214, 247, 0.6);
+  animation: cortex-pulse 2.4s ease-in-out infinite;
+}
+.audit-cortex .cortex-status-bar .sep {
+  opacity: 0.5;
+}
+.audit-cortex .cortex-status-bar .num {
+  color: var(--accent-strong);
+  font-weight: 500;
+}
+@keyframes cortex-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(93, 214, 247, 0.6); }
+  50%      { opacity: 0.55; box-shadow: 0 0 4px rgba(93, 214, 247, 0.35); }
+}
+
+/* ─── Hero eyebrow + headline (mixed sans + italic serif accent) ──────── */
+.audit-cortex .cortex-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.audit-cortex .cortex-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.audit-cortex .get-started-header .page-title {
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.audit-cortex .accent-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #5dd6f7 0%, #7be3ff 60%, #b9f3ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 2px;
+}
+
+.audit-cortex .get-started-header .page-subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+/* ─── Step indicator → cyan ───────────────────────────────────────────── */
+.audit-cortex .micro {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.audit-cortex .get-started-progress {
+  background: rgba(255, 255, 255, 0.06);
+  max-width: 360px;
+}
+.audit-cortex .get-started-progress-bar {
+  background: linear-gradient(90deg, #5dd6f7, #7be3ff);
+  box-shadow: var(--accent-glow);
+}
+
+/* ─── Form panel surface ───────────────────────────────────────────────── */
+.audit-cortex .form-step-panel {
+  background: var(--surface-card);
+  border: 1px solid var(--border-cortex);
+  border-radius: 18px;
+  max-width: 780px;
+  padding: 36px 32px;
+  backdrop-filter: blur(8px);
+}
+.audit-cortex .section-title {
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+/* ─── Form tiles (the choice cards) ───────────────────────────────────── */
+.audit-cortex .form-tile {
+  background: var(--surface-card);
+  border: 1px solid var(--border-cortex);
+  border-radius: 14px;
+  padding: 22px 20px;
+  text-align: left;
+  position: relative;
+  transition: border-color 200ms ease, background 200ms ease,
+    transform 180ms ease, box-shadow 200ms ease;
+}
+.audit-cortex .form-tile:hover {
+  border-color: var(--border-cortex-strong);
+  background: var(--surface-card-hover);
+  transform: translateY(-1px);
+}
+.audit-cortex .form-tile.selected {
+  border-color: var(--accent);
+  background: var(--surface-card-selected);
+  box-shadow: var(--accent-glow);
+}
+.audit-cortex .form-tile .form-tile-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: -0.005em;
+}
+.audit-cortex .form-tile .form-tile-desc {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  display: block;
+  margin-top: 6px;
+}
+
+/* ─── Form inputs ──────────────────────────────────────────────────────── */
+.audit-cortex .form-group label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 8px;
+}
+.audit-cortex .form-group input[type="text"],
+.audit-cortex .form-group input[type="email"],
+.audit-cortex .form-group input[type="tel"],
+.audit-cortex .form-group select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-cortex);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  transition: border-color 200ms ease, box-shadow 200ms ease,
+    background 200ms ease;
+}
+.audit-cortex .form-group input:focus,
+.audit-cortex .form-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(93, 214, 247, 0.12);
+  background: rgba(93, 214, 247, 0.03);
+}
+.audit-cortex .form-group input::placeholder {
+  color: rgba(154, 166, 178, 0.6);
+}
+
+/* ─── Consent checkbox ────────────────────────────────────────────────── */
+.audit-cortex .audit-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px dashed var(--border-cortex);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.audit-cortex .audit-consent input[type="checkbox"] {
+  accent-color: var(--accent);
+  margin-top: 3px;
+}
+
+/* ─── Buttons (primary pill + secondary outline) ──────────────────────── */
+.audit-cortex .btn {
+  font-family: inherit;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  border: 1px solid var(--border-cortex);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+  transition: all 200ms ease;
+}
+.audit-cortex .btn:not(.secondary) {
+  background: linear-gradient(135deg, #5dd6f7 0%, #7be3ff 100%);
+  color: #0a0e1a;
+  border: 1px solid transparent;
+  box-shadow: var(--accent-glow);
+}
+.audit-cortex .btn:not(.secondary):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 36px rgba(93, 214, 247, 0.42);
+}
+.audit-cortex .btn.secondary {
+  background: transparent;
+  border-color: var(--border-cortex-strong);
+  color: var(--text-primary);
+}
+.audit-cortex .btn.secondary:hover {
+  border-color: var(--accent);
+  background: rgba(93, 214, 247, 0.05);
+}
+.audit-cortex .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── Error message ───────────────────────────────────────────────────── */
+.audit-cortex .error {
+  color: #ff8a8a;
+  font-size: 0.9rem;
+}
+
+/* ─── Done / success state ────────────────────────────────────────────── */
+.audit-cortex .form-step-panel .section-title + .micro {
+  margin-top: 6px;
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .audit-cortex .get-started-header .page-title {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+  .audit-cortex .cortex-status-bar {
+    gap: 10px;
+    font-size: 10px;
+  }
+  .audit-cortex .form-step-panel {
+    padding: 24px 18px;
+  }
+}

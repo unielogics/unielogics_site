@@ -18,7 +18,7 @@ export default function UnieConnectPage() {
               UnieConnect is the order command center behind every sale. It models true landed cost — fees, shipping, returns, all in — and tells you what each order is actually worth before you promise it. Stop discovering you sold at a loss when the invoice comes back.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
-              <Anchor href="/audit?type=order-financial" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+              <Anchor href="/audit?type=order-financial" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
               <Anchor href="/join#products" className="btn">Join Our Supply Chain</Anchor>
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function UnieConnectPage() {
           <h2>Stop selling blind.<br /><span className="serif-line">Start pricing for profit.</span></h2>
           <p className="lede" style={{ textAlign: 'center' }}>10-minute audit. Share your recent sales data. We rebuild margin per order — fees, shipping, returns all in — and show you exactly where the money is leaking.</p>
           <div className="btns">
-            <Anchor href="/audit?type=order-financial" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+            <Anchor href="/audit?type=order-financial" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
             <Anchor href="/join#products" className="btn">Run your OMS on UnieConnect</Anchor>
           </div>
         </div>

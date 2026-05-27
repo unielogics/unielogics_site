@@ -16,7 +16,7 @@ export default function Wms() {
               UnieWMS is the warehouse management system behind every fulfillment job we run. Receiving, storage, picking, packing, dispatch — instrumented in real time. Your orders move through it faster, your inventory sits where it should, and you never have to operate a warehouse to get the result.
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
-              <Anchor href="/audit?type=task-workflow" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+              <Anchor href="/audit?type=task-workflow" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
               <Anchor href="/join#wms" className="btn">Join Our Supply Chain</Anchor>
               <Anchor href="https://uniewms.com" className="btn-tertiary">Open UnieWMS ↗</Anchor>
             </div>
@@ -116,7 +116,7 @@ export default function Wms() {
           <h2>Let us run the warehouse.<br /><span className="serif-line">You handle the selling.</span></h2>
           <p className="lede" style={{ textAlign: 'center' }}>10-minute audit. Tell us how you ship today. We show you where time is leaking — receiving, picking, packing, dispatch — and what a faster, cheaper fulfillment setup looks like with us running it.</p>
           <div className="btns">
-            <Anchor href="/audit?type=task-workflow" className="btn btn-primary">Audit my business <span className="arrow">→</span></Anchor>
+            <Anchor href="/audit?type=task-workflow" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
             <Anchor href="/join#wms" className="btn">Run your own warehouse on UnieWMS</Anchor>
           </div>
         </div>
