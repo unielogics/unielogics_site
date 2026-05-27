@@ -1,21 +1,26 @@
 /**
- * Audit Your Business — direct submission to Cortex.
+ * Audit Your Business — direct submission to Cortex + parallel UnieSales mirror.
  *
- * Posts the audit-request straight to CortexBackend's public intake at
- *   POST https://api.uniecortex.com/v1/public/intake
- * exactly as cortex's own /audit-request form does, so the existing
- * onboarding workflow runs identically:
- *   1. CortexBackend persists the audit_request
- *   2. Auto-provisions an invitation + one-time access code
- *   3. Emails the activation link to the operator's work email
+ * 1. PRIMARY: POST straight to CortexBackend's public intake at
+ *      POST https://api.uniecortex.com/v1/public/intake
+ *    exactly as cortex's own /audit-request form does, so the existing
+ *    onboarding workflow runs identically:
+ *      a. CortexBackend persists the audit_request
+ *      b. Auto-provisions an invitation + one-time access code
+ *      c. Emails the activation link to the operator's work email
+ *    This is the canonical success signal — UI status follows this response.
  *
- * No bridge, no UnieBackend hop — the user gets the same email + login
- * experience as if they'd filled the form on uniecortex.com.
+ * 2. PARALLEL (fire-and-forget): POST a normalized envelope to UnieSales
+ *      POST https://api.uniesales.com/public/intake/unielogics (tag: 'audit')
+ *    so the lead lands in the sales workspace. Failure here NEVER flips the
+ *    user-facing success state and NEVER affects the Cortex onboarding email.
  *
  * `audit_type` enum (Pydantic): carrier · rate · warehouse · seller · research · unsure
  * The unielogics form exposes carrier · rate · warehouse · seller · unsure (5 cards,
  * matches cortex's UI exactly).
  */
+
+import { submitToUnieSales } from './leadApi'
 
 const CORTEX_INTAKE_URL =
   import.meta.env?.VITE_CORTEX_INTAKE_URL?.trim() ||
@@ -89,13 +94,60 @@ export function buildAuditPayload(state) {
 }
 
 /**
- * Submit an audit-request to Cortex's public intake.
+ * Fire the UnieSales mirror in parallel with the Cortex POST. Never throws,
+ * never blocks success — failures are silently logged. Stuffs the full
+ * Cortex Pydantic payload into `fields` verbatim so the sales team sees the
+ * exact audit selections.
+ */
+function fireUnieSalesMirror(state, cortexPayload, hpEmail) {
+  const c = cortexPayload.contact || {}
+  // Pull source/state contact names so contactName preserves original casing.
+  const stateContact = state?.contact || {}
+  const fullName = [c.first_name, c.last_name].filter(Boolean).join(' ').trim()
+
+  return submitToUnieSales({
+    tag: 'audit',
+    contact: {
+      contactName: fullName || stateContact.firstName + ' ' + stateContact.lastName,
+      email: c.email,
+      phone: c.phone || undefined,
+      company: c.company || undefined,
+      title: c.role || undefined,
+    },
+    fields: {
+      audit_type: cortexPayload.audit_type,
+      problems: cortexPayload.problems || [],
+      baseline: cortexPayload.baseline || {},
+      volume: cortexPayload.volume || {},
+      has_data_ready: !!cortexPayload.has_data_ready,
+      notes: cortexPayload.notes || '',
+      page_path: cortexPayload.page_path || '',
+      company_site: c.company_site || '',
+    },
+    hp_email: hpEmail || '',
+  }).catch((err) => {
+    // Fire-and-forget — never surface to user, never break Cortex success.
+    if (typeof console !== 'undefined') {
+      console.warn('[audit] UnieSales mirror failed (Cortex onboarding unaffected):', err?.message || err)
+    }
+    return { success: false, error: err?.message }
+  })
+}
+
+/**
+ * Submit an audit-request:
+ *   • Primary: Cortex /v1/public/intake (canonical — triggers onboarding email)
+ *   • Mirror: UnieSales /public/intake/unielogics (fire-and-forget — feeds sales)
  *
- * @param {object} state Audit form state: { auditType, contact, notes, source? }
+ * Both fire in parallel. The UI's success state is determined entirely by the
+ * Cortex response. UnieSales failure is logged and dropped on the floor.
+ *
+ * @param {object} state Audit form state: { auditType, contact, notes, source?, hpEmail? }
  * @returns {Promise<{ success: boolean, reference?: string, error?: string, payload: object }>}
  */
 export async function submitAuditRequest(state) {
   const payload = buildAuditPayload(state)
+  const hpEmail = state?.hpEmail || ''
 
   // Client-side validation matching Cortex's Pydantic constraints
   if (!payload.audit_type) {
@@ -106,6 +158,10 @@ export async function submitAuditRequest(state) {
   if (!c.last_name) return { success: false, error: 'Last name is required', payload }
   if (!c.email) return { success: false, error: 'Work email is required', payload }
   if (!c.company) return { success: false, error: 'Company is required', payload }
+
+  // Fire UnieSales mirror in parallel — it will resolve in its own .catch()
+  // without affecting the Cortex POST below. We don't await the result here.
+  const mirrorPromise = fireUnieSalesMirror(state, payload, hpEmail)
 
   try {
     const res = await fetch(CORTEX_INTAKE_URL, {
@@ -127,8 +183,13 @@ export async function submitAuditRequest(state) {
         (res.status === 429
           ? 'You\'re submitting too fast. Try again in a minute.'
           : `Submission failed (HTTP ${res.status}). Please try again.`)
+      // Ensure mirror finishes (resolves) even on Cortex failure so it isn't dropped.
+      mirrorPromise.catch(() => {})
       return { success: false, error: message, payload }
     }
+
+    // Cortex succeeded → user is good. Mirror promise continues in background.
+    mirrorPromise.catch(() => {})
 
     return {
       success: true,
@@ -139,6 +200,7 @@ export async function submitAuditRequest(state) {
       payload,
     }
   } catch (err) {
+    mirrorPromise.catch(() => {})
     return {
       success: false,
       error: err?.message || 'Network error. Please try again.',

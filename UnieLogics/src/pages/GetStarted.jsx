@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Footer from '../components/Footer'
-import { submitLead } from '../lib/leadApi'
+import { submitToUnieSales } from '../lib/leadApi'
 
 const PERSONAS = [
   { id: 'warehouse', label: 'Warehouse operator', desc: '3PL, fulfillment, or warehouse ops', icon: 'warehouse' },
@@ -51,6 +51,7 @@ export default function GetStarted() {
     timeline: ''
   })
   const [contact, setContact] = useState({ name: '', company: '', email: '', phone: '', source: '' })
+  const [hpEmail, setHpEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null) // { ok: boolean, message: string }
 
@@ -85,26 +86,31 @@ export default function GetStarted() {
     e.preventDefault()
     setSubmitting(true)
     setSubmitStatus(null)
-    const notes = [
-      `Persona: ${persona || 'Not selected'}`,
-      `Solution interest: ${solution || 'Not selected'}`,
-      `Monthly volume: ${qualifying.volume || 'N/A'}`,
-      `Locations: ${qualifying.locations || 'N/A'}`,
-      `Timeline: ${qualifying.timeline || 'N/A'}`,
-      `How did you hear: ${contact.source || 'N/A'}`,
-    ].join('\n')
-    const result = await submitLead({
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone || undefined,
-      company: contact.company,
-      notes,
-      source: 'UnieLogics Get Started',
+    const result = await submitToUnieSales({
+      tag: 'get_started',
+      contact: {
+        contactName: contact.name,
+        email: contact.email,
+        phone: contact.phone || undefined,
+        company: contact.company,
+      },
+      fields: {
+        persona: persona || '',
+        solution: solution || '',
+        qualifying: {
+          volume: qualifying.volume || '',
+          locations: qualifying.locations || '',
+          timeline: qualifying.timeline || '',
+        },
+        howHeard: contact.source || '',
+      },
+      hp_email: hpEmail,
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', company: '', email: '', phone: '', source: '' })
+      setHpEmail('')
       setStep(1)
       setPersona(null)
       setSolution(null)
@@ -133,6 +139,19 @@ export default function GetStarted() {
             </div>
 
             <form className="get-started-form" onSubmit={(e) => { e.preventDefault(); if (step < 4) setStep((s) => s + 1); else handleSubmit(e); }}>
+              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
+                <label>
+                  Don't fill this out
+                  <input
+                    name="hp_email"
+                    type="text"
+                    autoComplete="off"
+                    tabIndex={-1}
+                    value={hpEmail}
+                    onChange={(e) => setHpEmail(e.target.value)}
+                  />
+                </label>
+              </div>
               {/* Step 1: Who are you? */}
               {step === 1 && (
                 <div className="form-step-panel reveal on">

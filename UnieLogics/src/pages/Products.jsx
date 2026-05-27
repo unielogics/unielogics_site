@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import { products, PRODUCTS_INTRO, STRATEGIC_FLOW } from '../data/productContent'
-import { submitLead } from '../lib/leadApi'
+import { submitToUnieSales } from '../lib/leadApi'
 
 const HELP_AREAS = [
   {
@@ -24,6 +24,7 @@ const HELP_AREAS = [
 export default function Products() {
   const revealRefs = useRef([])
   const [contact, setContact] = useState({ name: '', company: '', email: '', phone: '', message: '' })
+  const [hpEmail, setHpEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
@@ -31,18 +32,25 @@ export default function Products() {
     e.preventDefault()
     setSubmitting(true)
     setSubmitStatus(null)
-    const result = await submitLead({
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone || undefined,
-      company: contact.company,
-      notes: contact.message,
-      source: 'UnieLogics Products',
+    const result = await submitToUnieSales({
+      tag: 'products_inquiry',
+      contact: {
+        contactName: contact.name,
+        email: contact.email,
+        phone: contact.phone || undefined,
+        company: contact.company,
+      },
+      fields: {
+        message: contact.message || '',
+        subForm: 'products',
+      },
+      hp_email: hpEmail,
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', company: '', email: '', phone: '', message: '' })
+      setHpEmail('')
     } else {
       setSubmitStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
     }
@@ -253,6 +261,19 @@ export default function Products() {
             </div>
             <div className="products-operators-form-wrap">
               <form className="products-operators-form" onSubmit={handleContactSubmit}>
+                <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
+                  <label>
+                    Don't fill this out
+                    <input
+                      name="hp_email"
+                      type="text"
+                      autoComplete="off"
+                      tabIndex={-1}
+                      value={hpEmail}
+                      onChange={(e) => setHpEmail(e.target.value)}
+                    />
+                  </label>
+                </div>
                 <h3 className="section-title">Contact us</h3>
                 <div className="form-group">
                   <label htmlFor="products-name">Name</label>

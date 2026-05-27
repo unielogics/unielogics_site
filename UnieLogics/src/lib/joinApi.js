@@ -2,15 +2,11 @@
  * Provider-join submission (the "I want to plug in" workflow).
  *
  * ── BACKEND CONTRACT ───────────────────────────────────────────────────────
- * The dedicated network-onboarding endpoint does not exist yet. Until it does,
- * `submitJoinRequest()` flattens the structured payload into the `notes` field
- * and routes it through the existing lead pipeline (submitLead →
- * https://api.uniewms.com/api/v1/sales-request) so no application is ever lost.
- *
- * `buildJoinPayload()` returns the FULL structured object the backend should
- * eventually receive. When the real endpoint is ready, the only change needed
- * is inside `submitJoinRequest()`: POST `buildJoinPayload(state)` as JSON to
- * the new URL and stop flattening into notes. Nothing else in the app changes.
+ * Submits the structured payload directly to UnieSales' public intake at
+ *   POST https://api.uniesales.com/public/intake/unielogics (tag: 'join')
+ * via submitToUnieSales(). The full structured payload (providerType,
+ * capabilities, scale, integrations, consent) lands verbatim in
+ * UnieSales' custom_fields.fields — no flattening into notes.
  *
  * Expected backend behavior on the join payload:
  *   1. Persist the provider application (identity + providerType + capabilities).
@@ -49,7 +45,7 @@
  * ───────────────────────────────────────────────────────────────────────────
  */
 
-import { submitLead } from './leadApi'
+import { submitToUnieSales } from './leadApi'
 
 const JOIN_SOURCE = 'UnieLogics Provider Join'
 
@@ -108,38 +104,13 @@ export function buildJoinPayload(state) {
   }
 }
 
-function flattenToNotes(p) {
-  const lines = [
-    'PROVIDER JOIN APPLICATION',
-    `Provider type: ${p.providerType || 'N/A'}`,
-    '---',
-    `Role/title: ${p.identity.roleTitle || 'N/A'}`,
-    `Website: ${p.identity.companyWebsite || 'N/A'}`,
-    '---',
-    'Capabilities:',
-    ...Object.entries(p.capabilities).map(
-      ([k, v]) => `  ${k}: ${Array.isArray(v) ? v.join(', ') : v || 'N/A'}`,
-    ),
-    '---',
-    `Monthly capacity: ${p.scale.monthlyCapacityBand || 'N/A'}`,
-    `Regions covered: ${p.scale.regionsCovered.join(', ') || 'N/A'}`,
-    `Years operating: ${p.scale.yearsOperating || 'N/A'}`,
-    '---',
-    `Systems / integrations: ${p.integrations.systems.join(', ') || 'N/A'}`,
-    `Willing to share signal: ${p.integrations.willingToShareSignal || 'N/A'}`,
-    '---',
-    `Consent: ${p.consent ? 'yes' : 'no'}`,
-  ]
-  return lines.join('\n')
-}
-
 /**
- * Submit a provider-join application.
- * Today: routes through the existing lead endpoint (rich notes) so the
- * application is captured. Returns the same shape as submitLead plus the
- * structured payload.
+ * Submit a provider-join application directly to UnieSales' public intake.
+ * The full structured payload (providerType / capabilities / scale /
+ * integrations / consent) is preserved verbatim under `fields`; contact is
+ * normalized from the identity block.
  *
- * @returns {Promise<{ success: boolean, id?: string, error?: string, payload: object }>}
+ * @returns {Promise<{ success: boolean, lead_id?: string|null, error?: string, payload: object }>}
  */
 export async function submitJoinRequest(state) {
   const payload = buildJoinPayload(state)
@@ -151,18 +122,25 @@ export async function submitJoinRequest(state) {
     return { success: false, error: 'Please accept the consent checkbox to continue', payload }
   }
 
-  // ── Integration seam ──────────────────────────────────────────────────────
-  // When the dedicated endpoint exists, replace the block below with a direct
-  // POST of `payload` to the new URL.
-  const result = await submitLead({
-    name: payload.identity.fullName,
-    email: payload.identity.workEmail,
-    phone: payload.identity.phone || undefined,
-    company: payload.identity.company || undefined,
-    notes: flattenToNotes(payload),
-    source: JOIN_SOURCE,
+  const result = await submitToUnieSales({
+    tag: 'join',
+    contact: {
+      contactName: payload.identity.fullName,
+      email: payload.identity.workEmail,
+      phone: payload.identity.phone || undefined,
+      company: payload.identity.company || undefined,
+      title: payload.identity.roleTitle || undefined,
+    },
+    fields: {
+      providerType: payload.providerType,
+      capabilities: payload.capabilities,
+      scale: payload.scale,
+      integrations: payload.integrations,
+      consent: payload.consent,
+      company_site: payload.identity.companyWebsite || '',
+    },
+    hp_email: state?.hpEmail || '',
   })
-  // ──────────────────────────────────────────────────────────────────────────
 
   return { ...result, payload }
 }

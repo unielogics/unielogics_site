@@ -148,6 +148,7 @@ function JoinForm() {
     fullName: '', workEmail: '', company: '', roleTitle: '', phone: '', companyWebsite: '',
   })
   const [consent, setConsent] = useState(false)
+  const [hpEmail, setHpEmail] = useState('')
   const [stepIdx, setStepIdx] = useState(0)
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState(null)
@@ -192,7 +193,7 @@ function JoinForm() {
     setSubmitting(true)
     setStatus(null)
     const result = await submitJoinRequest({
-      providerType, capabilities, scale, integrations, contact, consent,
+      providerType, capabilities, scale, integrations, contact, consent, hpEmail,
     })
     setSubmitting(false)
     if (result.success) {
@@ -247,6 +248,19 @@ function JoinForm() {
                 else next()
               }}
             >
+              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
+                <label>
+                  Don't fill this out
+                  <input
+                    name="hp_email"
+                    type="text"
+                    autoComplete="off"
+                    tabIndex={-1}
+                    value={hpEmail}
+                    onChange={(e) => setHpEmail(e.target.value)}
+                  />
+                </label>
+              </div>
               {stepKey === 'provider' && (
                 <div className="form-step-panel reveal on">
                   <h2 className="section-title">What kind of business do you run?</h2>

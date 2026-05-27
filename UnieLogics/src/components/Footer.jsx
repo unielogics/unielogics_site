@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Anchor } from '../showcase/lib/nav'
-import { submitLead } from '../lib/leadApi'
+import { submitToUnieSales } from '../lib/leadApi'
 
 const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogics/icononly.png'
 
@@ -28,6 +28,7 @@ function DevIcon({ name, size = 24 }) {
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [form, setForm] = useState({ name: '', email: '', phone: '', github: '', background: [], company: '', technologyToPublish: '' })
+  const [hpEmail, setHpEmail] = useState('')
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
@@ -45,27 +46,29 @@ export default function Footer() {
     e.preventDefault()
     setSubmitting(true)
     setSubmitStatus(null)
-    const backgroundStr = form.background.length
-      ? form.background.map((id) => BACKGROUND_OPTIONS.find((o) => o.id === id)?.label || id).join(', ')
-      : ''
-    const notesParts = [
-      `Background: ${backgroundStr}`,
-      `GitHub: ${form.github.trim()}`,
-      form.technologyToPublish.trim() ? `Technology to publish: ${form.technologyToPublish.trim()}` : null,
-    ].filter(Boolean)
-    const notes = notesParts.join('\n\n')
-    const result = await submitLead({
-      name: form.name.trim(),
-      email: form.email.trim().toLowerCase(),
-      phone: form.phone.trim(),
-      company: form.company.trim() || undefined,
-      notes,
-      source: 'UnieLogics Employment',
+    const backgroundAreas = form.background
+      .map((id) => BACKGROUND_OPTIONS.find((o) => o.id === id)?.label || id)
+    const result = await submitToUnieSales({
+      tag: 'developer',
+      contact: {
+        contactName: form.name.trim(),
+        email: form.email.trim().toLowerCase(),
+        phone: form.phone.trim(),
+        company: form.company.trim() || undefined,
+      },
+      fields: {
+        githubUsername: form.github.trim(),
+        backgroundAreas,
+        technologyToPublish: form.technologyToPublish.trim() || '',
+        message: form.technologyToPublish.trim() || '',
+      },
+      hp_email: hpEmail,
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll be in touch to explore." })
       setForm({ name: '', email: '', phone: '', github: '', background: [], company: '', technologyToPublish: '' })
+      setHpEmail('')
       setStep(1)
     } else {
       setSubmitStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
@@ -117,6 +120,19 @@ export default function Footer() {
           <h4 className="footer-developer-widget-title">Curious if we're a fit?</h4>
           <p className="footer-developer-widget-tagline">AI, ecommerce, logistics—request to explore.</p>
           <form className="footer-developer-form" onSubmit={handleDeveloperSubmit}>
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
+              <label>
+                Don't fill this out
+                <input
+                  name="hp_email"
+                  type="text"
+                  autoComplete="off"
+                  tabIndex={-1}
+                  value={hpEmail}
+                  onChange={(e) => setHpEmail(e.target.value)}
+                />
+              </label>
+            </div>
             <div className="footer-developer-pagination">
               {[1, 2, 3, 4, 5].map((s) => (
                 <span

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { services } from '../data/services'
 import ServiceCard from '../components/ServiceCard'
 import Footer from '../components/Footer'
-import { submitLead } from '../lib/leadApi'
+import { submitToUnieSales } from '../lib/leadApi'
 
 const SERVICE_ICONS = {
   audit: 'audit',
@@ -46,6 +46,7 @@ export default function Services() {
   const [persona, setPersona] = useState('')
   const [qualifying, setQualifying] = useState({ volume: '', locations: '', timeline: '' })
   const [contact, setContact] = useState({ name: '', company: '', email: '', phone: '', source: '' })
+  const [hpEmail, setHpEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
@@ -93,19 +94,35 @@ export default function Services() {
     e.preventDefault()
     setSubmitting(true)
     setSubmitStatus(null)
-    const notes = buildMailtoBody()
-    const result = await submitLead({
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone || undefined,
-      company: contact.company,
-      notes,
-      source: 'UnieLogics Services',
+    const serviceTitles = selectedServices
+      .map((id) => services.find((s) => s.id === id)?.title || id)
+    const result = await submitToUnieSales({
+      tag: 'services_inquiry',
+      contact: {
+        contactName: contact.name,
+        email: contact.email,
+        phone: contact.phone || undefined,
+        company: contact.company,
+      },
+      fields: {
+        servicesNeeded: selectedServices,
+        servicesNeededLabels: serviceTitles,
+        persona: persona || '',
+        qualifying: {
+          volume: qualifying.volume || '',
+          locations: qualifying.locations || '',
+          timeline: qualifying.timeline || '',
+        },
+        howHeard: contact.source || '',
+        subForm: 'services',
+      },
+      hp_email: hpEmail,
     })
     setSubmitting(false)
     if (result.success) {
       setSubmitStatus({ ok: true, message: "Thanks! We'll reach out shortly." })
       setContact({ name: '', company: '', email: '', phone: '', source: '' })
+      setHpEmail('')
       setSelectedServices([])
       setPersona('')
       setQualifying({ volume: '', locations: '', timeline: '' })
@@ -196,6 +213,19 @@ export default function Services() {
               </div>
             </div>
             <form className="services-form" onSubmit={(e) => { e.preventDefault(); if (formStep < 4) setFormStep((s) => s + 1); else handleFormSubmit(e); }}>
+              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', height: 1, width: 1, overflow: 'hidden' }}>
+                <label>
+                  Don't fill this out
+                  <input
+                    name="hp_email"
+                    type="text"
+                    autoComplete="off"
+                    tabIndex={-1}
+                    value={hpEmail}
+                    onChange={(e) => setHpEmail(e.target.value)}
+                  />
+                </label>
+              </div>
               {formStep === 1 && (
                 <div className="form-step-panel reveal on">
                   <h3 className="form-step-title">Which services do you need?</h3>
