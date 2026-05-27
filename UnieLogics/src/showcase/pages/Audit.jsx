@@ -128,6 +128,10 @@ export default function Audit() {
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState(null) // { ok, message }
   const [done, setDone] = useState(false)
+  // Holds the cortex hand-off URLs (onboarding magic link + verify-code page)
+  // returned by submitAuditRequest, so the done state can show CTAs that
+  // bridge the user from unielogics.com straight to ai.uniecortex.com.
+  const [doneInfo, setDoneInfo] = useState(null)
 
   // Tab title reflects the rename
   useEffect(() => {
@@ -182,6 +186,11 @@ export default function Audit() {
     })
     setSubmitting(false)
     if (result.success) {
+      setDoneInfo({
+        onboardingUrl: result.onboardingUrl || null,
+        verifyUrl: result.verifyUrl || null,
+        emailSent: !!result.emailSent,
+      })
       setDone(true)
     } else {
       setStatus({ ok: false, message: result.error || 'Something went wrong. Please try again.' })
@@ -207,10 +216,34 @@ export default function Audit() {
           </h1>
           <p>
             Your Cortex account access and onboarding link are on their way to{' '}
-            <strong style={{ color: 'var(--cx-text)' }}>{contact.workEmail}</strong>. Follow
-            the activation link in that email to log in and run your audit. Your data stays
+            <strong style={{ color: 'var(--cx-text)' }}>{contact.workEmail}</strong>. Open it
+            from your inbox, or use the buttons below to continue right now. Your data stays
             inside your own systems.
           </p>
+          {(doneInfo?.onboardingUrl || doneInfo?.verifyUrl) && (
+            <div className="cx-done-actions">
+              {doneInfo?.onboardingUrl && (
+                <a
+                  className="cx-submit"
+                  href={doneInfo.onboardingUrl}
+                  target="_self"
+                  rel="noopener"
+                >
+                  Open my Cortex workspace →
+                </a>
+              )}
+              {doneInfo?.verifyUrl && (
+                <a
+                  className="cx-done-secondary"
+                  href={doneInfo.verifyUrl}
+                  target="_self"
+                  rel="noopener"
+                >
+                  Or enter the code from your email →
+                </a>
+              )}
+            </div>
+          )}
         </section>
       ) : (
         <form onSubmit={handleSubmit}>

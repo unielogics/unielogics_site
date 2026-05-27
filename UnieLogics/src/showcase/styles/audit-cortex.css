@@ -521,6 +521,25 @@
   line-height: 1.55;
   font-size: 1.02rem;
 }
+.cx-done-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+}
+.cx-done-secondary {
+  color: var(--cx-cyan);
+  font-size: 0.92rem;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cx-done-secondary:hover {
+  border-bottom-color: var(--cx-cyan);
+  color: var(--cx-text);
+}
 
 /* ─── Error ───────────────────────────────────────────────────────────── */
 .cx-error {

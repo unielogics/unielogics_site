@@ -26,7 +26,20 @@ const CORTEX_INTAKE_URL =
   import.meta.env?.VITE_CORTEX_INTAKE_URL?.trim() ||
   'https://api.uniecortex.com/v1/public/intake'
 
+// Base URL of cortex's gated app (where /invite/<token> and
+// /verify?email=... live). The cortex intake response only returns the
+// onboarding URL — the verify URL is emailed but not surfaced in JSON,
+// so we build it client-side from the user's email + this stable base.
+const CORTEX_APP_BASE =
+  import.meta.env?.VITE_CORTEX_APP_URL?.trim() || 'https://ai.uniecortex.com'
+
 const DEFAULT_SOURCE = 'UnieLogics Audit Your Business'
+
+function buildVerifyUrl(email) {
+  const trimmed = (email || '').trim().toLowerCase()
+  if (!trimmed) return null
+  return `${CORTEX_APP_BASE.replace(/\/+$/, '')}/verify?email=${encodeURIComponent(trimmed)}`
+}
 
 function readUtm() {
   if (typeof window === 'undefined') return {}
@@ -196,6 +209,7 @@ export async function submitAuditRequest(state) {
       reference: data?.reference,
       status: data?.status,
       onboardingUrl: data?.onboarding_url || null,
+      verifyUrl: buildVerifyUrl(state?.contact?.workEmail),
       emailSent: !!data?.email_sent,
       payload,
     }
