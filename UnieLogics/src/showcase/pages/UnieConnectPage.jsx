@@ -19,7 +19,7 @@ export default function UnieConnectPage() {
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <Anchor href="/audit?type=order-financial" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
-              <Anchor href="/join#products" className="btn">Join Our Supply Chain</Anchor>
+              <Anchor href="/join#apply" className="btn">Join Our Supply Chain</Anchor>
             </div>
           </div>
           <div className="detail-hero-visual">

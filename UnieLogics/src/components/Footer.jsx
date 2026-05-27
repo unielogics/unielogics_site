@@ -115,7 +115,7 @@ export default function Footer() {
         <div>
           <h4>Operators</h4>
           <ul>
-            <li><Anchor href="/join">Join Our Supply Chain</Anchor></li>
+            <li><Anchor href="/join#apply">Join Our Supply Chain</Anchor></li>
             <li><Anchor href="/join#intelligence">The intelligence layer</Anchor></li>
             <li><Anchor href="/join#products">Product suite</Anchor></li>
             <li><a href="mailto:contact@unielogics.com">Contact</a></li>

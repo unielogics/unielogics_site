@@ -8,7 +8,7 @@ const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogi
 
 const LINKS = [
   { href: '/audit', label: 'Audit Your Business', key: 'audit' },
-  { href: '/join', label: 'Join Our Supply Chain', key: 'join' },
+  { href: '/join#apply', label: 'Join Our Supply Chain', key: 'join' },
 ]
 
 const PATH_KEY = {
@@ -77,7 +77,7 @@ export default function Navigation() {
       </nav>
       <div className={`nav-mobile-sheet ${mobileOpen ? 'is-open' : ''}`}>
         <Anchor href="/audit" onClick={onLink}>Audit Your Business</Anchor>
-        <Anchor href="/join" onClick={onLink}>Join Our Supply Chain</Anchor>
+        <Anchor href="/join#apply" onClick={onLink}>Join Our Supply Chain</Anchor>
         <Anchor href="/audit" onClick={onLink} className="nav-mobile-cta">Audit Your Business →</Anchor>
       </div>
     </>

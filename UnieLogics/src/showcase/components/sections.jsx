@@ -27,7 +27,7 @@ export function Hero() {
             <Anchor href="/audit" className="btn btn-primary">Audit your business · instant improvements, no commitment <span className="arrow">→</span></Anchor>
           </div>
           <div className="hero-tertiary">
-            <Anchor href="/join">You run a warehouse, fleet, OMS, or broker yourself? → Join Our Supply Chain</Anchor>
+            <Anchor href="/join#apply">You run a warehouse, fleet, OMS, or broker yourself? → Join Our Supply Chain</Anchor>
           </div>
         </div>
         <div className="hero-orbital-wrap">
@@ -1046,7 +1046,7 @@ export function CTASection() {
         </p>
         <div className="btns">
           <Anchor href="/audit" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
-          <Anchor href="/join" className="btn">Join Our Supply Chain</Anchor>
+          <Anchor href="/join#apply" className="btn">Join Our Supply Chain</Anchor>
         </div>
       </div>
     </section>

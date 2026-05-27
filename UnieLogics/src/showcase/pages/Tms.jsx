@@ -35,7 +35,7 @@ export default function Tms() {
             </p>
             <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <Anchor href="/audit?type=network" className="btn btn-primary">Audit Your Business <span className="arrow">→</span></Anchor>
-              <Anchor href="/join#tms" className="btn">Join Our Supply Chain</Anchor>
+              <Anchor href="/join#apply" className="btn">Join Our Supply Chain</Anchor>
               <Anchor href="#waitlist" className="btn-tertiary" style={{ color: '#FF8A5C' }}>Drive for us ↓</Anchor>
             </div>
           </div>
