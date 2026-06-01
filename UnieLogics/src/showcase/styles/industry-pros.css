@@ -1084,80 +1084,318 @@
 .ip-apply-thanks p { font-size: 14.5px; line-height: 1.55; color: var(--ip-fg-2); max-width: 520px; margin: 0 auto; }
 
 /* ─── PRINT + ?print=1 toggle (headless Chrome PDF generation) ─────────
- * Override both desktop and mobile deck modes so every slide renders as
- * its own paginated page, regardless of which is "active" in the React
- * state when the headless render kicks off.
+ * The PDF was generating 25 pages instead of 17 because @page was A4
+ * landscape (210mm tall) and the slide was forced into a 16:9 box
+ * (~167mm tall) leaving 43mm of overflow zone — content-heavy slides
+ * (07 Platform Stack, 11 Sales Workflow, 14 Enablement) bled below the
+ * slide and Chrome paginated the overflow onto a 2nd / 3rd page.
+ *
+ * Fix: set @page to exactly the slide's 16:9 size (297×167mm). Each
+ * slot is forced to exactly one page. Slide content is sized down in
+ * print so it actually fits. overflow: hidden is a hard floor against
+ * any residual spill.
  */
+
 @media print {
-  @page { size: A4 landscape; margin: 8mm; }
-  html, body { background: #ffffff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  @page { size: 297mm 167mm; margin: 0; }
+  html, body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
   nav, .ip-hero, .ip-deck-hud, .ip-deck-controls, .ip-apply-section,
   .site-footer, footer.site-footer { display: none !important; }
-  .ip-page { background: white !important; }
-  .ip-deck,
-  .ip-deck-desktop,
-  .ip-deck-mobile {
+  .ip-page, main { background: white !important; margin: 0 !important; padding: 0 !important; }
+}
+
+/* Shared deck-mode-busting + slide-sizing rules. We apply them to BOTH
+   @media print AND body[data-print="1"] so headless Chrome captures
+   identical layout whether it's using browser-print or our explicit
+   ?print=1 path. Authored as a separate selector group to avoid the
+   duplication problem we had before.                                  */
+@media print {
+  .ip-deck, .ip-deck-desktop, .ip-deck-mobile,
+  body[data-print="1"] .ip-deck, body[data-print="1"] .ip-deck-desktop, body[data-print="1"] .ip-deck-mobile {
     height: auto !important;
     overflow: visible !important;
     display: block !important;
     padding: 0 !important;
-  }
-  .ip-deck-slot {
-    position: static !important;
-    inset: auto !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding: 0 !important;
     margin: 0 !important;
-    background: transparent !important;
-    page-break-after: always;
-    page-break-inside: avoid;
-  }
-  .ip-deck-slot:last-child { page-break-after: auto; }
-  .ip-slide {
-    background: linear-gradient(135deg, #0a0d14, #06080f 75%) !important;
-    color: var(--ip-fg) !important;
-    border-radius: 8px !important;
-    min-height: 0 !important;
-    height: auto !important;
-    width: 100% !important;
-    max-height: none !important;
-    aspect-ratio: 16 / 9 !important;
-    padding: 28mm 28mm 14mm !important;
-    box-sizing: border-box !important;
   }
 }
-
-/* Same intent for headless Chrome's ?print=1 render path. */
-body[data-print="1"] nav,
-body[data-print="1"] .ip-hero,
-body[data-print="1"] .ip-deck-hud,
-body[data-print="1"] .ip-deck-controls,
-body[data-print="1"] .ip-apply-section,
-body[data-print="1"] .site-footer { display: none !important; }
 body[data-print="1"] .ip-deck,
 body[data-print="1"] .ip-deck-desktop,
 body[data-print="1"] .ip-deck-mobile {
   height: auto !important;
   overflow: visible !important;
   display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body[data-print="1"] nav,
+body[data-print="1"] .ip-hero,
+body[data-print="1"] .ip-deck-hud,
+body[data-print="1"] .ip-deck-controls,
+body[data-print="1"] .ip-apply-section,
+body[data-print="1"] .site-footer,
+body[data-print="1"] footer.site-footer { display: none !important; }
+/* Strip every container's top/bottom space so slot 1 sits at offset 0 and the
+   slot boundaries align with the printed @page boundaries. Without this the
+   global .ip-page padding pushes slot 1 down ~92px, every slot misaligns
+   with the page break, and headless Chrome paginates an extra page. */
+body[data-print="1"],
+body[data-print="1"] html,
+body[data-print="1"] #root,
+body[data-print="1"] main,
+body[data-print="1"] main.ip-page,
+body[data-print="1"] .ip-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+@media print {
+  .ip-deck-slot {
+    position: static !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: 297mm !important;
+    height: 167mm !important;
+    min-height: 0 !important;
+    max-height: 167mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+    overflow: hidden !important;
+  }
+  .ip-deck-slot:last-child { page-break-after: auto; }
 }
 body[data-print="1"] .ip-deck-slot {
   position: static !important;
   inset: auto !important;
   opacity: 1 !important;
   pointer-events: auto !important;
+  width: 297mm !important;
+  height: 166mm !important;
   min-height: 0 !important;
-  height: auto !important;
+  max-height: 166mm !important;
   padding: 0 !important;
+  margin: 0 !important;
   background: transparent !important;
   page-break-after: always;
-  margin-bottom: 16px;
+  break-after: page;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  overflow: hidden !important;
+}
+/* Don't force a page-break after the LAST slot — otherwise headless Chrome
+   emits an empty 18th trailing page. */
+body[data-print="1"] .ip-deck-slot:last-child {
+  page-break-after: auto !important;
+  break-after: auto !important;
+}
+
+@media print {
+  .ip-slide {
+    background: linear-gradient(135deg, #0a0d14, #06080f 75%) !important;
+    color: var(--ip-fg) !important;
+    border: 0 !important;
+    border-left: 4px solid var(--ip-accent) !important;
+    border-radius: 0 !important;
+    width: 297mm !important;
+    height: 167mm !important;
+    min-height: 0 !important;
+    max-height: 167mm !important;
+    aspect-ratio: auto !important;
+    padding: 11mm 16mm 8mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    gap: 7mm !important;
+  }
 }
 body[data-print="1"] .ip-slide {
-  aspect-ratio: 16 / 9 !important;
-  max-height: none !important;
-  height: auto !important;
+  background: linear-gradient(135deg, #0a0d14, #06080f 75%) !important;
+  color: var(--ip-fg) !important;
+  border: 0 !important;
+  border-left: 4px solid var(--ip-accent) !important;
+  border-radius: 0 !important;
+  width: 297mm !important;
+  height: 166mm !important;
+  min-height: 0 !important;
+  max-height: 166mm !important;
+  aspect-ratio: auto !important;
+  padding: 11mm 16mm 8mm !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  gap: 7mm !important;
 }
+
+/* Compress content typography for the smaller print canvas so every
+   slide actually fits in its 297×167mm box. Applied to both render
+   paths via a doubled selector list — `:where()` would let us merge
+   them but we keep them separated for clarity. */
+@media print {
+  .ip-h2,
+  body[data-print="1"] .ip-h2 { font-size: 18pt !important; line-height: 1.1 !important; }
+  .ip-lede,
+  body[data-print="1"] .ip-lede { font-size: 11pt !important; line-height: 1.45 !important; max-width: none !important; }
+  .ip-bullets li,
+  body[data-print="1"] .ip-bullets li { font-size: 10pt !important; line-height: 1.4 !important; }
+  .ip-card,
+  body[data-print="1"] .ip-card { padding: 10pt 12pt !important; gap: 4pt !important; }
+  .ip-card p,
+  body[data-print="1"] .ip-card p { font-size: 9.5pt !important; line-height: 1.4 !important; }
+  .ip-card-title,
+  body[data-print="1"] .ip-card-title { font-size: 11pt !important; }
+  .ip-card-tag,
+  body[data-print="1"] .ip-card-tag { font-size: 7pt !important; }
+  .ip-cover-title,
+  body[data-print="1"] .ip-cover-title { font-size: 30pt !important; line-height: 1 !important; }
+  .ip-cover-sub,
+  body[data-print="1"] .ip-cover-sub { font-size: 11pt !important; line-height: 1.45 !important; }
+  .ip-econ-pct,
+  body[data-print="1"] .ip-econ-pct { font-size: 22pt !important; width: 90pt !important; }
+  .ip-econ-product,
+  body[data-print="1"] .ip-econ-product { font-size: 12pt !important; }
+  .ip-econ-label,
+  body[data-print="1"] .ip-econ-label { font-size: 9pt !important; }
+  .ip-econ-table td,
+  body[data-print="1"] .ip-econ-table td { padding: 6pt 0 !important; }
+  .ip-flow-step,
+  body[data-print="1"] .ip-flow-step { padding: 8pt 10pt !important; }
+  .ip-flow-n,
+  body[data-print="1"] .ip-flow-n { font-size: 18pt !important; }
+  .ip-flow-name,
+  body[data-print="1"] .ip-flow-name { font-size: 10pt !important; }
+  .ip-flow-body,
+  body[data-print="1"] .ip-flow-body { font-size: 9pt !important; line-height: 1.35 !important; }
+  .ip-numbered-list,
+  body[data-print="1"] .ip-numbered-list { gap: 6pt !important; }
+  .ip-numbered-list li,
+  body[data-print="1"] .ip-numbered-list li { padding: 8pt 10pt !important; grid-template-columns: 36pt 1fr !important; gap: 10pt !important; }
+  .ip-numbered-list li strong,
+  body[data-print="1"] .ip-numbered-list li strong { font-size: 11pt !important; }
+  .ip-numbered-list li p,
+  body[data-print="1"] .ip-numbered-list li p { font-size: 9.5pt !important; line-height: 1.35 !important; }
+  .ip-numbered-n,
+  body[data-print="1"] .ip-numbered-n { font-size: 20pt !important; }
+  .ip-anchor-num,
+  body[data-print="1"] .ip-anchor-num { font-size: 22pt !important; margin: 4pt 0 !important; }
+  .ip-anchor-cell,
+  body[data-print="1"] .ip-anchor-cell { padding: 8pt 10pt !important; }
+  .ip-anchor-cell p,
+  body[data-print="1"] .ip-anchor-cell p { font-size: 8.5pt !important; line-height: 1.3 !important; }
+  /* Slide 09 layout: stack the three economics cells horizontally so the
+     left split column doesn't run past 405px. */
+  .ip-anchor-grid,
+  body[data-print="1"] .ip-anchor-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5pt !important;
+  }
+  .ip-audit-num,
+  body[data-print="1"] .ip-audit-num { font-size: 22pt !important; }
+  .ip-audit-lbl,
+  body[data-print="1"] .ip-audit-lbl { font-size: 8pt !important; }
+  .ip-stack-body,
+  body[data-print="1"] .ip-stack-body { padding: 8pt 10pt !important; gap: 3pt !important; }
+  .ip-stack-name,
+  body[data-print="1"] .ip-stack-name { font-size: 11pt !important; }
+  .ip-stack-body p,
+  body[data-print="1"] .ip-stack-body p { font-size: 9pt !important; line-height: 1.35 !important; }
+  .ip-stack-img,
+  body[data-print="1"] .ip-stack-img { padding: 8pt !important; }
+  .ip-advantage-big,
+  body[data-print="1"] .ip-advantage-big { font-size: 36pt !important; }
+  .ip-advantage-card,
+  body[data-print="1"] .ip-advantage-card { padding: 14pt !important; }
+  .ip-advantage-card p,
+  body[data-print="1"] .ip-advantage-card p { font-size: 10pt !important; }
+  .ip-win-stage-label,
+  body[data-print="1"] .ip-win-stage-label { padding: 5pt 12pt !important; font-size: 10pt !important; }
+  .ip-recommended-close,
+  body[data-print="1"] .ip-recommended-close { padding: 8pt 12pt !important; }
+  .ip-recommended-close p,
+  body[data-print="1"] .ip-recommended-close p { font-size: 11pt !important; }
+  .ip-slide-eyebrow,
+  body[data-print="1"] .ip-slide-eyebrow { font-size: 8pt !important; }
+  .ip-slide-count,
+  body[data-print="1"] .ip-slide-count { font-size: 8pt !important; }
+  .ip-slide-footer,
+  body[data-print="1"] .ip-slide-footer { font-size: 7pt !important; gap: 8pt !important; padding-top: 6pt !important; }
+  .ip-slide-disclaimer,
+  body[data-print="1"] .ip-slide-disclaimer { font-size: 8pt !important; padding-top: 6pt !important; }
+}
+body[data-print="1"] .ip-h2 { font-size: 18pt !important; line-height: 1.1 !important; }
+body[data-print="1"] .ip-lede { font-size: 11pt !important; line-height: 1.45 !important; max-width: none !important; }
+body[data-print="1"] .ip-cover-title { font-size: 30pt !important; line-height: 1 !important; }
+body[data-print="1"] .ip-cover-sub { font-size: 11pt !important; line-height: 1.45 !important; }
+
+/* Tight constraints on flexible content containers — without min-height: 0
+   on grid items, content can grow beyond the row track. We saw slide 09
+   bleed 7px past 167mm because the UnieWMS dashboard image had no
+   max-height. Cap visuals and let grid rows shrink in print. */
+@media print {
+  .ip-split, body[data-print="1"] .ip-split,
+  .ip-split > *, body[data-print="1"] .ip-split > *,
+  .ip-cover-grid, body[data-print="1"] .ip-cover-grid,
+  .ip-cover-grid > *, body[data-print="1"] .ip-cover-grid > *,
+  .ip-close-grid, body[data-print="1"] .ip-close-grid,
+  .ip-close-grid > *, body[data-print="1"] .ip-close-grid > * {
+    min-height: 0 !important;
+    min-width: 0 !important;
+  }
+  .ip-anchor-visual img, body[data-print="1"] .ip-anchor-visual img,
+  .ip-stack-img img, body[data-print="1"] .ip-stack-img img {
+    max-height: 70mm !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+  .ip-anchor-visual, body[data-print="1"] .ip-anchor-visual {
+    padding: 6pt !important;
+    max-height: 90mm !important;
+  }
+  .ip-anchor-grid, body[data-print="1"] .ip-anchor-grid {
+    gap: 6pt !important;
+  }
+  .ip-cover-visual svg, body[data-print="1"] .ip-cover-visual svg,
+  .ip-close-visual svg, body[data-print="1"] .ip-close-visual svg {
+    max-height: 90mm !important;
+    width: auto !important;
+  }
+}
+body[data-print="1"] .ip-split,
+body[data-print="1"] .ip-split > *,
+body[data-print="1"] .ip-cover-grid,
+body[data-print="1"] .ip-cover-grid > *,
+body[data-print="1"] .ip-close-grid,
+body[data-print="1"] .ip-close-grid > * {
+  min-height: 0 !important;
+  min-width: 0 !important;
+}
+body[data-print="1"] .ip-anchor-visual img,
+body[data-print="1"] .ip-stack-img img {
+  max-height: 70mm !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+body[data-print="1"] .ip-anchor-visual { padding: 6pt !important; max-height: 90mm !important; }
+body[data-print="1"] .ip-cover-visual svg,
+body[data-print="1"] .ip-close-visual svg { max-height: 90mm !important; width: auto !important; }
+
+/* Slide 09 — economics cells go horizontal in print so the left split
+   column doesn't stack to 548px and overflow the 405px body track. */
+body[data-print="1"] .ip-anchor-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 5pt !important;
+}
+body[data-print="1"] .ip-anchor-num {
+  font-size: 22pt !important;
+  margin: 4pt 0 !important;
+}
+body[data-print="1"] .ip-anchor-cell { padding: 8pt 10pt !important; }
+body[data-print="1"] .ip-anchor-cell p { font-size: 8.5pt !important; line-height: 1.3 !important; }

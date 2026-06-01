@@ -32,11 +32,16 @@ OUT="$(dirname "$0")/../public/industry-pros.pdf"
 mkdir -p "$(dirname "$OUT")"
 
 echo "Rendering /industry-pros?print=1 via headless Chrome..."
+# --window-size matches the @page size (297mm x 167mm at 96dpi = 1123x632)
+# so headless Chrome's render viewport matches the print viewport exactly.
+# --virtual-time-budget gives React + IntersectionObserver time to settle.
 "$CHROME" \
   --headless \
   --disable-gpu \
   --no-pdf-header-footer \
   --print-to-pdf-no-header \
+  --window-size=1123,632 \
+  --virtual-time-budget=10000 \
   --print-to-pdf="$OUT" \
   "http://localhost:5173/industry-pros?print=1"
 
