@@ -158,7 +158,19 @@
   margin: 16px 0 0 0;
 }
 @media (max-width: 980px) {
-  .ip-hero-inner { grid-template-columns: 1fr; }
+  .ip-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .ip-hero { padding: 64px 20px 40px; }
+  .ip-hero-title { font-size: clamp(34px, 9.5vw, 44px); line-height: 1.04; }
+  .ip-hero-sub { font-size: 14px; }
+  .ip-hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
+  .ip-hero-ctas .ip-btn { width: 100%; justify-content: center; padding: 14px 16px; font-size: 12px; }
+  .ip-hero-card { padding: 22px; }
+  .ip-hero-card-title { font-size: 17px; }
+  .ip-hero-card-rows li { grid-template-columns: 1fr auto; }
+  .ip-hero-card-label { display: none; }
+  .ip-hero-card-pct { font-size: 17px; }
 }
 
 /* Scroll-cue at the bottom of the hero: nudges the user into the deck. */
@@ -312,16 +324,90 @@
 .ip-deck-mobile {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding: 24px 0;
+  gap: 20px;
+  padding: 16px 0 80px; /* bottom padding clears the docked HUD */
 }
 .ip-deck-mobile .ip-deck-slot {
-  padding: 16px;
+  padding: 0 12px;
   min-height: auto;
 }
 .ip-deck-mobile .ip-deck-slot .ip-slide {
   max-height: none;
   height: auto;
+}
+
+/* Mobile typography + layout polish for slides */
+@media (max-width: 768px) {
+  /* Tighter, more readable type at 343px-wide */
+  .ip-cover-title { font-size: clamp(30px, 8.5vw, 38px); line-height: 1.05; }
+  .ip-cover-sub { font-size: 14px; line-height: 1.5; }
+  .ip-cover-tags { font-size: 10px; gap: 6px; flex-wrap: wrap; }
+  .ip-h2 { font-size: clamp(20px, 6.2vw, 26px); line-height: 1.18; }
+  .ip-lede { font-size: 13.5px; line-height: 1.55; }
+  .ip-bullets li { font-size: 13px; }
+
+  /* Cards: tighter padding so the body text breathes */
+  .ip-card { padding: 14px 14px; gap: 6px; }
+  .ip-card p { font-size: 13px; }
+  .ip-card-title { font-size: 14px; }
+
+  /* 5-step flow stacks vertically with arrows turning into separators */
+  .ip-flow { gap: 8px; }
+  .ip-flow-step { padding: 12px 14px; }
+  .ip-flow-n { font-size: 22px; }
+  .ip-flow-name { font-size: 13px; }
+  .ip-flow-body { font-size: 12.5px; }
+
+  /* 6-step numbered list */
+  .ip-numbered-list { gap: 8px; }
+  .ip-numbered-list li {
+    grid-template-columns: 40px 1fr;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+  .ip-numbered-list li strong { font-size: 14px; }
+  .ip-numbered-list li p { font-size: 12.5px; }
+  .ip-numbered-n { font-size: 26px; }
+
+  /* Economics table — pct number stays prominent but row is denser */
+  .ip-econ-table td { padding: 10px 0; }
+  .ip-econ-product { font-size: 14px; }
+  .ip-econ-pct { font-size: 24px; width: 72px; }
+  .ip-econ-label { font-size: 10px; padding-left: 8px !important; }
+
+  /* Anchor grid (slide 09) — single column, smaller numbers */
+  .ip-anchor-cell { padding: 14px; }
+  .ip-anchor-num { font-size: 38px; }
+  .ip-anchor-cell p { font-size: 12.5px; }
+  .ip-anchor-visual { padding: 6px; }
+
+  /* Platform stack (slide 07) — image stacks above body on mobile */
+  .ip-stack-card { grid-template-columns: 1fr; }
+  .ip-stack-img { border-right: none; border-bottom: 1px solid var(--ip-hairline); padding: 18px; aspect-ratio: 16 / 9; }
+  .ip-stack-img img { width: 100%; height: 100%; object-fit: contain; }
+  .ip-stack-name { font-size: 15px; }
+  .ip-stack-body p { font-size: 12.5px; }
+
+  /* Audit dashboard (slide 06) — full width tiles, smaller numbers */
+  .ip-audit-dash { padding: 16px; }
+  .ip-audit-num { font-size: 26px; }
+  .ip-audit-lbl { font-size: 9px; }
+
+  /* Win flow (slide 16) — labels stack, arrows turn vertical */
+  .ip-win-flow { flex-direction: column; align-items: center; padding: 14px; gap: 6px; }
+  .ip-win-stage { flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+  .ip-win-stage-label { width: auto; min-width: 60%; text-align: center; padding: 9px 18px; font-size: 12px; }
+  .ip-win-arrow { transform: rotate(90deg); font-size: 14px; line-height: 1; }
+
+  /* Closing slide 17 close-ctas — single-button, full-width tap target */
+  .ip-close-ctas { width: 100%; }
+  .ip-close-ctas .ip-btn { width: 100%; justify-content: center; }
+  .ip-recommended-close { padding: 12px 14px; }
+  .ip-recommended-close p { font-size: 13px; }
+
+  /* Advantage card on slide 04 — tighter */
+  .ip-advantage-card { padding: 20px; }
+  .ip-advantage-big { font-size: 44px; }
 }
 
 /* ─── Floating HUD: PDF download + slide progress + jump-to-apply ───── */
@@ -340,6 +426,19 @@
   border-radius: 999px;
   padding: 6px 8px 6px 14px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  transition: opacity .25s ease, transform .25s ease;
+}
+/* When the hero is still in view we keep the HUD out of the way so it
+   doesn't fight the hero CTAs / commission card for taps. */
+.ip-deck-hud.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+@media (max-width: 768px) {
+  .ip-deck-hud.is-hidden {
+    transform: translateY(20px);
+  }
 }
 .ip-deck-progress {
   font-size: 11px;
@@ -417,8 +516,17 @@
 .ip-slide-prog { color: var(--ip-fg-2); }
 .ip-slide-confidential { margin-left: auto; }
 @media (max-width: 768px) {
-  .ip-slide { padding: 36px 24px 18px; }
+  .ip-slide {
+    padding: 28px 20px 16px;
+    gap: 16px;
+    border-radius: 12px;
+    border-left-width: 3px;
+  }
   .ip-slide-confidential { display: none; }
+  .ip-slide-eyebrow { font-size: 10px; letter-spacing: .14em; }
+  .ip-slide-count { font-size: 10px; }
+  .ip-slide-footer { font-size: 9px; letter-spacing: .1em; gap: 8px; }
+  .ip-slide-brand { width: 14px; height: 14px; }
 }
 
 /* ─── SHARED TYPOGRAPHY INSIDE SLIDES ──────────────────────────────────── */

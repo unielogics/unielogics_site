@@ -96,6 +96,22 @@ export default function IndustryPros() {
     return () => io.disconnect()
   }, [isDesktopDeck, isPrintMode])
 
+  // HUD is only shown once the user has scrolled past the hero. Otherwise
+  // it competes with the hero CTAs / commission card for tap targets on
+  // mobile.
+  const [heroVisible, setHeroVisible] = useState(true)
+  useEffect(() => {
+    if (isPrintMode) return
+    const hero = document.querySelector('.ip-hero')
+    if (!hero) return
+    const io = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting && entry.intersectionRatio > 0.15),
+      { threshold: [0.15] },
+    )
+    io.observe(hero)
+    return () => io.disconnect()
+  }, [isPrintMode])
+
   return (
     <main className="ip-page">
       {/* ─── HERO (hidden in print) ────────────────────────────────────── */}
@@ -203,8 +219,8 @@ export default function IndustryPros() {
         )}
       </section>
 
-      {/* ─── Floating HUD ─────────────────────────────────────────────── */}
-      <div className="ip-deck-hud" aria-hidden="false">
+      {/* ─── Floating HUD — only when past the hero ──────────────────── */}
+      <div className={`ip-deck-hud ${heroVisible ? 'is-hidden' : ''}`} aria-hidden={heroVisible}>
         <a
           href="/industry-pros.pdf"
           className="ip-btn ip-btn-outline ip-btn-sm"
