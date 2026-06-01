@@ -1,4 +1,4 @@
-// IndustryProsSlides — 17-slide partner program deck.
+// IndustryProsSlides — 17-slide Account Executive program deck.
 //
 // Each slide is a React function component returning <Slide>. The same DOM
 // renders both the long-scroll hero stack at top of /industry-pros AND the
@@ -7,7 +7,7 @@
 // (one slide → one printed page).
 //
 // Source content: user-supplied 17-slide "Turn Logistics Relationships Into
-// Long-Term Recurring Income" partner program presentation. Every figure
+// Long-Term Recurring Income" Account Executive program presentation. Every figure
 // (90%, 30%, $42K, etc.) is copied verbatim from the source — nothing is
 // invented in this file.
 
@@ -36,8 +36,8 @@ export function Slide({ n, eyebrow, disclaimer, children, accent = 'lime' }) {
       {disclaimer && <div className="ip-slide-disclaimer">{disclaimer}</div>}
       <footer className="ip-slide-footer">
         <img className="ip-slide-brand" src={BRAND_ICON} alt="UnieLogics" />
-        <span className="ip-slide-prog">UnieLogics · Industry Partner Program</span>
-        <span className="ip-slide-confidential mono">UnieLogics — Confidential Partner Presentation</span>
+        <span className="ip-slide-prog">UnieLogics · Industry Account Executive Program</span>
+        <span className="ip-slide-confidential mono">UnieLogics — Confidential Account Executive Presentation</span>
       </footer>
     </section>
   )
@@ -56,14 +56,14 @@ export function Slide01() {
             Income
           </h1>
           <p className="ip-cover-sub">
-            A corporate partner program for brokers, consultants, auditors, and industry
+            UnieLogics' Account Executive program for brokers, consultants, auditors, and industry
             professionals who can open doors in warehousing, freight, ecommerce, and
             supply chain operations.
           </p>
           <div className="ip-cover-tags">
             <span>Audit-led selling</span>
             <span>·</span>
-            <span>Recurring partner economics</span>
+            <span>Recurring AE economics</span>
           </div>
         </div>
         <div className="ip-cover-visual">
@@ -82,14 +82,14 @@ export function Slide02() {
         This program turns industry access into a <em>protected revenue channel.</em>
       </h2>
       <p className="ip-lede">
-        The partner does not simply refer a name. The partner uses operational audits to create
-        urgency, matches the account to the right technology, and earns from active accounts under
-        the partner agreement.
+        The Account Executive does not simply refer a name. The AE uses operational audits to
+        create urgency, matches the account to the right technology, and earns from active accounts
+        under the Account Executive agreement.
       </p>
       <div className="ip-cols ip-cols-3">
         <div className="ip-card">
           <div className="ip-card-tag mono">Relationship</div>
-          <p>Partners bring access to warehouses, freight operators, sellers, and logistics decision-makers.</p>
+          <p>Account Executives bring access to warehouses, freight operators, sellers, and logistics decision-makers.</p>
         </div>
         <div className="ip-card">
           <div className="ip-card-tag mono">Audit</div>
@@ -134,10 +134,10 @@ export function Slide03() {
   )
 }
 
-/* ─── 04 Partner Opening ─────────────────────────────────────────────────── */
+/* ─── 04 The Opening ─────────────────────────────────────────────────── */
 export function Slide04() {
   return (
-    <Slide n={4} eyebrow="THE PARTNER OPENING">
+    <Slide n={4} eyebrow="THE OPENING">
       <div className="ip-split">
         <div>
           <h2 className="ip-h2">
@@ -151,7 +151,7 @@ export function Slide04() {
           </p>
         </div>
         <div className="ip-advantage-card">
-          <div className="ip-card-tag mono">PARTNER ADVANTAGE</div>
+          <div className="ip-card-tag mono">ACCOUNT EXECUTIVE ADVANTAGE</div>
           <div className="ip-advantage-big">Access</div>
           <p className="ip-advantage-tag">Relationships become revenue assets.</p>
           <p>
@@ -212,7 +212,7 @@ export function Slide06() {
           </h2>
           <p className="ip-lede">
             The audit creates urgency. The software creates the solution.
-            The partner earns from the account.
+            The Account Executive earns from the account.
           </p>
           <ul className="ip-bullets">
             <li>Billing leakage and invoice discrepancies</li>
@@ -255,7 +255,7 @@ export function Slide07() {
   return (
     <Slide n={7} eyebrow="PLATFORM STACK">
       <h2 className="ip-h2">
-        One partner program.<br />
+        One Account Executive program.<br />
         <em>Multiple ways to monetize the relationship.</em>
       </h2>
       <div className="ip-stack-grid">
@@ -304,7 +304,7 @@ export function Slide07() {
   )
 }
 
-/* ─── 08 Aggressive Partner Economics ────────────────────────────────────── */
+/* ─── 08 Aggressive Account Executive Economics ─────────────────────────── */
 export function Slide08() {
   const rows = [
     { product: 'UnieWMS', pct: '90%', label: 'first-year commission' },
@@ -316,15 +316,15 @@ export function Slide08() {
   return (
     <Slide
       n={8}
-      eyebrow="AGGRESSIVE PARTNER ECONOMICS"
-      disclaimer="Based on eligible collected revenue and final partner terms."
+      eyebrow="AGGRESSIVE ACCOUNT EXECUTIVE ECONOMICS"
+      disclaimer="Based on eligible collected revenue and final Account Executive terms."
     >
       <h2 className="ip-h2">
         Compensation designed<br />
         <em>to build a serious book of business.</em>
       </h2>
       <p className="ip-lede">
-        The schedule rewards partners for opening doors, using the audit
+        The schedule rewards Account Executives for opening doors, using the audit
         process, and helping activate accounts that stay with the platform.
       </p>
       <table className="ip-econ-table">
@@ -354,7 +354,7 @@ export function Slide09() {
         <div>
           <h2 className="ip-h2">
             The WMS offer creates the<br />
-            <em>strongest upfront partner incentive.</em>
+            <em>strongest upfront Account Executive incentive.</em>
           </h2>
           <div className="ip-anchor-grid">
             <div className="ip-anchor-cell">
@@ -382,24 +382,24 @@ export function Slide09() {
   )
 }
 
-/* ─── 10 Partner Account Protection ──────────────────────────────────────── */
+/* ─── 10 Account Executive Account Protection ──────────────────────────── */
 export function Slide10() {
   const cards = [
-    { title: 'Account Registration', body: 'Partner submits the target account before sales activity is credited.' },
-    { title: 'Protection Window', body: 'Registered accounts receive a defined protection window under the partner agreement.' },
-    { title: 'Expansion Credit', body: 'If the account expands into additional eligible products, partner economics can follow the registered relationship.' },
+    { title: 'Account Registration', body: 'Account Executive submits the target account before sales activity is credited.' },
+    { title: 'Protection Window', body: 'Registered accounts receive a defined protection window under the Account Executive agreement.' },
+    { title: 'Expansion Credit', body: 'If the account expands into additional eligible products, Account Executive economics can follow the registered relationship.' },
     { title: 'Active Account Rule', body: 'Ongoing commissions require active accounts, collected revenue, and compliance with program terms.' },
     { title: 'No Channel Conflict', body: 'Duplicate submissions, existing pipeline accounts, and house accounts are resolved by written program rules.' },
     { title: 'Deal Support', body: 'UnieLogics supports audits, demos, proposals, implementation planning, and product matching.' },
   ]
   return (
-    <Slide n={10} eyebrow="PARTNER ACCOUNT PROTECTION">
+    <Slide n={10} eyebrow="ACCOUNT EXECUTIVE PROTECTION">
       <h2 className="ip-h2">
-        Serious partners need a<br />
+        Serious Account Executives need a<br />
         <em>serious account-registration structure.</em>
       </h2>
       <p className="ip-lede">
-        The program should protect legitimate partner-sourced opportunities while giving UnieLogics
+        The program should protect legitimate AE-sourced opportunities while giving UnieLogics
         clean rules for qualification, activation, payout, and support.
       </p>
       <div className="ip-cols ip-cols-3">
@@ -414,18 +414,18 @@ export function Slide10() {
   )
 }
 
-/* ─── 11 Partner Sales Workflow ──────────────────────────────────────────── */
+/* ─── 11 Account Executive Sales Workflow ─────────────────────────────── */
 export function Slide11() {
   const steps = [
     ['1', 'Identify', 'Warehouses, sellers, freight users, distributors, manufacturers, and logistics operators.'],
-    ['2', 'Register', 'Submit account for partner protection and deal tracking.'],
+    ['2', 'Register', 'Submit account for Account Executive protection and deal tracking.'],
     ['3', 'Audit', 'Use operational audit tools to expose gaps and quantify the pain.'],
     ['4', 'Present', 'Review findings with decision-makers and match the product line.'],
     ['5', 'Close', 'UnieLogics supports demo, proposal, onboarding, and implementation.'],
-    ['6', 'Earn', 'Partner receives eligible commission on collected revenue under agreement terms.'],
+    ['6', 'Earn', 'Account Executive receives eligible commission on collected revenue under agreement terms.'],
   ]
   return (
-    <Slide n={11} eyebrow="PARTNER SALES WORKFLOW">
+    <Slide n={11} eyebrow="ACCOUNT EXECUTIVE SALES WORKFLOW">
       <h2 className="ip-h2">
         A simple motion that converts access<br />
         <em>into a software-backed opportunity.</em>
@@ -475,7 +475,7 @@ export function Slide12() {
       </h2>
       <div className="ip-cols ip-cols-2">
         <div className="ip-card">
-          <div className="ip-card-title">Ideal Partners</div>
+          <div className="ip-card-title">Ideal Account Executives</div>
           <ul className="ip-bullets">
             {ideal.map((x) => <li key={x}>{x}</li>)}
           </ul>
@@ -513,20 +513,20 @@ export function Slide13() {
   )
 }
 
-/* ─── 14 Partner Enablement ──────────────────────────────────────────────── */
+/* ─── 14 Account Executive Enablement ─────────────────────────────────── */
 export function Slide14() {
   const cards = [
-    { title: 'Audit Positioning', body: 'Talk tracks and audit categories that help partners identify pain quickly.' },
+    { title: 'Audit Positioning', body: 'Talk tracks and audit categories that help Account Executives identify pain quickly.' },
     { title: 'Sales Materials', body: 'Corporate decks, one-pagers, compensation overview, email sequences, and call scripts.' },
     { title: 'Deal Desk', body: 'Support for demo strategy, pricing, proposal structure, and product matching.' },
     { title: 'Implementation Handoff', body: 'Clear process after close so the customer sees professionalism from day one.' },
-    { title: 'Partner Dashboard', body: 'Account registration, deal status, commission visibility, and product education.' },
+    { title: 'AE Dashboard', body: 'Account registration, deal status, commission visibility, and product education.' },
     { title: 'Training', body: 'Product, audit, objection-handling, and vertical-specific selling resources.' },
   ]
   return (
-    <Slide n={14} eyebrow="PARTNER ENABLEMENT">
+    <Slide n={14} eyebrow="ACCOUNT EXECUTIVE ENABLEMENT">
       <h2 className="ip-h2">
-        Partners need more than commission.<br />
+        Account Executives need more than commission.<br />
         <em>They need a repeatable system.</em>
       </h2>
       <div className="ip-cols ip-cols-3">
@@ -547,9 +547,9 @@ export function Slide15() {
     { title: 'Eligible Revenue', body: 'Define which collected revenue categories are commissionable.' },
     { title: 'Payment Timing', body: 'Commissions paid after customer payment clears and account status is verified.' },
     { title: 'Chargebacks / Refunds', body: 'Returned or unpaid revenue can adjust commission calculations.' },
-    { title: 'Partner Conduct', body: 'No false claims, no savings guarantees, no unauthorized pricing promises.' },
+    { title: 'Account Executive Conduct', body: 'No false claims, no savings guarantees, no unauthorized pricing promises.' },
     { title: 'Customer Ownership', body: 'Account registration rules determine credit, conflict handling, and expansion economics.' },
-    { title: 'Final Agreement Controls', body: 'Partner agreement overrides all marketing language and program summaries.' },
+    { title: 'Final Agreement Controls', body: 'Account Executive agreement overrides all marketing language and program summaries.' },
   ]
   return (
     <Slide n={15} eyebrow="GOVERNANCE AND CLARITY">
@@ -558,7 +558,7 @@ export function Slide15() {
         <em>but keep the program terms clean.</em>
       </h2>
       <p className="ip-lede">
-        This deck should recruit serious partners while staying clear about eligibility, timing,
+        This deck should recruit serious Account Executives while staying clear about eligibility, timing,
         final agreement terms, and the fact that no income outcome is guaranteed.
       </p>
       <div className="ip-cols ip-cols-3">
@@ -573,17 +573,17 @@ export function Slide15() {
   )
 }
 
-/* ─── 16 Why Partners Win ────────────────────────────────────────────────── */
+/* ─── 16 Why Account Executives Win ────────────────────────────────────── */
 export function Slide16() {
-  const flow = ['Relationship', 'Audit', 'Usage', 'Software Sale', 'Retention', 'Ongoing Partner Income']
+  const flow = ['Relationship', 'Audit', 'Usage', 'Software Sale', 'Retention', 'Ongoing AE Income']
   return (
-    <Slide n={16} eyebrow="WHY PARTNERS WIN">
+    <Slide n={16} eyebrow="WHY ACCOUNT EXECUTIVES WIN">
       <h2 className="ip-h2">
         Every account can become<br />
         <em>a long-term revenue asset.</em>
       </h2>
       <p className="ip-lede">
-        Partners bring access, trust, and industry knowledge. The
+        Account Executives bring access, trust, and industry knowledge. The
         platform brings the audit tools, software, implementation
         structure, and compensation model.
       </p>
@@ -611,7 +611,7 @@ export function Slide17() {
             <em>Keep earning.</em>
           </h2>
           <p className="ip-lede">
-            Apply to become a strategic UnieLogics partner. Built for serious brokers, consultants,
+            Apply to become a UnieLogics Account Executive. Built for serious brokers, consultants,
             auditors, and logistics professionals ready to help modernize the industry.
           </p>
           <div className="ip-recommended-close">
@@ -625,9 +625,8 @@ export function Slide17() {
               target="_blank"
               rel="noreferrer"
             >
-              Become a strategic partner ↗
+              Become an Account Executive ↗
             </a>
-            <a href="#apply" className="ip-btn ip-btn-outline">Apply on this page →</a>
           </div>
         </div>
         <div className="ip-close-visual">
