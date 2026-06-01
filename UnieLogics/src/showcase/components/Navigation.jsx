@@ -9,11 +9,13 @@ const BRAND_ICON = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/unielogi
 const LINKS = [
   { href: '/audit', label: 'Audit Your Business', key: 'audit' },
   { href: '/join#apply', label: 'Join Our Supply Chain', key: 'join' },
+  { href: '/industry-pros', label: 'Industry Pros', key: 'industry-pros' },
 ]
 
 const PATH_KEY = {
   '/audit': 'audit',
   '/join': 'join',
+  '/industry-pros': 'industry-pros',
 }
 
 export default function Navigation() {
@@ -78,6 +80,7 @@ export default function Navigation() {
       <div className={`nav-mobile-sheet ${mobileOpen ? 'is-open' : ''}`}>
         <Anchor href="/audit" onClick={onLink}>Audit Your Business</Anchor>
         <Anchor href="/join#apply" onClick={onLink}>Join Our Supply Chain</Anchor>
+        <Anchor href="/industry-pros" onClick={onLink}>Industry Pros</Anchor>
         <Anchor href="/audit" onClick={onLink} className="nav-mobile-cta">Audit Your Business →</Anchor>
       </div>
     </>

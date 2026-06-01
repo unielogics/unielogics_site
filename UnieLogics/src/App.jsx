@@ -8,6 +8,7 @@ import Join from './showcase/pages/Join'
 import Wms from './showcase/pages/Wms'
 import Tms from './showcase/pages/Tms'
 import UnieConnectPage from './showcase/pages/UnieConnectPage'
+import IndustryPros from './showcase/pages/IndustryPros'
 import Services from './pages/Services'
 import Solutions from './pages/Solutions'
 import IndustryProblems from './pages/IndustryProblems'
@@ -26,6 +27,7 @@ function App() {
         <Route path="/wms" element={<Wms />} />
         <Route path="/tms" element={<Tms />} />
         <Route path="/connect" element={<UnieConnectPage />} />
+        <Route path="/industry-pros" element={<IndustryPros />} />
         <Route path="/cortex" element={<Navigate to="/join#intelligence" replace />} />
         <Route path="/products" element={<Navigate to="/join#products" replace />} />
         <Route path="/services" element={<Services />} />
