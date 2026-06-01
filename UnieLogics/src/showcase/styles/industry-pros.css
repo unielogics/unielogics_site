@@ -161,44 +161,94 @@
   .ip-hero-inner { grid-template-columns: 1fr; }
 }
 
-/* ─── FULL-SCREEN DECK (the immersive experience after the hero) ─────── */
-/* Snap-scroll only activates on /industry-pros (page sets html.ip-snap).  */
-html.ip-snap {
-  scroll-snap-type: y proximity;
-  scroll-behavior: smooth;
-}
-.ip-hero { scroll-snap-align: start; scroll-snap-stop: normal; }
-
-.ip-deck {
-  display: flex;
-  flex-direction: column;
-}
+/* ─── DECK SECTION ─────────────────────────────────────────────────────
+ * Two distinct modes:
+ *   - .ip-deck-desktop  (≥ 1024px)  one slide at a time, prev/next arrows
+ *   - .ip-deck-mobile   (< 1024px)  natural vertical scroll, every slide
+ *                                   visible, slides flow to their content
+ */
 .ip-deck-slot {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 32px;
   background: var(--ip-bg);
   position: relative;
-}
-.ip-deck-slot:nth-child(even) {
-  background: linear-gradient(180deg, var(--ip-bg), #02030a 50%, var(--ip-bg));
 }
 .ip-deck-slot .ip-slide {
   width: 100%;
   max-width: 1280px;
   min-height: 0;
-  aspect-ratio: auto;
   height: auto;
-  max-height: calc(100vh - 48px);
+  aspect-ratio: auto;
   border-radius: var(--ip-radius);
 }
-@media (max-width: 768px) {
-  .ip-deck-slot { padding: 16px; }
-  .ip-deck-slot .ip-slide { max-height: none; }
+
+/* DESKTOP DECK — pinned 100vh, slides stack absolutely, fade transition */
+.ip-deck-desktop {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--ip-bg);
+}
+.ip-deck-desktop .ip-deck-slot {
+  position: absolute;
+  inset: 0;
+  padding: 32px 96px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.ip-deck-desktop .ip-deck-slot.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+.ip-deck-desktop .ip-deck-slot .ip-slide {
+  max-height: calc(100vh - 64px);
+}
+
+/* Desktop prev/next arrows */
+.ip-deck-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(10, 13, 20, .82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--ip-hairline-strong);
+  color: var(--ip-fg);
+  font-size: 36px;
+  font-family: var(--mono);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color .15s, transform .15s;
+  padding: 0;
+}
+.ip-deck-nav:hover { border-color: var(--ip-accent); transform: translateY(-50%) scale(1.05); }
+.ip-deck-nav:disabled { opacity: .25; cursor: not-allowed; }
+.ip-deck-prev { left: 24px; }
+.ip-deck-next { right: 24px; }
+.ip-deck-mobile .ip-deck-nav { display: none; }
+
+/* MOBILE FLOW — every slide visible, natural height, scroll normally */
+.ip-deck-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 24px 0;
+}
+.ip-deck-mobile .ip-deck-slot {
+  padding: 16px;
+  min-height: auto;
+}
+.ip-deck-mobile .ip-deck-slot .ip-slide {
+  max-height: none;
+  height: auto;
 }
 
 /* ─── Floating HUD: PDF download + slide progress + jump-to-apply ───── */
@@ -726,6 +776,12 @@ html.ip-snap {
   padding: 14px 18px;
 }
 .ip-recommended-close p { font-size: 14px; line-height: 1.5; color: var(--ip-fg); margin: 6px 0 0 0; font-style: italic; }
+.ip-close-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
 @media (max-width: 768px) {
   .ip-close-grid { grid-template-columns: 1fr; }
   .ip-close-visual { display: none; }
@@ -846,18 +902,34 @@ html.ip-snap {
 }
 .ip-apply-thanks p { font-size: 14.5px; line-height: 1.55; color: var(--ip-fg-2); max-width: 520px; margin: 0 auto; }
 
-/* ─── PRINT + ?print=1 toggle (headless Chrome PDF generation) ───────── */
+/* ─── PRINT + ?print=1 toggle (headless Chrome PDF generation) ─────────
+ * Override both desktop and mobile deck modes so every slide renders as
+ * its own paginated page, regardless of which is "active" in the React
+ * state when the headless render kicks off.
+ */
 @media print {
   @page { size: A4 landscape; margin: 8mm; }
   html, body { background: #ffffff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-  nav, .ip-hero, .ip-deck-hud, .ip-apply-section,
+  nav, .ip-hero, .ip-deck-hud, .ip-deck-nav, .ip-apply-section,
   .site-footer, footer.site-footer { display: none !important; }
-  html { scroll-snap-type: none !important; }
   .ip-page { background: white !important; }
+  .ip-deck,
+  .ip-deck-desktop,
+  .ip-deck-mobile {
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    padding: 0 !important;
+  }
   .ip-deck-slot {
+    position: static !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
     min-height: 0 !important;
     height: auto !important;
     padding: 0 !important;
+    margin: 0 !important;
     background: transparent !important;
     page-break-after: always;
     page-break-inside: avoid;
@@ -881,10 +953,21 @@ html.ip-snap {
 body[data-print="1"] nav,
 body[data-print="1"] .ip-hero,
 body[data-print="1"] .ip-deck-hud,
+body[data-print="1"] .ip-deck-nav,
 body[data-print="1"] .ip-apply-section,
 body[data-print="1"] .site-footer { display: none !important; }
-body[data-print="1"] html.ip-snap { scroll-snap-type: none !important; }
+body[data-print="1"] .ip-deck,
+body[data-print="1"] .ip-deck-desktop,
+body[data-print="1"] .ip-deck-mobile {
+  height: auto !important;
+  overflow: visible !important;
+  display: block !important;
+}
 body[data-print="1"] .ip-deck-slot {
+  position: static !important;
+  inset: auto !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
   min-height: 0 !important;
   height: auto !important;
   padding: 0 !important;

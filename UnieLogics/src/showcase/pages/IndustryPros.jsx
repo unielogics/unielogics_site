@@ -90,24 +90,54 @@ export default function IndustryPros() {
   const [searchParams] = useSearchParams()
   const isPrintMode = searchParams.get('print') === '1'
 
-  // Print mode flag on <body> so the print stylesheet + headless Chrome see it.
-  // Also flip <html> into scroll-snap mode so the deck snaps slide-by-slide.
+  // Page-level title + print-mode body flag for headless Chrome.
   useEffect(() => {
     const prevTitle = document.title
     document.title = 'UnieLogics — Industry Partner Program'
     if (isPrintMode) document.body.setAttribute('data-print', '1')
-    else document.documentElement.classList.add('ip-snap')
     return () => {
       document.title = prevTitle
       document.body.removeAttribute('data-print')
-      document.documentElement.classList.remove('ip-snap')
     }
   }, [isPrintMode])
 
-  // Track the active slide so the floating progress pill updates as we scroll.
-  const [activeSlide, setActiveSlide] = useState(1)
+  // Two modes: desktop ≥1024px → one-slide-at-a-time deck w/ prev/next;
+  // smaller → natural vertical flow, every slide visible, scroll normally.
+  const [isDesktopDeck, setIsDesktopDeck] = useState(
+    typeof window !== 'undefined' ? window.matchMedia('(min-width: 1024px)').matches : false,
+  )
   useEffect(() => {
     if (isPrintMode) return
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () => setIsDesktopDeck(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [isPrintMode])
+
+  // Active slide — single source of truth. Desktop: driven by buttons / keys.
+  // Mobile: driven by IntersectionObserver as the user scrolls.
+  const [activeSlide, setActiveSlide] = useState(1)
+  const goPrev = () => setActiveSlide((s) => Math.max(1, s - 1))
+  const goNext = () => setActiveSlide((s) => Math.min(TOTAL_SLIDES, s + 1))
+
+  // Keyboard nav on desktop (← → / PgUp PgDn).
+  useEffect(() => {
+    if (!isDesktopDeck || isPrintMode) return
+    const onKey = (e) => {
+      // Don't hijack typing in the apply form.
+      const t = e.target
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goNext() }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goPrev() }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [isDesktopDeck, isPrintMode])
+
+  // Mobile: observe which slot is dominantly in view and update the HUD.
+  useEffect(() => {
+    if (isDesktopDeck || isPrintMode) return
     const slots = document.querySelectorAll('.ip-deck-slot')
     if (!slots.length) return
     const io = new IntersectionObserver(
@@ -123,7 +153,7 @@ export default function IndustryPros() {
     )
     slots.forEach((s) => io.observe(s))
     return () => io.disconnect()
-  }, [isPrintMode])
+  }, [isDesktopDeck, isPrintMode])
 
   // ─── Apply form state ────────────────────────────────────────────────────
   const [partnerType, setPartnerType] = useState([])
@@ -241,25 +271,51 @@ export default function IndustryPros() {
         </div>
       </section>
 
-      {/* ─── FULL-SCREEN DECK ─────────────────────────────────────────────
-        * Each of the 17 slides occupies a full viewport; <html> has
-        * `scroll-snap-type: y proximity` so the user snaps from one slide
-        * to the next as they scroll past the hero. No carousel chrome.
-        */}
-      <section className="ip-deck">
-        {ALL_SLIDES.map((SlideComp, i) => (
-          <div
-            key={i}
-            className="ip-deck-slot"
-            data-n={i + 1}
-            id={`slide-${String(i + 1).padStart(2, '0')}`}
-          >
-            <SlideComp />
-          </div>
-        ))}
+      {/* ─── DECK (desktop: prev/next deck · mobile: natural scroll) ──── */}
+      <section
+        className={`ip-deck ${isDesktopDeck ? 'ip-deck-desktop' : 'ip-deck-mobile'}`}
+        data-active-slide={activeSlide}
+      >
+        {ALL_SLIDES.map((SlideComp, i) => {
+          const n = i + 1
+          const isActive = activeSlide === n
+          return (
+            <div
+              key={i}
+              className={`ip-deck-slot ${isActive ? 'is-active' : ''}`}
+              data-n={n}
+              id={`slide-${String(n).padStart(2, '0')}`}
+              aria-hidden={isDesktopDeck && !isActive}
+            >
+              <SlideComp />
+            </div>
+          )
+        })}
+        {isDesktopDeck && (
+          <>
+            <button
+              type="button"
+              className="ip-deck-nav ip-deck-prev"
+              onClick={goPrev}
+              disabled={activeSlide === 1}
+              aria-label="Previous slide"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="ip-deck-nav ip-deck-next"
+              onClick={goNext}
+              disabled={activeSlide === TOTAL_SLIDES}
+              aria-label="Next slide"
+            >
+              ›
+            </button>
+          </>
+        )}
       </section>
 
-      {/* ─── Floating UI while in the deck ────────────────────────────── */}
+      {/* ─── Floating HUD ─────────────────────────────────────────────── */}
       <div className="ip-deck-hud" aria-hidden="false">
         <a
           href="/industry-pros.pdf"

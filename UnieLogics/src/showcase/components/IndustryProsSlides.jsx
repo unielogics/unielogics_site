@@ -611,14 +611,24 @@ export function Slide17() {
             <em>Keep earning.</em>
           </h2>
           <p className="ip-lede">
-            Apply to become a UnieLogics partner. Built for serious brokers, consultants, auditors,
-            and logistics professionals ready to help modernize the industry.
+            Apply to become a strategic UnieLogics partner. Built for serious brokers, consultants,
+            auditors, and logistics professionals ready to help modernize the industry.
           </p>
           <div className="ip-recommended-close">
             <div className="ip-card-tag mono">Recommended Close</div>
             <p>Register the account. Run the audit. Let the findings create the business case.</p>
           </div>
-          <a href="#apply" className="ip-btn ip-btn-primary">Apply to the partner program →</a>
+          <div className="ip-close-ctas">
+            <a
+              href="https://uniecortex.com/industry-pros"
+              className="ip-btn ip-btn-primary"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Become a strategic partner ↗
+            </a>
+            <a href="#apply" className="ip-btn ip-btn-outline">Apply on this page →</a>
+          </div>
         </div>
         <div className="ip-close-visual">
           <CortexOrbital size={360} compact={true} />
