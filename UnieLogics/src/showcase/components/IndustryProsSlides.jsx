@@ -20,11 +20,17 @@ const UNIEFREIGHT_PNG = 'https://prepcenternearme.s3.us-east-1.amazonaws.com/uni
 
 export const TOTAL_SLIDES = 17
 
-/* ─── Slide chrome ────────────────────────────────────────────────────────── */
+/* ─── Slide chrome ──────────────────────────────────────────────────────────
+ * The brand-mark + program-label footer is intentionally rendered ONLY on
+ * the cover (slide 1) and the closing slide (slide 17). The intermediate
+ * slides drop the chrome so every body slide reads as content-first — the
+ * counter in the top-right header still confirms "where am I" without the
+ * extra weight at the bottom. */
 export function Slide({ n, eyebrow, disclaimer, children, accent = 'lime' }) {
+  const showFooter = n === 1 || n === TOTAL_SLIDES
   return (
     <section
-      className={`ip-slide ip-slide-${n} ip-accent-${accent}`}
+      className={`ip-slide ip-slide-${n} ip-accent-${accent} ${showFooter ? 'has-slide-footer' : 'no-slide-footer'}`}
       data-slide={n}
       aria-label={`Slide ${n} of ${TOTAL_SLIDES}`}
     >
@@ -34,11 +40,13 @@ export function Slide({ n, eyebrow, disclaimer, children, accent = 'lime' }) {
       </header>
       <div className="ip-slide-body">{children}</div>
       {disclaimer && <div className="ip-slide-disclaimer">{disclaimer}</div>}
-      <footer className="ip-slide-footer">
-        <img className="ip-slide-brand" src={BRAND_ICON} alt="UnieLogics" />
-        <span className="ip-slide-prog">UnieLogics · Industry Account Executive Program</span>
-        <span className="ip-slide-confidential mono">UnieLogics — Confidential Account Executive Presentation</span>
-      </footer>
+      {showFooter && (
+        <footer className="ip-slide-footer">
+          <img className="ip-slide-brand" src={BRAND_ICON} alt="UnieLogics" />
+          <span className="ip-slide-prog">UnieLogics · Industry Account Executive Program</span>
+          <span className="ip-slide-confidential mono">UnieLogics — Confidential Account Executive Presentation</span>
+        </footer>
+      )}
     </section>
   )
 }
