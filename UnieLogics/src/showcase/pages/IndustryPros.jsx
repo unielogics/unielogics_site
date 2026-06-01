@@ -10,12 +10,12 @@
 // /industry-pros?print=1 sets <body data-print="1"> which the print stylesheet
 // uses to hide the hero, carousel chrome, apply form, and footer — leaving
 // only the 17 slides for headless Chrome to PDF.
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Anchor } from '../lib/nav'
 import { submitToUnieSales } from '../../lib/leadApi'
 import { useHoneypot } from '../../lib/Honeypot'
-import { ALL_SLIDES, HERO_STACK_SLIDES, TOTAL_SLIDES } from '../components/IndustryProsSlides'
+import { ALL_SLIDES, TOTAL_SLIDES } from '../components/IndustryProsSlides'
 import '../styles/industry-pros.css'
 
 const PARTNER_TYPES = [
@@ -91,14 +91,38 @@ export default function IndustryPros() {
   const isPrintMode = searchParams.get('print') === '1'
 
   // Print mode flag on <body> so the print stylesheet + headless Chrome see it.
+  // Also flip <html> into scroll-snap mode so the deck snaps slide-by-slide.
   useEffect(() => {
     const prevTitle = document.title
     document.title = 'UnieLogics — Industry Partner Program'
     if (isPrintMode) document.body.setAttribute('data-print', '1')
+    else document.documentElement.classList.add('ip-snap')
     return () => {
       document.title = prevTitle
       document.body.removeAttribute('data-print')
+      document.documentElement.classList.remove('ip-snap')
     }
+  }, [isPrintMode])
+
+  // Track the active slide so the floating progress pill updates as we scroll.
+  const [activeSlide, setActiveSlide] = useState(1)
+  useEffect(() => {
+    if (isPrintMode) return
+    const slots = document.querySelectorAll('.ip-deck-slot')
+    if (!slots.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && e.intersectionRatio > 0.5) {
+            const n = parseInt(e.target.dataset.n || '0', 10)
+            if (n) setActiveSlide(n)
+          }
+        })
+      },
+      { threshold: [0.5] },
+    )
+    slots.forEach((s) => io.observe(s))
+    return () => io.disconnect()
   }, [isPrintMode])
 
   // ─── Apply form state ────────────────────────────────────────────────────
@@ -169,39 +193,6 @@ export default function IndustryPros() {
     }
   }
 
-  // ─── Carousel navigation ─────────────────────────────────────────────────
-  const carouselRef = useRef(null)
-  const [activeIdx, setActiveIdx] = useState(0)
-  const scrollToIdx = (i) => {
-    const el = carouselRef.current
-    if (!el) return
-    const slides = el.querySelectorAll('.ip-slide')
-    const target = slides[Math.max(0, Math.min(slides.length - 1, i))]
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-  }
-  useEffect(() => {
-    const el = carouselRef.current
-    if (!el) return
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const slides = [...el.querySelectorAll('.ip-slide')]
-        const containerCenter = el.scrollLeft + el.clientWidth / 2
-        let best = 0
-        let bestDist = Infinity
-        slides.forEach((s, i) => {
-          const center = s.offsetLeft + s.clientWidth / 2
-          const d = Math.abs(center - containerCenter)
-          if (d < bestDist) { bestDist = d; best = i }
-        })
-        setActiveIdx(best)
-      })
-    }
-    el.addEventListener('scroll', onScroll, { passive: true })
-    return () => el.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
     <main className="ip-page">
       {/* ─── HERO (hidden in print) ────────────────────────────────────── */}
@@ -250,63 +241,44 @@ export default function IndustryPros() {
         </div>
       </section>
 
-      {/* ─── LONG-SCROLL HERO SLIDES (visible always, including print) ───── */}
-      <section className="ip-hero-stack">
-        {HERO_STACK_SLIDES.map((SlideComp, i) => <SlideComp key={i} />)}
+      {/* ─── FULL-SCREEN DECK ─────────────────────────────────────────────
+        * Each of the 17 slides occupies a full viewport; <html> has
+        * `scroll-snap-type: y proximity` so the user snaps from one slide
+        * to the next as they scroll past the hero. No carousel chrome.
+        */}
+      <section className="ip-deck">
+        {ALL_SLIDES.map((SlideComp, i) => (
+          <div
+            key={i}
+            className="ip-deck-slot"
+            data-n={i + 1}
+            id={`slide-${String(i + 1).padStart(2, '0')}`}
+          >
+            <SlideComp />
+          </div>
+        ))}
       </section>
 
-      {/* ─── CAROUSEL (hidden in print; carousel itself is screen-only) ─── */}
-      <section className="ip-deck-section">
-        <header className="ip-deck-header">
-          <span className="ip-deck-eyebrow mono">FULL DECK</span>
-          <h2 className="ip-deck-title">All {TOTAL_SLIDES} slides. Scroll horizontally.</h2>
-          <a
-            href="/industry-pros.pdf"
-            className="ip-btn ip-btn-outline ip-btn-sm"
-            download="UnieLogics-Industry-Partner-Program.pdf"
-          >
-            Download PDF ↓
-          </a>
-        </header>
-        <div className="ip-carousel-wrap">
-          <button
-            type="button"
-            className="ip-carousel-arrow ip-carousel-arrow-prev"
-            onClick={() => scrollToIdx(activeIdx - 1)}
-            aria-label="Previous slide"
-            disabled={activeIdx === 0}
-          >
-            ‹
-          </button>
-          <div className="ip-carousel" ref={carouselRef}>
-            {ALL_SLIDES.map((SlideComp, i) => (
-              <div key={i} className="ip-carousel-cell">
-                <SlideComp />
-              </div>
-            ))}
-          </div>
-          <button
-            type="button"
-            className="ip-carousel-arrow ip-carousel-arrow-next"
-            onClick={() => scrollToIdx(activeIdx + 1)}
-            aria-label="Next slide"
-            disabled={activeIdx === ALL_SLIDES.length - 1}
-          >
-            ›
-          </button>
-        </div>
-        <div className="ip-carousel-dots">
-          {ALL_SLIDES.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className={`ip-carousel-dot ${activeIdx === i ? 'is-on' : ''}`}
-              onClick={() => scrollToIdx(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      </section>
+      {/* ─── Floating UI while in the deck ────────────────────────────── */}
+      <div className="ip-deck-hud" aria-hidden="false">
+        <a
+          href="/industry-pros.pdf"
+          className="ip-btn ip-btn-outline ip-btn-sm"
+          download="UnieLogics-Industry-Partner-Program.pdf"
+        >
+          Download PDF ↓
+        </a>
+        <span className="ip-deck-progress mono">
+          {String(activeSlide).padStart(2, '0')} / {TOTAL_SLIDES}
+        </span>
+        <button
+          type="button"
+          className="ip-deck-jump-apply ip-btn ip-btn-primary ip-btn-sm"
+          onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
+        >
+          Apply →
+        </button>
+      </div>
 
       {/* ─── APPLY FORM (hidden in print) ───────────────────────────────── */}
       <section className="ip-apply-section" id="apply">

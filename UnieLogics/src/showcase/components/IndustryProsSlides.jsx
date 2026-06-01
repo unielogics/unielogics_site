@@ -633,6 +633,3 @@ export const ALL_SLIDES = [
   Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09,
   Slide10, Slide11, Slide12, Slide13, Slide14, Slide15, Slide16, Slide17,
 ]
-
-// Hero-stack subset shown in long-scroll above the carousel (per plan §2).
-export const HERO_STACK_SLIDES = [Slide01, Slide02, Slide03, Slide04, Slide05]

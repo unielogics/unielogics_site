@@ -161,109 +161,82 @@
   .ip-hero-inner { grid-template-columns: 1fr; }
 }
 
-/* ─── HERO STACK (top 5 slides in long-scroll) ────────────────────────── */
-.ip-hero-stack {
+/* ─── FULL-SCREEN DECK (the immersive experience after the hero) ─────── */
+/* Snap-scroll only activates on /industry-pros (page sets html.ip-snap).  */
+html.ip-snap {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+.ip-hero { scroll-snap-align: start; scroll-snap-stop: normal; }
+
+.ip-deck {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding: 48px 32px;
-  max-width: 1280px;
-  margin: 0 auto;
 }
-.ip-hero-stack .ip-slide {
-  min-height: 80vh;
-  width: 100%;
-  margin: 0;
-}
-
-/* ─── DECK SECTION + CAROUSEL (screen-only) ──────────────────────────── */
-.ip-deck-section {
-  padding: 80px 32px;
-  background: linear-gradient(180deg, var(--ip-bg), #02030a 60%, var(--ip-bg));
-  border-top: 1px solid var(--ip-hairline);
-  border-bottom: 1px solid var(--ip-hairline);
-}
-.ip-deck-header {
-  max-width: 1280px;
-  margin: 0 auto 32px;
+.ip-deck-slot {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+  min-height: 100vh;
   display: flex;
-  align-items: baseline;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.ip-deck-eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ip-accent); }
-.ip-deck-title {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: clamp(28px, 3vw, 36px);
-  letter-spacing: -.02em;
-  margin: 0;
-  flex: 1;
-}
-
-.ip-carousel-wrap {
-  position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
-}
-.ip-carousel {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  padding: 8px 4vw 24px;
-  scroll-padding-inline: 4vw;
-}
-.ip-carousel::-webkit-scrollbar { display: none; }
-.ip-carousel-cell {
-  flex: 0 0 min(900px, 92vw);
-  scroll-snap-align: center;
-}
-.ip-carousel-cell .ip-slide {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 0;
-}
-.ip-carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(15, 17, 22, .9);
-  border: 1px solid var(--ip-hairline-strong);
-  color: var(--ip-fg);
-  font-size: 28px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: border-color .15s, background .15s;
-}
-.ip-carousel-arrow:hover { border-color: var(--ip-accent); }
-.ip-carousel-arrow:disabled { opacity: .3; cursor: not-allowed; }
-.ip-carousel-arrow-prev { left: 8px; }
-.ip-carousel-arrow-next { right: 8px; }
-
-.ip-carousel-dots {
-  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-top: 12px;
+  padding: 24px 32px;
+  background: var(--ip-bg);
+  position: relative;
 }
-.ip-carousel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ip-hairline-strong);
-  border: 0;
-  cursor: pointer;
-  padding: 0;
-  transition: background .15s, width .15s;
+.ip-deck-slot:nth-child(even) {
+  background: linear-gradient(180deg, var(--ip-bg), #02030a 50%, var(--ip-bg));
 }
-.ip-carousel-dot.is-on { background: var(--ip-accent); width: 20px; border-radius: 4px; }
+.ip-deck-slot .ip-slide {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 0;
+  aspect-ratio: auto;
+  height: auto;
+  max-height: calc(100vh - 48px);
+  border-radius: var(--ip-radius);
+}
+@media (max-width: 768px) {
+  .ip-deck-slot { padding: 16px; }
+  .ip-deck-slot .ip-slide { max-height: none; }
+}
+
+/* ─── Floating HUD: PDF download + slide progress + jump-to-apply ───── */
+.ip-deck-hud {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 13, 20, .82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--ip-hairline-strong);
+  border-radius: 999px;
+  padding: 6px 8px 6px 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+.ip-deck-progress {
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--ip-fg-2);
+  min-width: 56px;
+  text-align: center;
+}
+.ip-deck-hud .ip-btn { padding: 8px 14px; font-size: 11px; }
+.ip-deck-jump-apply { white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .ip-deck-hud {
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    justify-content: center;
+  }
+}
 
 /* ─── SLIDE CHROME ─────────────────────────────────────────────────────── */
 .ip-slide {
@@ -873,38 +846,23 @@
 }
 .ip-apply-thanks p { font-size: 14.5px; line-height: 1.55; color: var(--ip-fg-2); max-width: 520px; margin: 0 auto; }
 
-/* ─── PRINT STYLESHEET ────────────────────────────────────────────────── */
+/* ─── PRINT + ?print=1 toggle (headless Chrome PDF generation) ───────── */
 @media print {
-  @page {
-    size: A4 landscape;
-    margin: 8mm;
-  }
-  body {
-    background: #ffffff !important;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
-  /* Hide all chrome — nav, hero, carousel arrows/dots, apply form, footer. */
-  nav, .ip-hero, .ip-deck-header, .ip-carousel-arrow, .ip-carousel-dots,
-  .ip-apply-section, .site-footer, footer.site-footer { display: none !important; }
-  .ip-deck-section { padding: 0 !important; border: none !important; background: transparent !important; }
-  .ip-carousel-wrap { max-width: none !important; }
-  .ip-carousel {
-    display: block !important;
-    overflow: visible !important;
+  @page { size: A4 landscape; margin: 8mm; }
+  html, body { background: #ffffff !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  nav, .ip-hero, .ip-deck-hud, .ip-apply-section,
+  .site-footer, footer.site-footer { display: none !important; }
+  html { scroll-snap-type: none !important; }
+  .ip-page { background: white !important; }
+  .ip-deck-slot {
+    min-height: 0 !important;
+    height: auto !important;
     padding: 0 !important;
-    scroll-snap-type: none !important;
-  }
-  .ip-carousel-cell {
-    width: 100% !important;
-    flex: none !important;
+    background: transparent !important;
     page-break-after: always;
     page-break-inside: avoid;
   }
-  .ip-carousel-cell:last-child { page-break-after: auto; }
-  /* Hide hero-stack section in print — same slides are already in the carousel. */
-  .ip-hero-stack { display: none !important; }
-  .ip-page { background: white !important; }
+  .ip-deck-slot:last-child { page-break-after: auto; }
   .ip-slide {
     background: linear-gradient(135deg, #0a0d14, #06080f 75%) !important;
     color: var(--ip-fg) !important;
@@ -912,31 +870,30 @@
     min-height: 0 !important;
     height: auto !important;
     width: 100% !important;
+    max-height: none !important;
     aspect-ratio: 16 / 9 !important;
     padding: 28mm 28mm 14mm !important;
     box-sizing: border-box !important;
   }
 }
 
-/* ─── data-print toggle for headless Chrome (?print=1) ────────────────── */
+/* Same intent for headless Chrome's ?print=1 render path. */
 body[data-print="1"] nav,
 body[data-print="1"] .ip-hero,
-body[data-print="1"] .ip-deck-header,
-body[data-print="1"] .ip-carousel-arrow,
-body[data-print="1"] .ip-carousel-dots,
+body[data-print="1"] .ip-deck-hud,
 body[data-print="1"] .ip-apply-section,
 body[data-print="1"] .site-footer { display: none !important; }
-body[data-print="1"] .ip-deck-section { padding: 0 !important; border: none !important; }
-body[data-print="1"] .ip-carousel {
-  display: block !important;
-  overflow: visible !important;
+body[data-print="1"] html.ip-snap { scroll-snap-type: none !important; }
+body[data-print="1"] .ip-deck-slot {
+  min-height: 0 !important;
+  height: auto !important;
   padding: 0 !important;
-  scroll-snap-type: none !important;
-}
-body[data-print="1"] .ip-carousel-cell {
-  width: 100% !important;
-  flex: none !important;
+  background: transparent !important;
   page-break-after: always;
   margin-bottom: 16px;
 }
-body[data-print="1"] .ip-hero-stack { display: none !important; }
+body[data-print="1"] .ip-slide {
+  aspect-ratio: 16 / 9 !important;
+  max-height: none !important;
+  height: auto !important;
+}
