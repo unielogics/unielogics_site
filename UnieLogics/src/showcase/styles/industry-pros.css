@@ -210,7 +210,9 @@
   border-radius: var(--ip-radius);
 }
 
-/* DESKTOP DECK — pinned 100vh, slides stack absolutely, fade transition */
+/* DESKTOP DECK — pinned 100vh, slides stack absolutely, fade transition.
+   Each slide is rendered edge-to-edge (no slot padding, no border-radius,
+   no max-width / max-height): the slide *frame* is the visible view area. */
 .ip-deck-desktop {
   position: relative;
   height: 100vh;
@@ -220,7 +222,7 @@
 .ip-deck-desktop .ip-deck-slot {
   position: absolute;
   inset: 0;
-  padding: 32px 96px;
+  padding: 0;
   opacity: 0;
   pointer-events: none;
   transition: opacity .4s ease;
@@ -231,7 +233,26 @@
   z-index: 1;
 }
 .ip-deck-desktop .ip-deck-slot .ip-slide {
-  max-height: calc(100vh - 64px);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left-width: 4px;
+  padding: 56px 80px 100px; /* extra bottom padding clears the control bar */
+}
+/* Center the slide content inside the now-edge-to-edge frame. */
+.ip-deck-desktop .ip-deck-slot .ip-slide > .ip-slide-header,
+.ip-deck-desktop .ip-deck-slot .ip-slide > .ip-slide-body,
+.ip-deck-desktop .ip-deck-slot .ip-slide > .ip-slide-disclaimer,
+.ip-deck-desktop .ip-deck-slot .ip-slide > .ip-slide-footer {
+  max-width: 1280px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Desktop bottom-centered control bar — inside the deck frame, always
