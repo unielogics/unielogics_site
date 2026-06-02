@@ -1586,3 +1586,127 @@ body[data-print="1"] .ip-ba-arrow {
 }
 body[data-print="1"] .ip-ba-bridge-label,
 body[data-print="1"] .ip-ba-bridge-sub { font-size: 7pt !important; }
+
+/* ─── Slide 16 — Win flow icon track ───────────────────────────────────
+   Horizontal 6-stage value chain with inline-SVG icons. Each stage is a
+   tile (icon + label + index). Arrows render in lime between stages.
+   The final stage carries an .is-win modifier — lime fill so the eye
+   lands on "Ongoing AE Income". */
+.ip-win-iconflow {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 12px;
+  width: 100%;
+}
+.ip-win-iconflow-step-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.ip-win-iconflow-step {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 18px 10px 14px;
+  background: var(--ip-bg-card);
+  border: 1px solid var(--ip-hairline-strong);
+  border-radius: 12px;
+  color: var(--ip-fg);
+  transition: transform .12s ease, border-color .12s ease;
+}
+.ip-win-iconflow-step.is-win {
+  background: var(--ip-accent);
+  border-color: var(--ip-accent);
+  color: #0a0a0a;
+  box-shadow: 0 0 24px rgba(176, 255, 0, .22);
+}
+.ip-win-iconflow-step.is-win .ip-win-iconflow-n { color: rgba(10, 10, 10, .55); }
+.ip-win-iconflow-icon {
+  width: 38px;
+  height: 38px;
+  color: var(--ip-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ip-win-iconflow-icon svg { width: 100%; height: 100%; }
+.ip-win-iconflow-step.is-win .ip-win-iconflow-icon { color: #0a0a0a; }
+.ip-win-iconflow-label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+  line-height: 1.25;
+  font-weight: 500;
+  text-transform: none;
+}
+.ip-win-iconflow-step.is-win .ip-win-iconflow-label { font-weight: 600; }
+.ip-win-iconflow-n {
+  font-size: 9px;
+  letter-spacing: .22em;
+  color: var(--ip-fg-3);
+  margin-top: 2px;
+}
+.ip-win-iconflow-arrow {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 14px;
+  color: var(--ip-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .85;
+}
+.ip-win-iconflow-arrow svg { width: 100%; height: auto; }
+
+/* Mobile — wrap to a 3x2 grid */
+@media (max-width: 768px) {
+  .ip-win-iconflow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .ip-win-iconflow-step-wrap { flex-direction: column; }
+  .ip-win-iconflow-arrow { display: none; }
+  .ip-win-iconflow-step { padding: 14px 8px 12px; gap: 8px; }
+  .ip-win-iconflow-icon { width: 30px; height: 30px; }
+  .ip-win-iconflow-label { font-size: 10.5px; }
+}
+
+/* Print fit: 1123x627 slot, no per-slide footer, ~440px body height */
+body[data-print="1"] .ip-win-iconflow {
+  gap: 4pt !important;
+  margin-top: 6pt !important;
+}
+body[data-print="1"] .ip-win-iconflow-step {
+  padding: 10pt 6pt 8pt !important;
+  gap: 5pt !important;
+  border-radius: 8pt !important;
+}
+body[data-print="1"] .ip-win-iconflow-icon {
+  width: 28pt !important;
+  height: 28pt !important;
+}
+body[data-print="1"] .ip-win-iconflow-label {
+  font-size: 9pt !important;
+  line-height: 1.2 !important;
+}
+body[data-print="1"] .ip-win-iconflow-n {
+  font-size: 6.5pt !important;
+}
+body[data-print="1"] .ip-win-iconflow-arrow {
+  flex: 0 0 14pt !important;
+  width: 14pt !important;
+  height: 12pt !important;
+}
+body[data-print="1"] .ip-win-iconflow-step.is-win {
+  /* Print engines often drop box-shadow — rely on background + border */
+  box-shadow: none !important;
+}

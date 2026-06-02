@@ -699,7 +699,77 @@ export function Slide15() {
 
 /* ─── 16 Why Account Executives Win ────────────────────────────────────── */
 export function Slide16() {
-  const flow = ['Relationship', 'Audit', 'Usage', 'Software Sale', 'Retention', 'Ongoing AE Income']
+  // Six-stage value chain rendered as a horizontal icon flow. The final
+  // stage (Ongoing AE Income) carries the lime "win" accent so the eye
+  // lands on the outcome, not the path.
+  const flow = [
+    {
+      label: 'Relationship',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="8" cy="8" r="3" />
+          <circle cx="16" cy="8" r="3" />
+          <path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+          <path d="M22 20c0-3.3-2.7-6-6-6-.6 0-1.2.1-1.7.2" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Audit',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="5" y="4" width="14" height="17" rx="1.5" />
+          <path d="M9 4V2.5h6V4" />
+          <path d="M8 10l2 2 4-4" />
+          <path d="M8 16h8" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Usage',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M3 20h18" />
+          <path d="M6 20V12" />
+          <path d="M11 20V8" />
+          <path d="M16 20v-6" />
+          <path d="M21 20V4" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Software Sale',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="13" rx="1.5" />
+          <path d="M3 8h18" />
+          <path d="M8 21h8" />
+          <path d="M12 17v4" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Retention',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M12 21s-7-4.5-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-7 10-7 10z" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Ongoing AE Income',
+      win: true,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <ellipse cx="12" cy="6" rx="7" ry="2.4" />
+          <path d="M5 6v4c0 1.3 3.1 2.4 7 2.4s7-1.1 7-2.4V6" />
+          <path d="M5 12v4c0 1.3 3.1 2.4 7 2.4s7-1.1 7-2.4v-4" />
+          <path d="M9 6.5v12M15 6.5v12" opacity=".5" />
+        </svg>
+      ),
+    },
+  ]
   return (
     <Slide n={16} eyebrow="WHY ACCOUNT EXECUTIVES WIN">
       <h2 className="ip-h2">
@@ -711,11 +781,27 @@ export function Slide16() {
         platform brings the audit tools, software, implementation
         structure, and compensation model.
       </p>
-      <div className="ip-win-flow">
+      <div className="ip-win-iconflow" role="list">
         {flow.map((stage, i) => (
-          <div key={stage} className="ip-win-stage">
-            <span className="ip-win-stage-label">{stage}</span>
-            {i < flow.length - 1 && <span className="ip-win-arrow" aria-hidden="true">→</span>}
+          <div key={stage.label} className="ip-win-iconflow-step-wrap">
+            <div
+              className={`ip-win-iconflow-step ${stage.win ? 'is-win' : ''}`}
+              role="listitem"
+            >
+              <div className="ip-win-iconflow-icon">{stage.icon}</div>
+              <div className="ip-win-iconflow-label">{stage.label}</div>
+              <div className="ip-win-iconflow-n mono">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+            </div>
+            {i < flow.length - 1 && (
+              <div className="ip-win-iconflow-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 7h20" />
+                  <path d="M16 2l5 5-5 5" />
+                </svg>
+              </div>
+            )}
           </div>
         ))}
       </div>
