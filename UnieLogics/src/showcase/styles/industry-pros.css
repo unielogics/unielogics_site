@@ -1602,17 +1602,21 @@ body[data-print="1"] .ip-ba-bridge-sub { font-size: 7pt !important; }
 }
 .ip-win-iconflow-step-wrap {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex: 1 1 0;
   min-width: 0;
+  width: 100%;
 }
 .ip-win-iconflow-step {
   flex: 1 1 0;
   min-width: 0;
+  width: 100%;
+  min-height: 116px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   gap: 10px;
   padding: 18px 10px 14px;
@@ -1666,16 +1670,29 @@ body[data-print="1"] .ip-ba-bridge-sub { font-size: 7pt !important; }
 }
 .ip-win-iconflow-arrow svg { width: 100%; height: auto; }
 
-/* Mobile — wrap to a 3x2 grid */
+/* Mobile / narrow viewport — wrap to a 3x2 grid.
+   Force the wrap + step to fill the grid cell so every tile is the
+   same width AND the same height regardless of label length. */
 @media (max-width: 768px) {
   .ip-win-iconflow {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
     gap: 10px;
   }
-  .ip-win-iconflow-step-wrap { flex-direction: column; }
+  .ip-win-iconflow-step-wrap {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
   .ip-win-iconflow-arrow { display: none; }
-  .ip-win-iconflow-step { padding: 14px 8px 12px; gap: 8px; }
+  .ip-win-iconflow-step {
+    width: 100%;
+    height: 100%;
+    min-height: 110px;
+    padding: 14px 8px 12px;
+    gap: 8px;
+  }
   .ip-win-iconflow-icon { width: 30px; height: 30px; }
   .ip-win-iconflow-label { font-size: 10.5px; }
 }
