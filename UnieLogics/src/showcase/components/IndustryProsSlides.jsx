@@ -210,7 +210,6 @@ export function Slide06() {
     <Slide
       n={6}
       eyebrow="AUDIT TOOLS AS THE SALES ENGINE"
-      disclaimer="Sample dashboard for positioning only — not an earnings or savings guarantee."
     >
       <div className="ip-split">
         <div>
@@ -242,14 +241,6 @@ export function Slide06() {
             <div className="ip-audit-tile">
               <div className="ip-audit-num">18%</div>
               <div className="ip-audit-lbl mono">Freight Waste</div>
-            </div>
-            <div className="ip-audit-tile">
-              <div className="ip-audit-num">31</div>
-              <div className="ip-audit-lbl mono">Workflow Gaps</div>
-            </div>
-            <div className="ip-audit-tile">
-              <div className="ip-audit-num">High</div>
-              <div className="ip-audit-lbl mono">Retention Risk</div>
             </div>
           </div>
         </div>
@@ -356,7 +347,6 @@ export function Slide09() {
     <Slide
       n={9}
       eyebrow="WMS REVENUE ANCHOR"
-      disclaimer="Note: This slide describes program economics, not an earnings guarantee. Final agreement controls eligibility, timing, exclusions, and payment rules."
     >
       <div className="ip-split">
         <div>
@@ -499,7 +489,7 @@ export function Slide12() {
   )
 }
 
-/* ─── 13 Why Customers Buy ───────────────────────────────────────────────── */
+/* ─── 13 Why Customers Buy — visual Before → After ─────────────────────── */
 export function Slide13() {
   return (
     <Slide n={13} eyebrow="WHY CUSTOMERS BUY">
@@ -507,14 +497,140 @@ export function Slide13() {
         The customer buys because the audit<br />
         <em>makes the problem visible.</em>
       </h2>
-      <div className="ip-cols ip-cols-2">
-        <div className="ip-card ip-card-before">
-          <div className="ip-card-title">Before</div>
-          <p>Disconnected systems, manual workflows, billing issues, freight waste, weak visibility, and limited client control.</p>
+
+      <div className="ip-ba">
+        {/* ── BEFORE ─────────────────────────────────────────────────── */}
+        <div className="ip-ba-side ip-ba-before" aria-label="Before UnieLogics">
+          <div className="ip-ba-head">
+            <span className="ip-ba-eyebrow mono">BEFORE</span>
+            <span className="ip-ba-state">Disconnected operation</span>
+          </div>
+
+          <ul className="ip-ba-grid" role="list">
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3"  y="4"  width="6" height="6" rx="1.2" />
+                <rect x="15" y="4"  width="6" height="6" rx="1.2" />
+                <rect x="3"  y="14" width="6" height="6" rx="1.2" />
+                <rect x="15" y="14" width="6" height="6" rx="1.2" />
+                <path d="M9 7h3M12 7v10M12 17h3" strokeDasharray="2 2" opacity=".55" />
+              </svg>
+              <span>Disconnected systems</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 19c2-3 4-3 6 0s4 3 6 0 4-3 4-3" />
+                <path d="M4 8c2-3 4-3 6 0" opacity=".55" />
+                <circle cx="20" cy="6" r="1.4" />
+              </svg>
+              <span>Manual workflows</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="1.5" />
+                <path d="M3 9h18" />
+                <path d="M7 14h4" />
+                <path d="M15 13l4 4M19 13l-4 4" />
+              </svg>
+              <span>Billing issues</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 17h11l2-3h4l-1 4-2 1H4z" />
+                <circle cx="8"  cy="19" r="1.6" />
+                <circle cx="17" cy="19" r="1.6" />
+                <path d="M6 11l3-3M6 8l3 3" opacity=".75" />
+              </svg>
+              <span>Freight waste</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" opacity=".55" />
+                <path d="M4 4l16 16" />
+              </svg>
+              <span>Weak visibility</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="4" y="10" width="16" height="10" rx="1.5" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                <path d="M10 15h4" />
+              </svg>
+              <span>Limited client control</span>
+            </li>
+          </ul>
         </div>
-        <div className="ip-card ip-card-after">
-          <div className="ip-card-title">After</div>
-          <p>Centralized operation, audit intelligence, better client retention, freight technology, OMS connectivity, and AI decision support.</p>
+
+        {/* ── ARROW ───────────────────────────────────────────────────── */}
+        <div className="ip-ba-bridge" aria-hidden="true">
+          <span className="ip-ba-bridge-label mono">AUDIT</span>
+          <svg className="ip-ba-arrow" viewBox="0 0 60 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 12h52" />
+            <path d="M46 5l8 7-8 7" />
+          </svg>
+          <span className="ip-ba-bridge-sub mono">makes it visible</span>
+        </div>
+
+        {/* ── AFTER ──────────────────────────────────────────────────── */}
+        <div className="ip-ba-side ip-ba-after" aria-label="After UnieLogics">
+          <div className="ip-ba-head">
+            <span className="ip-ba-eyebrow mono">AFTER</span>
+            <span className="ip-ba-state">Unified intelligence</span>
+          </div>
+
+          <ul className="ip-ba-grid" role="list">
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3.2" />
+                <circle cx="12" cy="12" r="8.5" opacity=".4" />
+                <path d="M12 4v3.2M12 16.8V20M4 12h3.2M16.8 12H20" />
+              </svg>
+              <span>Centralized operation</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="14" height="16" rx="1.5" />
+                <path d="M7 9h6M7 12h6M7 15h4" />
+                <path d="M17 15l2.5 2.5L23 14" />
+              </svg>
+              <span>Audit intelligence</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 21s-7-4.5-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-7 10-7 10z" />
+                <path d="M9 11l2 2 4-4" />
+              </svg>
+              <span>Client retention</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 17h11l2-3h4l-1 4-2 1H4z" />
+                <circle cx="8"  cy="19" r="1.6" />
+                <circle cx="17" cy="19" r="1.6" />
+                <path d="M7 11l2-2 2 2 2-3" />
+              </svg>
+              <span>Freight technology</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="6"  cy="6"  r="2.2" />
+                <circle cx="18" cy="6"  r="2.2" />
+                <circle cx="6"  cy="18" r="2.2" />
+                <circle cx="18" cy="18" r="2.2" />
+                <circle cx="12" cy="12" r="2.2" />
+                <path d="M8 6h8M8 18h8M6 8v8M18 8v8M7.5 7.5l3 3M13.5 13.5l3 3M16.5 7.5l-3 3M10.5 13.5l-3 3" />
+              </svg>
+              <span>OMS connectivity</span>
+            </li>
+            <li className="ip-ba-tag">
+              <svg className="ip-ba-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3a6 6 0 0 0-4 10.5V16h8v-2.5A6 6 0 0 0 12 3z" />
+                <path d="M9 19h6M10 21h4" />
+                <path d="M12 8v3M10.5 9.5h3" />
+              </svg>
+              <span>AI decision support</span>
+            </li>
+          </ul>
         </div>
       </div>
     </Slide>

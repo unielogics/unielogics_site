@@ -1399,3 +1399,190 @@ body[data-print="1"] .ip-anchor-num {
 }
 body[data-print="1"] .ip-anchor-cell { padding: 8pt 10pt !important; }
 body[data-print="1"] .ip-anchor-cell p { font-size: 8.5pt !important; line-height: 1.3 !important; }
+
+/* ─── Slide 12 defensive grid lock ──────────────────────────────────────────
+   The screen rule at ~line 575 collapses .ip-cols-2/3/4 to a single column
+   below 768px CSS px. A Chrome print-to-PDF that uses default A4 portrait
+   (~794px) can trip that breakpoint depending on the print pipeline, which
+   stacks "Ideal Account Executives" and "Target Accounts" vertically and
+   overflows slide 12 by ~70px. Force the multi-col grids to stay
+   side-by-side in print regardless of @page width. */
+@media print {
+  .ip-cols-2,
+  body[data-print="1"] .ip-cols-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .ip-cols-3,
+  body[data-print="1"] .ip-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+  .ip-cols-4,
+  body[data-print="1"] .ip-cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
+  .ip-cols,
+  body[data-print="1"] .ip-cols { gap: 10pt !important; }
+}
+body[data-print="1"] .ip-cols-2 { grid-template-columns: repeat(2, 1fr) !important; }
+body[data-print="1"] .ip-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+body[data-print="1"] .ip-cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
+body[data-print="1"] .ip-cols { gap: 10pt !important; }
+
+/* ─── Slide 13 — Before / After visual ────────────────────────────────── */
+.ip-ba {
+  display: grid;
+  grid-template-columns: 1fr 92px 1fr;
+  gap: 18px;
+  align-items: stretch;
+  margin-top: 4px;
+}
+.ip-ba-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 14px;
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,.04), transparent 60%),
+    var(--ip-bg-card);
+  border: 1px solid var(--ip-hairline);
+  min-width: 0;
+}
+.ip-ba-before {
+  --ba-c:        #ff7a5c;
+  --ba-c-soft:   rgba(255, 122, 92, .14);
+  --ba-c-line:   rgba(255, 122, 92, .35);
+  color: var(--ip-fg);
+  border-left: 3px solid var(--ba-c);
+}
+.ip-ba-after {
+  --ba-c:        #b0ff00;
+  --ba-c-soft:   rgba(176, 255, 0, .14);
+  --ba-c-line:   rgba(176, 255, 0, .35);
+  color: var(--ip-fg);
+  border-left: 3px solid var(--ba-c);
+}
+
+.ip-ba-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--ba-c-line);
+}
+.ip-ba-eyebrow {
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--ba-c);
+}
+.ip-ba-state {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ip-fg);
+  letter-spacing: -.005em;
+}
+
+.ip-ba-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 8px;
+}
+.ip-ba-tag {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  background: var(--ba-c-soft);
+  border: 1px solid var(--ba-c-line);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.25;
+  color: var(--ip-fg);
+}
+.ip-ba-tag span { min-width: 0; }
+.ip-ba-ico {
+  width: 22px;
+  height: 22px;
+  color: var(--ba-c);
+  display: block;
+}
+.ip-ba-before .ip-ba-tag { opacity: .92; }
+
+/* Bridge / arrow between the two halves */
+.ip-ba-bridge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--ip-accent);
+  position: relative;
+}
+.ip-ba-bridge::before,
+.ip-ba-bridge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 28%;
+  background: linear-gradient(to bottom, transparent, var(--ip-hairline-strong));
+  transform: translateX(-50%);
+}
+.ip-ba-bridge::before { top: 0; }
+.ip-ba-bridge::after { bottom: 0; transform: translateX(-50%) scaleY(-1); }
+.ip-ba-bridge-label {
+  font-size: 9px;
+  letter-spacing: .28em;
+  color: var(--ip-fg-3);
+}
+.ip-ba-bridge-sub {
+  font-size: 9px;
+  letter-spacing: .14em;
+  color: var(--ip-accent);
+  text-align: center;
+  max-width: 84px;
+  line-height: 1.25;
+}
+.ip-ba-arrow {
+  width: 72px;
+  height: 26px;
+  color: var(--ip-accent);
+  filter: drop-shadow(0 0 6px rgba(176, 255, 0, .45));
+}
+
+/* Print fit: 1123x627 slot, no per-slide footer, ~440px body height */
+body[data-print="1"] .ip-ba {
+  grid-template-columns: 1fr 84pt 1fr !important;
+  gap: 12pt !important;
+  margin-top: 2pt !important;
+}
+body[data-print="1"] .ip-ba-side {
+  padding: 10pt 11pt 9pt !important;
+  gap: 8pt !important;
+  border-radius: 9pt !important;
+}
+body[data-print="1"] .ip-ba-head {
+  padding-bottom: 5pt !important;
+}
+body[data-print="1"] .ip-ba-eyebrow { font-size: 7.5pt !important; letter-spacing: .22em !important; }
+body[data-print="1"] .ip-ba-state   { font-size: 10pt !important; }
+body[data-print="1"] .ip-ba-grid    { gap: 5pt 5pt !important; }
+body[data-print="1"] .ip-ba-tag {
+  grid-template-columns: 20pt 1fr !important;
+  gap: 6pt !important;
+  padding: 5pt 7pt !important;
+  font-size: 8.5pt !important;
+  line-height: 1.2 !important;
+  border-radius: 6pt !important;
+}
+body[data-print="1"] .ip-ba-ico { width: 16pt !important; height: 16pt !important; }
+body[data-print="1"] .ip-ba-arrow {
+  width: 60pt !important;
+  height: 20pt !important;
+  /* Print engines often drop CSS filters — keep arrow legible without glow. */
+  filter: none !important;
+}
+body[data-print="1"] .ip-ba-bridge-label,
+body[data-print="1"] .ip-ba-bridge-sub { font-size: 7pt !important; }
