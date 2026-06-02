@@ -1422,6 +1422,36 @@ body[data-print="1"] .ip-cols-3 { grid-template-columns: repeat(3, 1fr) !importa
 body[data-print="1"] .ip-cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
 body[data-print="1"] .ip-cols { gap: 10pt !important; }
 
+/* ─── Slide 5 defensive horizontal lock ─────────────────────────────────
+   .ip-flow has a mobile rule at @media (max-width: 768px) that flips
+   flex-direction to column. Some print pipelines evaluate @page at
+   A4 portrait (~794px) instead of our 1123px landscape canvas, which
+   trips the mobile rule and stacks the 5 audit steps vertically —
+   pushing "Earn" (step 5) past the slot. Force the row layout back
+   in @media print AND body[data-print="1"] regardless of viewport. */
+@media print {
+  .ip-flow,
+  body[data-print="1"] .ip-flow {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8pt !important;
+  }
+  .ip-flow-arrow,
+  body[data-print="1"] .ip-flow-arrow {
+    display: inline-block !important;
+  }
+}
+body[data-print="1"] .ip-flow {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 8pt !important;
+}
+body[data-print="1"] .ip-flow-arrow { display: inline-block !important; }
+
 /* ─── Slide 13 — Before / After visual ────────────────────────────────── */
 .ip-ba {
   display: grid;
